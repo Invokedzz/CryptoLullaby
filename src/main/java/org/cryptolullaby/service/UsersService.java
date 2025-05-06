@@ -20,7 +20,7 @@ public class UsersService {
 
     public void createUser (RegisterDTO register) {
 
-
+        usersRepository.save(new Users(register));
 
     }
 
