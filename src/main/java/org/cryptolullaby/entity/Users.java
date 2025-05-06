@@ -1,8 +1,10 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.RegisterDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document("users")
@@ -17,20 +19,22 @@ public class Users {
 
     private String password;
 
-    private String description;
-
     private String imgUrl;
 
     private List <Roles> roles;
 
     private List <Interest> interests;
 
+    private LocalDateTime createdAt;
+
+    private Boolean isActive;
+
     public Users () {}
 
     public Users (
 
-            String id, String username, String email, String password, String description,
-            String imgUrl, List <Roles> roles, List <Interest> interests
+            String id, String username, String email, String password, String imgUrl, List <Roles> roles,
+            List <Interest> interests, LocalDateTime createdAt, Boolean isActive
     )
 
     {
@@ -43,13 +47,15 @@ public class Users {
 
         this.password = password;
 
-        this.description = description;
-
         this.imgUrl = imgUrl;
 
         this.roles = roles;
 
         this.interests = interests;
+
+        this.createdAt = createdAt;
+
+        this.isActive = isActive;
 
     }
 
@@ -95,18 +101,6 @@ public class Users {
 
     }
 
-    public String getDescription () {
-
-        return description;
-
-    }
-
-    public void setDescription (String description) {
-
-        this.description = description;
-
-    }
-
     public String getImgUrl () {
 
         return imgUrl;
@@ -140,6 +134,40 @@ public class Users {
     public void setInterests (List <Interest> interests) {
 
         this.interests = interests;
+
+    }
+
+    public LocalDateTime getCreatedAt () {
+
+        return createdAt;
+
+    }
+
+    public Boolean getIsActive () {
+
+        return isActive;
+
+    }
+
+    public void setIsActive (Boolean isActive) {
+
+        this.isActive = isActive;
+
+    }
+
+    public Users (RegisterDTO register) {
+
+        this.username = register.username();
+
+        this.email = register.email();
+
+        this.password = register.password();
+
+        this.imgUrl = register.imgUrl();
+
+        this.createdAt = LocalDateTime.now();
+
+        this.isActive = false;
 
     }
 

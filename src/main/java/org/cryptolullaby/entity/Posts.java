@@ -20,7 +20,7 @@ public class Posts {
 
     private Integer likes;
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     private String userId;
 
