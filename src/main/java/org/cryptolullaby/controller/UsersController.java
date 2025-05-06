@@ -2,7 +2,7 @@ package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.RegisterDTO;
-import org.cryptolullaby.model.dto.SuccessResponseDTO;
+import org.cryptolullaby.model.dto.SystemResponseDTO;
 import org.cryptolullaby.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +22,11 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity <SuccessResponseDTO> createUser (@Valid @RequestBody RegisterDTO register) {
+    public ResponseEntity <SystemResponseDTO> createUser (@Valid @RequestBody RegisterDTO register) {
 
         usersService.createUser(register);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponseDTO("User created successfully!"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new SystemResponseDTO("User created successfully!"));
 
     }
 

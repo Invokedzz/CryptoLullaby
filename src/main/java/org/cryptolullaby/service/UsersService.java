@@ -5,8 +5,6 @@ import org.cryptolullaby.model.dto.RegisterDTO;
 import org.cryptolullaby.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UsersService {
 
@@ -20,7 +18,13 @@ public class UsersService {
 
     public void createUser (RegisterDTO register) {
 
-        usersRepository.save(new Users(register));
+        if (!register.password().equals(register.repeatPassword())) {
+
+        }
+
+        var user = new Users(register);
+
+        usersRepository.save(user);
 
     }
 

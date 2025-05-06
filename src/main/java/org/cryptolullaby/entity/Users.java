@@ -21,7 +21,7 @@ public class Users {
 
     private String imgUrl;
 
-    private List <Roles> roles;
+    private List <String> rolesId;
 
     private List <Interest> interests;
 
@@ -33,7 +33,7 @@ public class Users {
 
     public Users (
 
-            String id, String username, String email, String password, String imgUrl, List <Roles> roles,
+            String id, String username, String email, String password, String imgUrl, List <String> rolesId,
             List <Interest> interests, LocalDateTime createdAt, Boolean isActive
     )
 
@@ -49,7 +49,7 @@ public class Users {
 
         this.imgUrl = imgUrl;
 
-        this.roles = roles;
+        this.rolesId = rolesId;
 
         this.interests = interests;
 
@@ -113,15 +113,15 @@ public class Users {
 
     }
 
-    public List <Roles> getRoles () {
+    public List <String> getRolesId () {
 
-        return roles;
+        return rolesId;
 
     }
 
-    public void setRoles (List <Roles> roles) {
+    public void setRolesId (List <String> rolesId) {
 
-        this.roles = roles;
+        this.rolesId = rolesId;
 
     }
 
