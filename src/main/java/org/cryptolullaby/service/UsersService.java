@@ -59,9 +59,17 @@ public class UsersService {
 
         var user = findUserById(id);
 
-        user.updateProfile(profileDTO);
+        if (!profileDTO.interests().isEmpty()) {
 
-        usersRepository.save(user);
+            user.updateProfile(profileDTO);
+
+            usersRepository.save(user);
+
+            return;
+
+        }
+
+
 
     }
 

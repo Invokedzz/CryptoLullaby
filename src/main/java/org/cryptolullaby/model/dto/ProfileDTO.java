@@ -2,6 +2,7 @@ package org.cryptolullaby.model.dto;
 
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.model.enums.InterestName;
 
 import java.time.LocalDateTime;
 import java.util.List;

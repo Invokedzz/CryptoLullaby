@@ -1,5 +1,7 @@
 package org.cryptolullaby.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public enum InterestName {
 
     BLOCKCHAIN("Blockchain"),
@@ -20,11 +22,13 @@ public enum InterestName {
 
     STABLECOIN("StableCoin"),
 
-    VIRTUAL_CURRENCY("VirtualCurrency");
+    VIRTUAL_CURRENCY("VirtualCurrency"),
+
+    NONE("None");
 
     private final String label;
 
-    InterestName (String label) {
+    InterestName(String label) {
 
         this.label = label;
 

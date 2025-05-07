@@ -4,6 +4,7 @@ import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.model.dto.ExceptionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,21 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity <ExceptionDTO> httpMessageNotReadableException (HttpMessageNotReadableException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
 
     }
 
