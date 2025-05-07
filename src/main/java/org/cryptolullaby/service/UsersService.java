@@ -1,10 +1,12 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.UserNotFoundException;
 import org.cryptolullaby.model.dto.RegisterDTO;
 import org.cryptolullaby.model.dto.UpdateProfileDTO;
+import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.springframework.stereotype.Service;
@@ -59,17 +61,20 @@ public class UsersService {
 
         var user = findUserById(id);
 
-        if (!profileDTO.interests().isEmpty()) {
+        var sanitizedList = sanitizeInterestList(profileDTO.interests());
 
-            user.updateProfile(profileDTO);
+        var profile = new UpdateProfileDTO(
 
-            usersRepository.save(user);
+                profileDTO.email(),
+                profileDTO.password(),
+                profileDTO.confirmNewPassword(),
+                sanitizedList
 
-            return;
+        );
 
-        }
+        user.updateProfile(profile);
 
-
+        usersRepository.save(user);
 
     }
 
@@ -88,6 +93,23 @@ public class UsersService {
         return usersRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found!"));
+
+    }
+
+    private List <Interest> sanitizeInterestList (List <Interest> interests) {
+
+        var sanitizedList =
+                interests.stream()
+                .filter(i -> i.getType() != null && !i.getType().getLabel().isBlank())
+                .collect(Collectors.toList());
+
+        if (sanitizedList.isEmpty()) {
+
+            sanitizedList.add(new Interest(InterestName.NONE));
+
+        }
+
+        return sanitizedList;
 
     }
 

@@ -196,7 +196,7 @@ public class Users {
 
         }
 
-        if (updateProfileDTO.interests() != null) {
+        if (updateProfileDTO.interests() != null && !updateProfileDTO.interests().isEmpty()) {
 
             this.interests = updateProfileDTO.interests();
 
