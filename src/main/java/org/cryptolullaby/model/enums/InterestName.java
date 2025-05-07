@@ -24,7 +24,7 @@ public enum InterestName {
 
     private final String label;
 
-    InterestName(String label) {
+    InterestName (String label) {
 
         this.label = label;
 

@@ -1,6 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.dto.ProfileDTO;
 import org.cryptolullaby.model.dto.RegisterDTO;
 import org.cryptolullaby.model.dto.UpdateProfileDTO;
 import org.springframework.data.annotation.Id;
@@ -151,12 +150,6 @@ public class Users {
 
     }
 
-    public void setIsActive (Boolean isActive) {
-
-        this.isActive = isActive;
-
-    }
-
     public Users (RegisterDTO register) {
 
         this.username = register.username();
@@ -168,6 +161,18 @@ public class Users {
         this.imgUrl = register.imgUrl();
 
         this.createdAt = LocalDateTime.now();
+
+        this.isActive = false;
+
+    }
+
+    public void activate () {
+
+        this.isActive = true;
+
+    }
+
+    public void deactivate () {
 
         this.isActive = false;
 

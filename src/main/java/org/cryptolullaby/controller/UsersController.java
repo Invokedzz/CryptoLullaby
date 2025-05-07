@@ -45,16 +45,20 @@ public class UsersController {
     }
 
     @PutMapping("/profile/edit/{id}")
-    public ResponseEntity <Void> editProfileById (@PathVariable String id, @Valid @RequestBody UpdateProfileDTO profileDTO) {
+    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @RequestBody UpdateProfileDTO profileDTO) {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        usersService.editProfileById(id, profileDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("Profile edited successfully!"));
 
     }
 
-    @DeleteMapping("/profile/delete/{id}")
-    public ResponseEntity <Void> deleteProfileById (@PathVariable String id) {
+    @DeleteMapping("/profile/deactivate/{id}")
+    public ResponseEntity <Void> deactivateProfileById (@PathVariable String id) {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        usersService.deactivateProfileById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 

@@ -4,6 +4,7 @@ import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.UserNotFoundException;
 import org.cryptolullaby.model.dto.RegisterDTO;
+import org.cryptolullaby.model.dto.UpdateProfileDTO;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,26 @@ public class UsersService {
     public Users findProfileById (@PathVariable String id) {
 
         return findUserById(id);
+
+    }
+
+    public void editProfileById (String id, UpdateProfileDTO profileDTO) {
+
+        var user = findUserById(id);
+
+        user.updateProfile(profileDTO);
+
+        usersRepository.save(user);
+
+    }
+
+    public void deactivateProfileById (@PathVariable String id) {
+
+        var user = findUserById(id);
+
+        user.deactivate();
+
+        usersRepository.save(user);
 
     }
 

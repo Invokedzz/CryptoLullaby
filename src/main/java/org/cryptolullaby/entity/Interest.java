@@ -4,23 +4,13 @@ import org.cryptolullaby.model.enums.InterestName;
 
 public class Interest {
 
-    private String id;
-
     private InterestName type;
 
     public Interest () {}
 
-    public Interest (String id, InterestName type) {
-
-        this.id = id;
+    public Interest (InterestName type) {
 
         this.type = type;
-
-    }
-
-    public String getId () {
-
-        return id;
 
     }
 

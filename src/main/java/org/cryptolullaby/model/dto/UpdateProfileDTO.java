@@ -2,6 +2,7 @@ package org.cryptolullaby.model.dto;
 
 import jakarta.validation.constraints.Email;
 import org.cryptolullaby.entity.Interest;
+import org.cryptolullaby.model.enums.InterestName;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
