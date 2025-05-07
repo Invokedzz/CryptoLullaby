@@ -2,11 +2,12 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.exception.UserNotFoundException;
 import org.cryptolullaby.model.dto.RegisterDTO;
 import org.cryptolullaby.model.enums.RolesName;
-import org.cryptolullaby.repository.RolesRepository;
 import org.cryptolullaby.repository.UsersRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,6 +45,20 @@ public class UsersService {
         );
 
         usersRepository.save(user);
+
+    }
+
+    public Users findProfileById (@PathVariable String id) {
+
+        return findUserById(id);
+
+    }
+
+    private Users findUserById (String id) {
+
+        return usersRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
 
     }
 

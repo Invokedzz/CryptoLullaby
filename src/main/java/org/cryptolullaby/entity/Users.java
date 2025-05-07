@@ -1,6 +1,8 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.ProfileDTO;
 import org.cryptolullaby.model.dto.RegisterDTO;
+import org.cryptolullaby.model.dto.UpdateProfileDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -168,6 +170,32 @@ public class Users {
         this.createdAt = LocalDateTime.now();
 
         this.isActive = false;
+
+    }
+
+    public void updateProfile (UpdateProfileDTO updateProfileDTO) {
+
+        if (updateProfileDTO.email() != null) {
+
+            this.email = updateProfileDTO.email();
+
+        }
+
+        if (updateProfileDTO.password() != null) {
+
+            if (updateProfileDTO.password().equals(updateProfileDTO.confirmNewPassword())) {
+
+                this.password = updateProfileDTO.password();
+
+            }
+
+        }
+
+        if (updateProfileDTO.interests() != null) {
+
+            this.interests = updateProfileDTO.interests();
+
+        }
 
     }
 
