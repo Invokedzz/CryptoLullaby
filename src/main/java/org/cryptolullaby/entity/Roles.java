@@ -1,6 +1,6 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.enums.RolesTypeEnum;
+import org.cryptolullaby.model.enums.RolesName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,11 +10,17 @@ public class Roles {
     @Id
     private String id;
 
-    private RolesTypeEnum name;
+    private RolesName name;
 
     public Roles () {}
 
-    public Roles (String id, RolesTypeEnum name) {
+    public Roles (RolesName name) {
+
+        this.name = name;
+
+    }
+
+    public Roles (String id, RolesName name) {
 
         this.id = id;
 
@@ -28,13 +34,13 @@ public class Roles {
 
     }
 
-    public RolesTypeEnum getName () {
+    public RolesName getName () {
 
         return name;
 
     }
 
-    public void setName (RolesTypeEnum name) {
+    public void setName (RolesName name) {
 
         this.name = name;
 

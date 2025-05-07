@@ -1,16 +1,16 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.enums.InterestEnum;
+import org.cryptolullaby.model.enums.InterestName;
 
 public class Interest {
 
     private String id;
 
-    private InterestEnum type;
+    private InterestName type;
 
     public Interest () {}
 
-    public Interest (String id, InterestEnum type) {
+    public Interest (String id, InterestName type) {
 
         this.id = id;
 
@@ -24,13 +24,13 @@ public class Interest {
 
     }
 
-    public InterestEnum getType () {
+    public InterestName getType () {
 
         return type;
 
     }
 
-    public void setType (InterestEnum type) {
+    public void setType (InterestName type) {
 
         this.type = type;
 

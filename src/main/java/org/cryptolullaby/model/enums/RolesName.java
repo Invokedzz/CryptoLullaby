@@ -1,6 +1,6 @@
 package org.cryptolullaby.model.enums;
 
-public enum RolesTypeEnum {
+public enum RolesName {
 
     ADMIN,
 

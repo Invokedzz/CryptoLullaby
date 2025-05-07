@@ -1,6 +1,6 @@
 package org.cryptolullaby.model.enums;
 
-public enum InterestEnum {
+public enum InterestName {
 
     BLOCKCHAIN("Blockchain"),
 
@@ -24,7 +24,7 @@ public enum InterestEnum {
 
     private final String label;
 
-    InterestEnum (String label) {
+    InterestName(String label) {
 
         this.label = label;
 
