@@ -9,6 +9,8 @@ import org.cryptolullaby.model.dto.UpdateProfileDTO;
 import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
+import org.cryptolullaby.validation.UserValidator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,36 +24,42 @@ public class UsersService {
 
     private final RolesService rolesService;
 
-    public UsersService (UsersRepository usersRepository, RolesService rolesService) {
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserValidator userValidator;
+
+    public UsersService (UsersRepository usersRepository, RolesService rolesService,
+                         PasswordEncoder passwordEncoder, UserValidator userValidator) {
 
         this.usersRepository = usersRepository;
 
         this.rolesService = rolesService;
 
+        this.passwordEncoder = passwordEncoder;
+
+        this.userValidator = userValidator;
+
     }
 
     public void createUser (RegisterDTO register) {
 
-        if (!register.password().equals(register.repeatPassword())) {
-
-        }
+        checkIfPasswordsMatch(register.password(), register.repeatPassword());
 
         var user = new Users(register);
 
-        List <Roles> roles = List.of(rolesService.createIfRoleNotExistOrElseReturnIt(RolesName.USER));
+        checkIfUserComponentsAlreadyExist(user);
 
-        user.setRolesId(
-                roles
-                .stream()
-                .map(Roles::getId)
-                .collect(Collectors.toList())
-        );
+        String encodedPassword = encodeUserPassword(register.password());
+
+        user.setPassword(encodedPassword);
+
+        setupUserRoles(user);
 
         usersRepository.save(user);
 
     }
 
-    public Users findProfileById (@PathVariable String id) {
+    public Users findProfileById (String id) {
 
         return findUserById(id);
 
@@ -110,6 +118,37 @@ public class UsersService {
         }
 
         return sanitizedList;
+
+    }
+
+    private String encodeUserPassword (String password) {
+
+        return passwordEncoder.encode(password);
+
+    }
+
+    private void setupUserRoles (Users user) {
+
+        List <Roles> roles = List.of(rolesService.createIfRoleNotExistOrElseReturnIt(RolesName.USER));
+
+        user.setRolesId(
+                roles
+                        .stream()
+                        .map(Roles::getId)
+                        .collect(Collectors.toList())
+        );
+
+    }
+
+    private void checkIfUserComponentsAlreadyExist (Users user) {
+
+        userValidator.checkIfUserComponentsAlreadyExist(user);
+
+    }
+
+    private void checkIfPasswordsMatch (String password, String confirmPassword) {
+
+        userValidator.checkIfPasswordsAreTheSame(password, confirmPassword);
 
     }
 

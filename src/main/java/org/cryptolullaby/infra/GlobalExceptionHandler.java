@@ -1,5 +1,6 @@
 package org.cryptolullaby.infra;
 
+import org.cryptolullaby.exception.BadRequestException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.model.dto.ExceptionDTO;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,21 @@ public class GlobalExceptionHandler {
 
                 HttpStatus.BAD_REQUEST.value(),
                 fieldError.getDefaultMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity <ExceptionDTO> handleBadRequestException (BadRequestException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
                 LocalDateTime.now()
 
         );
