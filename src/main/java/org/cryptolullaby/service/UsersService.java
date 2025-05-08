@@ -5,7 +5,7 @@ import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.UserNotFoundException;
 import org.cryptolullaby.model.dto.RegisterDTO;
-import org.cryptolullaby.model.dto.UpdateProfileDTO;
+import org.cryptolullaby.model.dto.EditProfileDTO;
 import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
@@ -65,20 +65,23 @@ public class UsersService {
 
     }
 
-    public void editProfileById (String id, UpdateProfileDTO profileDTO) {
+    public void editProfileById (String id, EditProfileDTO profileDTO) {
 
         var user = findUserById(id);
 
         var sanitizedList = sanitizeInterestList(profileDTO.interests());
 
-        var profile = new UpdateProfileDTO(
+        var profile = new EditProfileDTO(
 
-                profileDTO.email(),
                 profileDTO.password(),
                 profileDTO.confirmNewPassword(),
                 sanitizedList
 
         );
+
+        checkIfNewPasswordIsDifferentFromTheOlderOne(user.getPassword(), profile.password());
+
+        checkIfPasswordsMatch(profile.password(), profile.confirmNewPassword());
 
         user.updateProfile(profile);
 
@@ -149,6 +152,12 @@ public class UsersService {
     private void checkIfPasswordsMatch (String password, String confirmPassword) {
 
         userValidator.checkIfPasswordsAreTheSame(password, confirmPassword);
+
+    }
+
+    private void checkIfNewPasswordIsDifferentFromTheOlderOne (String oldPassword, String newPassword) {
+
+        userValidator.comparePasswordsInOrderToEditAccount(oldPassword, newPassword);
 
     }
 

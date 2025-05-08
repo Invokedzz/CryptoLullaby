@@ -20,9 +20,27 @@ public class UserValidator {
 
     public void checkIfPasswordsAreTheSame (String password, String confirmPassword) {
 
-        if (!password.equals(confirmPassword)) {
+        if (password != null && confirmPassword != null) {
 
-            throw new DivergentPasswordsException("Passwords do not match!");
+            if (!password.equals(confirmPassword)) {
+
+                throw new DivergentPasswordsException("Passwords do not match!");
+
+            }
+
+        }
+
+    }
+
+    public void comparePasswordsInOrderToEditAccount (String oldPassword, String newPassword) {
+
+        if (newPassword != null) {
+
+            if (oldPassword.equals(newPassword)) {
+
+                throw new DivergentPasswordsException("Your new password must be different from your old password!");
+
+            }
 
         }
 

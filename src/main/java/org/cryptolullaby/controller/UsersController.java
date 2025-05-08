@@ -28,6 +28,13 @@ public class UsersController {
 
     }
 
+    @PostMapping("/confirm/activation")
+    public ResponseEntity <Void> confirmInterestsThenActivateAccount () {
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @PostMapping("/login")
     public ResponseEntity <Void> login (@Valid @RequestBody LoginDTO loginDTO) {
 
@@ -45,7 +52,7 @@ public class UsersController {
     }
 
     @PutMapping("/profile/edit/{id}")
-    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @RequestBody UpdateProfileDTO profileDTO) {
+    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @RequestBody EditProfileDTO profileDTO) {
 
         usersService.editProfileById(id, profileDTO);
 

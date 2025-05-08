@@ -2,15 +2,11 @@ package org.cryptolullaby.model.dto;
 
 import jakarta.validation.constraints.Email;
 import org.cryptolullaby.entity.Interest;
-import org.cryptolullaby.model.enums.InterestName;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-public record UpdateProfileDTO (
-
-        @Email(message = "Please, enter a valid email!")
-        String email,
+public record EditProfileDTO(
 
         @Length(min =  6, max = 20, message = "Password length must be higher than 6 and lower than 20!")
         String password,
