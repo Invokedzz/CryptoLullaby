@@ -52,11 +52,20 @@ public class UsersController {
     }
 
     @PutMapping("/profile/edit/{id}")
-    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @RequestBody EditProfileDTO profileDTO) {
+    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @ModelAttribute EditProfileDTO profileDTO) {
 
         usersService.editProfileById(id, profileDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("Profile edited successfully!"));
+
+    }
+
+    @PutMapping("/profile/edit/pfp/{id}")
+    public ResponseEntity <Void> editProfileImageById (@PathVariable String id, @Valid @ModelAttribute ImageDTO imageDTO) {
+
+        usersService.editProfileImageById(id, imageDTO.file());
+
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 

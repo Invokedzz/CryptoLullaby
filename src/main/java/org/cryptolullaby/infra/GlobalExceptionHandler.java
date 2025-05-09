@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 
@@ -77,6 +78,21 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity <ExceptionDTO> handlePayloadTooLargeException (MaxUploadSizeExceededException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.PAYLOAD_TOO_LARGE.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.PAYLOAD_TOO_LARGE);
 
     }
 

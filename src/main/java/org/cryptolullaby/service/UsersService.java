@@ -11,6 +11,7 @@ import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UsersService {
+
+    @Value("${default.image.url}")
+    private String defaultImgURL;
 
     private final UsersRepository usersRepository;
 
@@ -105,6 +109,16 @@ public class UsersService {
 
     }
 
+    public void editProfileImageById (String id, MultipartFile file) {
+
+        var user = findUserById(id);
+
+        uploadImgToCloud(user.getImg(), file);
+
+        usersRepository.save(user);
+
+    }
+
     public void deactivateProfileById (@PathVariable String id) {
 
         var user = findUserById(id);
@@ -130,6 +144,13 @@ public class UsersService {
     }
 
     private List <Interest> sanitizeInterestList (List <Interest> interests) {
+
+        /*
+        *
+        *  To do: fix the NullPointerIssue that is happening with interests.stream()
+        *   09/05/2025
+        *
+        * */
 
         var sanitizedList =
                 interests.stream()
@@ -167,7 +188,7 @@ public class UsersService {
 
     private void uploadImgToCloud (Images images, MultipartFile file) {
 
-        if (file != null && !file.isEmpty()) {
+        if (file.getContentType().matches("image/jpeg") || file.getContentType().matches("image/png")) {
 
             var picture = cloudinaryService.uploadImageToCloud(file);
 
@@ -181,7 +202,7 @@ public class UsersService {
 
         }
 
-        images.setUrl("");
+        images.setUrl(defaultImgURL);
 
     }
 
