@@ -2,7 +2,9 @@ package org.cryptolullaby.model.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.cryptolullaby.entity.Images;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 public record RegisterDTO (
 
@@ -21,6 +23,6 @@ public record RegisterDTO (
         @Length(min =  6, max = 20, message = "Password length must be higher than 6 and lower than 20!")
         String repeatPassword,
 
-        String imgUrl
+        MultipartFile img
 
 ) {}

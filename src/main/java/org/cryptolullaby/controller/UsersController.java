@@ -20,7 +20,7 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity <SystemResponseDTO> createUser (@Valid @RequestBody RegisterDTO register) {
+    public ResponseEntity <SystemResponseDTO> createUser (@Valid @ModelAttribute RegisterDTO register) {
 
         usersService.createUser(register);
 

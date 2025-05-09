@@ -1,10 +1,11 @@
 package org.cryptolullaby.config;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 public class CloudinaryConfig {
@@ -23,11 +24,11 @@ public class CloudinaryConfig {
 
         return new Cloudinary (
 
-                ObjectUtils.asMap(
+                Map.of(
 
-                "cloud_name", cloudinaryCloudName,
-                "api_key", cloudinaryApiKey,
-                "api_secret", cloudinaryApiSecret
+                        "cloud_name", cloudinaryCloudName,
+                        "api_key", cloudinaryApiKey,
+                        "api_secret", cloudinaryApiSecret
 
                 ));
 

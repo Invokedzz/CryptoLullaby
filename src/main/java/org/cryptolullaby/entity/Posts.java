@@ -15,7 +15,7 @@ public class Posts {
 
     private String description;
 
-    private String imgUrl;
+    private Images img;
 
     private Integer likes;
 
@@ -27,7 +27,7 @@ public class Posts {
 
     public Posts (
 
-            String id, String title, String description, String imgUrl,
+            String id, String title, String description, Images img,
             Integer likes, LocalDateTime createdAt, String userId
 
     )
@@ -40,7 +40,7 @@ public class Posts {
 
         this.description = description;
 
-        this.imgUrl = imgUrl;
+        this.img = img;
 
         this.likes = likes;
 
@@ -80,15 +80,15 @@ public class Posts {
 
     }
 
-    public String getImgUrl () {
+    public Images getImg () {
 
-        return imgUrl;
+        return img;
 
     }
 
-    public void setImgUrl (String imgUrl) {
+    public void setImgUrl (Images img) {
 
-        this.imgUrl = imgUrl;
+        this.img = img;
 
     }
 

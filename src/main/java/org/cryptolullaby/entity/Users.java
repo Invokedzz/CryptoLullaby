@@ -20,7 +20,7 @@ public class Users {
 
     private String password;
 
-    private String imgUrl;
+    private Images img;
 
     private List <String> rolesId;
 
@@ -34,7 +34,7 @@ public class Users {
 
     public Users (
 
-            String id, String username, String email, String password, String imgUrl, List <String> rolesId,
+            String id, String username, String email, String password, Images img, List <String> rolesId,
             List <Interest> interests, LocalDateTime createdAt, Boolean isActive
     )
 
@@ -48,7 +48,7 @@ public class Users {
 
         this.password = password;
 
-        this.imgUrl = imgUrl;
+        this.img = img;
 
         this.rolesId = rolesId;
 
@@ -102,15 +102,15 @@ public class Users {
 
     }
 
-    public String getImgUrl () {
+    public Images getImg () {
 
-        return imgUrl;
+        return img;
 
     }
 
-    public void setImgUrl (String imgUrl) {
+    public void setImgUrl (Images img) {
 
-        this.imgUrl = imgUrl;
+        this.img = img;
 
     }
 
@@ -158,7 +158,7 @@ public class Users {
 
         this.password = register.password();
 
-        this.imgUrl = register.imgUrl();
+        this.img = new Images();
 
         this.createdAt = LocalDateTime.now();
 

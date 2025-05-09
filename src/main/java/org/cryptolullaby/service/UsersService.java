@@ -1,5 +1,6 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
@@ -13,6 +14,7 @@ import org.cryptolullaby.validation.UserValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +30,11 @@ public class UsersService {
 
     private final UserValidator userValidator;
 
+    private final CloudinaryService cloudinaryService;
+
     public UsersService (UsersRepository usersRepository, RolesService rolesService,
-                         PasswordEncoder passwordEncoder, UserValidator userValidator) {
+                         PasswordEncoder passwordEncoder, UserValidator userValidator,
+                        CloudinaryService cloudinaryService) {
 
         this.usersRepository = usersRepository;
 
@@ -39,7 +44,16 @@ public class UsersService {
 
         this.userValidator = userValidator;
 
+        this.cloudinaryService = cloudinaryService;
+
     }
+
+    /*
+    *
+    *  Public methods (usually connected to controller)
+    *
+    *
+    * */
 
     public void createUser (RegisterDTO register) {
 
@@ -54,6 +68,8 @@ public class UsersService {
         user.setPassword(encodedPassword);
 
         setupUserRoles(user);
+
+        uploadImgToCloud(user.getImg(), register.img());
 
         usersRepository.save(user);
 
@@ -99,6 +115,12 @@ public class UsersService {
 
     }
 
+    /*
+    *
+    *  Private methods
+    *
+    * */
+
     private Users findUserById (String id) {
 
         return usersRepository
@@ -140,6 +162,26 @@ public class UsersService {
                         .map(Roles::getId)
                         .collect(Collectors.toList())
         );
+
+    }
+
+    private void uploadImgToCloud (Images images, MultipartFile file) {
+
+        if (file != null && !file.isEmpty()) {
+
+            var picture = cloudinaryService.uploadImageToCloud(file);
+
+            if (picture != null && picture.containsKey("url")) {
+
+                images.setUrl(picture.get("url").toString());
+
+                return;
+
+            }
+
+        }
+
+        images.setUrl("");
 
     }
 

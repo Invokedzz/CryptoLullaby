@@ -1,5 +1,6 @@
 package org.cryptolullaby.model.dto;
 
+import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.enums.InterestName;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public record ProfileDTO (
 
-        String imgUrl,
+        Images img,
 
         String username,
 
@@ -23,7 +24,7 @@ public record ProfileDTO (
 
     public ProfileDTO (Users user) {
 
-        this (user.getImgUrl(), user.getUsername(), user.getEmail(), user.getInterests(), user.getCreatedAt());
+        this (user.getImg(), user.getUsername(), user.getEmail(), user.getInterests(), user.getCreatedAt());
 
     }
 
