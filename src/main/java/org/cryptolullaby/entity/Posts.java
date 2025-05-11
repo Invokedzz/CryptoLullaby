@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.CreatePostDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,12 +24,14 @@ public class Posts {
 
     private String userId;
 
+    private Boolean isActive;
+
     public Posts () {}
 
     public Posts (
 
             String id, String title, String description, Images img,
-            Integer likes, LocalDateTime createdAt, String userId
+            Integer likes, LocalDateTime createdAt, String userId, Boolean isActive
 
     )
 
@@ -47,6 +50,26 @@ public class Posts {
         this.createdAt = createdAt;
 
         this.userId = userId;
+
+        this.isActive = isActive;
+
+    }
+
+    public Posts (CreatePostDTO createPostDTO) {
+
+        this.title = createPostDTO.title();
+
+        this.description = createPostDTO.description();
+
+        this.img = new Images();
+
+        this.likes = 0;
+
+        this.createdAt = LocalDateTime.now();
+
+        this.userId = createPostDTO.userId();
+
+        this.isActive = true;
 
     }
 
@@ -125,6 +148,18 @@ public class Posts {
     public void setUserId (String userId) {
 
         this.userId = userId;
+
+    }
+
+    public Boolean getIsActive () {
+
+        return isActive;
+
+    }
+
+    public void deactivate () {
+
+        this.isActive = false;
 
     }
 
