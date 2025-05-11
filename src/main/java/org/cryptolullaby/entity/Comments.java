@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.CreateCommentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -47,6 +48,22 @@ public class Comments {
         this.postId = postId;
 
         this.parentId = parentId;
+
+    }
+
+    public Comments (CreateCommentDTO createCommentDTO) {
+
+        this.comment = createCommentDTO.comment();
+
+        this.likes = 0;
+
+        this.createdAt = LocalDateTime.now();
+
+        this.userId = createCommentDTO.userId();
+
+        this.postId = createCommentDTO.postId();
+
+        this.parentId = createCommentDTO.parentId();
 
     }
 
