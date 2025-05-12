@@ -5,19 +5,14 @@ import org.cryptolullaby.model.dto.CreateCommentDTO;
 import org.cryptolullaby.service.CommentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class CommentsController {
-
-    /*
-    *
-    * To do: enable web socket for comments
-    *
-    * 10/05/2025
-    *
-    * */
 
     private final CommentsService commentsService;
 
@@ -28,7 +23,7 @@ public class CommentsController {
     }
 
     @PostMapping("/comments")
-    public ResponseEntity <Void> createComment (@Valid @RequestBody CreateCommentDTO createCommentDTO) {
+    public ResponseEntity <Void> createComment (@Valid @Payload CreateCommentDTO createCommentDTO) {
 
         commentsService.createComment(createCommentDTO);
 

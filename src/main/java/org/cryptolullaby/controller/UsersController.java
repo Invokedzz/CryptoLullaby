@@ -28,10 +28,12 @@ public class UsersController {
 
     }
 
-    @PostMapping("/confirm/activation")
-    public ResponseEntity <Void> confirmInterestsThenActivateAccount () {
+    @PostMapping("/confirm/activation/{id}")
+    public ResponseEntity <SystemResponseDTO> confirmInterestsThenActivateAccount (@PathVariable String id, @RequestBody InterestDTO interestDTO) {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        usersService.confirmProfileActivation(id, interestDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("User activated successfully!"));
 
     }
 
