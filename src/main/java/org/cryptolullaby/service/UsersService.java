@@ -91,6 +91,8 @@ public class UsersService {
 
             user.setInterests(sanitizedList);
 
+            user.activate();
+
             usersRepository.save(user);
 
         }
