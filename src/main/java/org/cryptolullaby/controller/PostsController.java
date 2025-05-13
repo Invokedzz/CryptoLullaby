@@ -2,6 +2,8 @@ package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.CreatePostDTO;
+import org.cryptolullaby.model.dto.EditPostsDTO;
+import org.cryptolullaby.model.dto.SystemResponseDTO;
 import org.cryptolullaby.service.PostsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +49,9 @@ public class PostsController {
     }
 
     @PutMapping("/posts/edit/{id}")
-    public ResponseEntity <Void> editPostById (@PathVariable String id) {
+    public ResponseEntity <SystemResponseDTO> editPostById (@PathVariable String id, @Valid @ModelAttribute EditPostsDTO editPostsDTO) {
 
-        postsService.editPostById(id);
+        postsService.editPostById(id, editPostsDTO);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
