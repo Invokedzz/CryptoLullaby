@@ -1,6 +1,7 @@
 package org.cryptolullaby.entity;
 
 import org.cryptolullaby.model.dto.CreatePostDTO;
+import org.cryptolullaby.model.dto.EditPostsDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -70,6 +71,28 @@ public class Posts {
         this.userId = createPostDTO.userId();
 
         this.isActive = true;
+
+    }
+
+    public void editPost (EditPostsDTO editPostsDTO) {
+
+        if (title != null) {
+
+            this.title = editPostsDTO.title();
+
+        }
+
+        if (description != null) {
+
+            this.description = editPostsDTO.description();
+
+        }
+
+        if (img != null) {
+
+            this.img = new Images();
+
+        }
 
     }
 

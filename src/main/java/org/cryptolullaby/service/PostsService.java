@@ -17,13 +17,20 @@ public class PostsService {
 
     private final UsersService usersService;
 
-    public PostsService (PostsRepository postsRepository, PostsValidator postsValidator, UsersService usersService) {
+    private final CloudinaryService cloudinaryService;
+
+    public PostsService (PostsRepository postsRepository,
+                         PostsValidator postsValidator,
+                         UsersService usersService,
+                         CloudinaryService cloudinaryService) {
 
         this.postsRepository = postsRepository;
 
         this.postsValidator = postsValidator;
 
         this.usersService = usersService;
+
+        this.cloudinaryService = cloudinaryService;
 
     }
 
@@ -39,6 +46,7 @@ public class PostsService {
 
     public void editPostById (String id, EditPostsDTO editPostsDTO) {
 
+        var post = findPostById(id);
 
 
     }

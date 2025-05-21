@@ -4,10 +4,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public record EditPostsDTO (
 
-        MultipartFile img,
-
         String title,
 
-        String description
+        String description,
+
+        MultipartFile img
 
 ) {}

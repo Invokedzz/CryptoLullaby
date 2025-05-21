@@ -1,6 +1,7 @@
 package org.cryptolullaby.entity;
 
 import org.cryptolullaby.model.dto.CreateCommentDTO;
+import org.cryptolullaby.model.dto.EditCommentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,12 +25,14 @@ public class Comments {
 
     private String parentId;
 
+    private Boolean isActive;
+
     public Comments () {}
 
     public Comments (
 
             String id, String comment, Integer likes, LocalDateTime createdAt,
-            String userId, String postId, String parentId
+            String userId, String postId, String parentId, Boolean isActive
 
     )
 
@@ -49,6 +52,8 @@ public class Comments {
 
         this.parentId = parentId;
 
+        this.isActive = isActive;
+
     }
 
     public Comments (CreateCommentDTO createCommentDTO) {
@@ -64,6 +69,18 @@ public class Comments {
         this.postId = createCommentDTO.postId();
 
         this.parentId = createCommentDTO.parentId();
+
+        this.isActive = true;
+
+    }
+
+    public void editComment (EditCommentDTO editCommentDTO) {
+
+        if (editCommentDTO.comment() != null) {
+
+            this.comment = editCommentDTO.comment();
+
+        }
 
     }
 
@@ -142,6 +159,18 @@ public class Comments {
     public void setParentId (String parentId) {
 
         this.parentId = parentId;
+
+    }
+
+    public Boolean getIsActive () {
+
+        return isActive;
+
+    }
+
+    public void deactivate () {
+
+        this.isActive = false;
 
     }
 

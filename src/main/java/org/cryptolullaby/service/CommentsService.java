@@ -1,6 +1,9 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Comments;
+import org.cryptolullaby.exception.CommentNotFoundException;
 import org.cryptolullaby.model.dto.CreateCommentDTO;
+import org.cryptolullaby.model.dto.EditCommentDTO;
 import org.cryptolullaby.repository.CommentsRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +18,42 @@ public class CommentsService {
 
     }
 
-    public void createComment (CreateCommentDTO createCommentDTO) {}
+    public void createComment (CreateCommentDTO createCommentDTO) {
+
+        commentsRepository.save(new Comments(createCommentDTO));
+
+    }
 
     public void getComments () {}
 
     public void getCommentById (String id) {}
 
-    public void editCommentById (String id) {}
+    public void editCommentById (String id, EditCommentDTO editCommentDTO) {
 
-    public void deactivateCommentById (String id) {}
+        var comment = findCommentById(id);
+
+        comment.editComment(editCommentDTO);
+
+        commentsRepository.save(comment);
+
+    }
+
+    public void deactivateCommentById (String id) {
+
+        var comment = findCommentById(id);
+
+        comment.deactivate();
+
+        commentsRepository.save(comment);
+
+    }
+
+    private Comments findCommentById (String id) {
+
+        return commentsRepository
+                .findById(id)
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found!"));
+
+    }
 
 }

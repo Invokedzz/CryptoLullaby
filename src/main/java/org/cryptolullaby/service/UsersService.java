@@ -25,9 +25,6 @@ import java.util.stream.Collectors;
 @Service
 public class UsersService {
 
-    @Value("${default.image.url}")
-    private String defaultImgURL;
-
     private final UsersRepository usersRepository;
 
     private final RolesService rolesService;
@@ -75,7 +72,7 @@ public class UsersService {
 
         setupUserRoles(user);
 
-        uploadImgToCloud(user.getImg(), register.img());
+        cloudinaryService.checkImgPropertiesThenSetURL(user.getImg(), register.img());
 
         usersRepository.save(user);
 
@@ -133,7 +130,7 @@ public class UsersService {
 
         var user = findUserById(id);
 
-        uploadImgToCloud(user.getImg(), file);
+        cloudinaryService.checkImgPropertiesThenSetURL(user.getImg(), file);
 
         usersRepository.save(user);
 
@@ -211,26 +208,6 @@ public class UsersService {
                         .map(Roles::getId)
                         .collect(Collectors.toList())
         );
-
-    }
-
-    private void uploadImgToCloud (Images images, MultipartFile file) {
-
-        if (Objects.requireNonNull(file.getContentType()).matches("image/jpeg") || file.getContentType().matches("image/png")) {
-
-            var picture = cloudinaryService.uploadImageToCloud(file);
-
-            if (picture != null && picture.containsKey("url")) {
-
-                images.setUrl(picture.get("url").toString());
-
-                return;
-
-            }
-
-        }
-
-        images.setUrl(defaultImgURL);
 
     }
 

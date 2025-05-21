@@ -2,6 +2,8 @@ package org.cryptolullaby.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.cryptolullaby.entity.Images;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,9 +13,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class CloudinaryService {
+
+    @Value("${default.image.url}")
+    private String defaultImgURL;
 
     private final Cloudinary cloudinary;
 
@@ -40,6 +46,26 @@ public class CloudinaryService {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, ex.getMessage());
 
         }
+
+    }
+
+    public void checkImgPropertiesThenSetURL (Images images, MultipartFile file) {
+
+        if (Objects.requireNonNull(file.getContentType()).matches("image/jpeg") || file.getContentType().matches("image/png")) {
+
+            var picture = uploadImageToCloud(file);
+
+            if (picture != null && picture.containsKey("url")) {
+
+                images.setUrl(picture.get("url").toString());
+
+                return;
+
+            }
+
+        }
+
+        images.setUrl(defaultImgURL);
 
     }
 
