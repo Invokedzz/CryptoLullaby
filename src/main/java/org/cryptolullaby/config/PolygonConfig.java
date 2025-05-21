@@ -15,7 +15,7 @@ public class PolygonConfig {
     private String polygonURL;
 
     @Bean
-    public RequestInterceptor requestInterceptor () {
+    public RequestInterceptor polygonRequestInterceptor () {
 
         return requestTemplate -> {
 

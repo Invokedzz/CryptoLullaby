@@ -48,6 +48,9 @@ public class PostsService {
 
         var post = findPostById(id);
 
+        post.editPost(editPostsDTO);
+
+        postsRepository.save(post);
 
     }
 
