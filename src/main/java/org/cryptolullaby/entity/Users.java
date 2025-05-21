@@ -60,6 +60,42 @@ public class Users {
 
     }
 
+    public Users (RegisterDTO register) {
+
+        this.username = register.username();
+
+        this.email = register.email();
+
+        this.password = register.password();
+
+        this.img = new Images();
+
+        this.createdAt = LocalDateTime.now();
+
+        this.isActive = false;
+
+    }
+
+    public void editProfile (EditProfileDTO editProfileDTO) {
+
+        if (editProfileDTO.password() != null) {
+
+            if (editProfileDTO.password().equals(editProfileDTO.confirmNewPassword())) {
+
+                this.password = editProfileDTO.password();
+
+            }
+
+        }
+
+        if (editProfileDTO.interests() != null && !editProfileDTO.interests().isEmpty()) {
+
+            this.interests = editProfileDTO.interests();
+
+        }
+
+    }
+
     public String getId () {
 
         return id;
@@ -72,21 +108,9 @@ public class Users {
 
     }
 
-    public void setUsername (String username) {
-
-        this.username = username;
-
-    }
-
     public String getEmail () {
 
         return email;
-
-    }
-
-    public void setEmail (String email) {
-
-        this.email = email;
 
     }
 
@@ -150,22 +174,6 @@ public class Users {
 
     }
 
-    public Users (RegisterDTO register) {
-
-        this.username = register.username();
-
-        this.email = register.email();
-
-        this.password = register.password();
-
-        this.img = new Images();
-
-        this.createdAt = LocalDateTime.now();
-
-        this.isActive = false;
-
-    }
-
     public void activate () {
 
         this.isActive = true;
@@ -175,26 +183,6 @@ public class Users {
     public void deactivate () {
 
         this.isActive = false;
-
-    }
-
-    public void updateProfile (EditProfileDTO editProfileDTO) {
-
-        if (editProfileDTO.password() != null) {
-
-            if (editProfileDTO.password().equals(editProfileDTO.confirmNewPassword())) {
-
-                this.password = editProfileDTO.password();
-
-            }
-
-        }
-
-        if (editProfileDTO.interests() != null && !editProfileDTO.interests().isEmpty()) {
-
-            this.interests = editProfileDTO.interests();
-
-        }
 
     }
 

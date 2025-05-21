@@ -1,6 +1,5 @@
 package org.cryptolullaby.service;
 
-import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
@@ -12,14 +11,12 @@ import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,7 +117,7 @@ public class UsersService {
 
         checkIfPasswordsMatch(profile.password(), profile.confirmNewPassword());
 
-        user.updateProfile(profile);
+        user.editProfile(profile);
 
         usersRepository.save(user);
 

@@ -2,6 +2,7 @@ package org.cryptolullaby.infra;
 
 import org.cryptolullaby.exception.BadRequestException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
+import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.model.dto.ExceptionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +94,21 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exception, HttpStatus.PAYLOAD_TOO_LARGE);
+
+    }
+
+    @ExceptionHandler(UnauthorizedRequestException.class)
+    public ResponseEntity <ExceptionDTO> unauthorizedException (UnauthorizedRequestException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
 
     }
 

@@ -2,6 +2,7 @@ package org.cryptolullaby.service;
 
 import feign.FeignException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
+import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,10 @@ public class MarketOperationsService {
 
             throw new ResourceNotFoundException(ex.getMessage());
 
+        } catch (FeignException.Unauthorized ex) {
+
+            throw new UnauthorizedRequestException(ex.getMessage());
+
         }
 
     }
@@ -40,6 +45,10 @@ public class MarketOperationsService {
 
             throw new ResourceNotFoundException(ex.getMessage());
 
+        } catch (FeignException.Unauthorized ex) {
+
+            throw new UnauthorizedRequestException(ex.getMessage());
+
         }
 
     }
@@ -53,6 +62,10 @@ public class MarketOperationsService {
         } catch (FeignException.NotFound ex) {
 
             throw new ResourceNotFoundException(ex.getMessage());
+
+        } catch (FeignException.Unauthorized ex) {
+
+            throw new UnauthorizedRequestException(ex.getMessage());
 
         }
 
