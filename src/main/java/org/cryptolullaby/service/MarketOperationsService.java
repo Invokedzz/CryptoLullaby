@@ -5,6 +5,7 @@ import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class MarketOperationsService {
@@ -17,11 +18,11 @@ public class MarketOperationsService {
 
     }
 
-    public void getMarketExchanges () {
+    public void getMarketExchanges (@RequestParam String asset_class, @RequestParam String locale) {
 
         try {
 
-            marketOperationsClient.getMarketExchanges();
+            marketOperationsClient.getMarketExchanges(asset_class, locale);
 
         } catch (FeignException.NotFound ex) {
 

@@ -3,6 +3,7 @@ package org.cryptolullaby.controller;
 import org.cryptolullaby.service.MarketOperationsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,14 +19,16 @@ public class CryptoMarketController {
 
     }
 
-    public ResponseEntity <Void> marketExchanges () {
+    @GetMapping("/exchanges")
+    public ResponseEntity <Void> marketExchanges (String asset_class, String locale) {
 
-        marketOperationsService.getMarketExchanges();
+        marketOperationsService.getMarketExchanges(asset_class, locale);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
+    @GetMapping("/holidays")
     public ResponseEntity <Void> upcomingMarketHolidays () {
 
         marketOperationsService.getUpcomingMarketHolidays();
@@ -34,6 +37,7 @@ public class CryptoMarketController {
 
     }
 
+    @GetMapping("/trading/status")
     public ResponseEntity <Void> currentTradingStatus () {
 
         marketOperationsService.getCurrentTradingStatus();
