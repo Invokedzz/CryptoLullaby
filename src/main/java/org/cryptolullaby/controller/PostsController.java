@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/domain/posts")
 public class PostsController {
 
     private final PostsService postsService;
@@ -24,7 +24,7 @@ public class PostsController {
 
     }
 
-    @PostMapping("/posts")
+    @PostMapping
     public ResponseEntity <Void> createPost (@Valid @ModelAttribute CreatePostDTO createPostDTO) {
 
         postsService.createPost(createPostDTO);
@@ -42,7 +42,7 @@ public class PostsController {
 
     } */
 
-    @GetMapping("/posts")
+    @GetMapping
     public ResponseEntity <List<PostsDTO>> postsByTitle (@RequestParam String title,
                                                          @RequestParam(defaultValue = "0") int page,
                                                          @RequestParam(defaultValue = "20") int size)
@@ -54,7 +54,7 @@ public class PostsController {
 
     }
 
-    @PutMapping("/posts/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity <SystemResponseDTO> editPostById (@PathVariable String id, @Valid @ModelAttribute EditPostsDTO editPostsDTO) {
 
         postsService.editPostById(id, editPostsDTO);
@@ -63,7 +63,7 @@ public class PostsController {
 
     }
 
-    @DeleteMapping("/posts/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity <Void> deactivatePostById (@PathVariable String id) {
 
         postsService.deactivatePostById(id);

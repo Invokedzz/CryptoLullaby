@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/domain/comments")
 public class CommentsController {
 
     private final CommentsService commentsService;
@@ -20,7 +20,7 @@ public class CommentsController {
 
     }
 
-    @PostMapping("/comments")
+    @PostMapping
     public ResponseEntity <Void> createComment (@Valid @RequestBody CreateCommentDTO createCommentDTO) {
 
         commentsService.createComment(createCommentDTO);
@@ -29,7 +29,7 @@ public class CommentsController {
 
     }
 
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity <Void> getComments () {
 
         commentsService.getComments();
@@ -38,7 +38,7 @@ public class CommentsController {
 
     }
 
-    @GetMapping("/comments/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity <Void> getCommentById (@PathVariable String id) {
 
         commentsService.getCommentById(id);
@@ -47,7 +47,7 @@ public class CommentsController {
 
     }
 
-    @PutMapping("/comments/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity <Void> editCommentById (@PathVariable String id, @Valid @RequestBody EditCommentDTO editCommentDTO) {
 
         commentsService.editCommentById(id, editCommentDTO);
@@ -56,7 +56,7 @@ public class CommentsController {
 
     }
 
-    @DeleteMapping("/comments/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity <Void> deactivateCommentById (@PathVariable String id) {
 
         commentsService.deactivateCommentById(id);
