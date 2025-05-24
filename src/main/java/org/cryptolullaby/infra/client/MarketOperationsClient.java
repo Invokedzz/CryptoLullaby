@@ -3,6 +3,7 @@ package org.cryptolullaby.infra.client;
 import org.cryptolullaby.config.PolygonConfig;
 import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
+import org.cryptolullaby.model.dto.TradingStatusDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,6 @@ public interface MarketOperationsClient {
     MarketHolidaysDTO getUpcomingMarketHolidays ();
 
     @GetMapping("/v1/marketstatus/now")
-    void getCurrentTradingStatus ();
+    TradingStatusDTO getCurrentTradingStatus ();
 
 }
