@@ -4,8 +4,10 @@ import feign.FeignException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
+import org.cryptolullaby.model.dto.MarketExchangeDTO;
+import org.cryptolullaby.model.dto.MarketHolidaysDTO;
+import org.cryptolullaby.model.dto.TradingStatusDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class MarketOperationsService {
@@ -18,11 +20,11 @@ public class MarketOperationsService {
 
     }
 
-    public void getMarketExchanges (@RequestParam String asset_class, @RequestParam String locale) {
+    public MarketExchangeDTO getMarketExchanges (String asset_class, String locale) {
 
         try {
 
-            marketOperationsClient.getMarketExchanges(asset_class, locale);
+            return marketOperationsClient.getMarketExchanges (asset_class, locale);
 
         } catch (FeignException.NotFound ex) {
 
@@ -36,11 +38,11 @@ public class MarketOperationsService {
 
     }
 
-    public void getUpcomingMarketHolidays () {
+    public MarketHolidaysDTO getUpcomingMarketHolidays () {
 
         try {
 
-            marketOperationsClient.getUpcomingMarketHolidays();
+            return marketOperationsClient.getUpcomingMarketHolidays();
 
         } catch (FeignException.NotFound ex) {
 
@@ -54,11 +56,11 @@ public class MarketOperationsService {
 
     }
 
-    public void getCurrentTradingStatus () {
+    public TradingStatusDTO getCurrentTradingStatus () {
 
         try {
 
-            marketOperationsClient.getCurrentTradingStatus();
+            return marketOperationsClient.getCurrentTradingStatus();
 
         } catch (FeignException.NotFound ex) {
 
