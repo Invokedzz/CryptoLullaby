@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/domain/market")
@@ -26,9 +26,9 @@ public class CryptoMarketController {
     }
 
     @GetMapping("/exchanges")
-    public ResponseEntity <MarketExchangeDTO> marketExchanges (String asset_class, String locale) {
+    public ResponseEntity <MarketExchangeDTO> marketExchanges (Map <String, String> params) {
 
-        var exchanges = marketOperationsService.getMarketExchanges(asset_class, locale);
+        var exchanges = marketOperationsService.getMarketExchanges(params);
 
         return ResponseEntity.status(HttpStatus.OK).body(exchanges);
 

@@ -9,18 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 @FeignClient(url = "${polygon.api.url}", name = "MarketOperations", configuration = PolygonConfig.class)
 public interface MarketOperationsClient {
 
     @GetMapping("/v3/reference/exchanges")
-    MarketExchangeDTO getMarketExchanges (@RequestParam(defaultValue = "crypto") String asset_class,
-                                          @RequestParam(defaultValue = "locale") String locale);
+    MarketExchangeDTO getMarketExchanges (@RequestParam Map <String, String> params);
 
     @GetMapping("/v1/marketstatus/upcoming")
     List <MarketHolidaysDTO> getUpcomingMarketHolidays ();
 
     @GetMapping("/v1/marketstatus/now")
     TradingStatusDTO getCurrentTradingStatus ();
+
+    @GetMapping("/v3/reference/conditions")
+    void getConditionsCode ();
 
 }

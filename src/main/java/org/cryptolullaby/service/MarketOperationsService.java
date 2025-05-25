@@ -7,9 +7,11 @@ import org.cryptolullaby.infra.client.MarketOperationsClient;
 import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
+import org.cryptolullaby.model.enums.ExchangesParameters;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MarketOperationsService {
@@ -22,11 +24,13 @@ public class MarketOperationsService {
 
     }
 
-    public MarketExchangeDTO getMarketExchanges (String asset_class, String locale) {
+    public MarketExchangeDTO getMarketExchanges (Map <String, String> params) {
 
         try {
 
-            return marketOperationsClient.getMarketExchanges (asset_class, locale);
+            setupExchangesParams(params);
+
+            return marketOperationsClient.getMarketExchanges(params);
 
         } catch (FeignException.NotFound ex) {
 
@@ -73,6 +77,14 @@ public class MarketOperationsService {
             throw new UnauthorizedRequestException(ex.getMessage());
 
         }
+
+    }
+
+    private void setupExchangesParams (Map <String, String> params) {
+
+        params.put("asset_class", ExchangesParameters.CRYPTO.getLabel());
+
+        params.put("locale", ExchangesParameters.GLOBAL.getLabel());
 
     }
 
