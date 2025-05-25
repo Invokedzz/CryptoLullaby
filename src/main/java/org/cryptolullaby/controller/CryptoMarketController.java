@@ -35,7 +35,7 @@ public class CryptoMarketController {
     }
 
     @GetMapping("/holidays")
-    public ResponseEntity <MarketHolidaysDTO> upcomingMarketHolidays () {
+    public ResponseEntity <List<MarketHolidaysDTO>> upcomingMarketHolidays () {
 
         var holidays = marketOperationsService.getUpcomingMarketHolidays();
 

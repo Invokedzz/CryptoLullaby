@@ -1,12 +1,10 @@
 package org.cryptolullaby.model.dto;
 
-import java.util.List;
-
 public record TradingStatusDTO (
 
-        List <CurrenciesDTO> currencies,
+        CurrenciesDTO currencies,
 
-        List <USStockExchangesDTO> exchanges,
+        USStockExchangesDTO exchanges,
 
         String market,
 

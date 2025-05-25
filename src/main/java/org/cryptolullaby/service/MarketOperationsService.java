@@ -9,6 +9,8 @@ import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MarketOperationsService {
 
@@ -38,7 +40,7 @@ public class MarketOperationsService {
 
     }
 
-    public MarketHolidaysDTO getUpcomingMarketHolidays () {
+    public List <MarketHolidaysDTO> getUpcomingMarketHolidays () {
 
         try {
 

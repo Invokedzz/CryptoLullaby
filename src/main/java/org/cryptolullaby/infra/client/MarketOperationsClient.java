@@ -8,6 +8,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @FeignClient(url = "${polygon.api.url}", name = "MarketOperations", configuration = PolygonConfig.class)
 public interface MarketOperationsClient {
 
@@ -16,7 +18,7 @@ public interface MarketOperationsClient {
                                           @RequestParam(defaultValue = "locale") String locale);
 
     @GetMapping("/v1/marketstatus/upcoming")
-    MarketHolidaysDTO getUpcomingMarketHolidays ();
+    List <MarketHolidaysDTO> getUpcomingMarketHolidays ();
 
     @GetMapping("/v1/marketstatus/now")
     TradingStatusDTO getCurrentTradingStatus ();
