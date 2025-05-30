@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.general.ImageDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
-import org.cryptolullaby.service.UsersService;
+import org.cryptolullaby.service.impl.UsersServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/users")
 public class UsersController {
 
-    private final UsersService usersService;
+    private final UsersServiceImpl usersService;
 
-    public UsersController (UsersService usersService) {
+    public UsersController (UsersServiceImpl usersService) {
 
         this.usersService = usersService;
 

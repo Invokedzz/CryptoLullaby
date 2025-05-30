@@ -1,134 +1,21 @@
 package org.cryptolullaby.service;
 
-import feign.FeignException;
-import org.cryptolullaby.exception.InvalidSIPException;
-import org.cryptolullaby.exception.ResourceNotFoundException;
-import org.cryptolullaby.exception.UnauthorizedRequestException;
-import org.cryptolullaby.infra.client.MarketOperationsClient;
 import org.cryptolullaby.model.dto.market.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.market.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.market.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.market.TradingStatusDTO;
-import org.cryptolullaby.model.enums.MarketOperationsParameters;
-import org.cryptolullaby.model.enums.SIPName;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class MarketOperationsService {
+public interface MarketOperationsService {
 
-    private final MarketOperationsClient marketOperationsClient;
+    MarketExchangeDTO getMarketExchanges (Map<String, String> params);
 
-    public MarketOperationsService (MarketOperationsClient marketOperationsClient) {
+    List <MarketHolidaysDTO> getUpcomingMarketHolidays ();
 
-        this.marketOperationsClient = marketOperationsClient;
+    TradingStatusDTO getCurrentTradingStatus ();
 
-    }
-
-    public MarketExchangeDTO getMarketExchanges (Map <String, String> params) {
-
-        try {
-
-            setupExchangesParams(params);
-
-            return marketOperationsClient.getMarketExchanges(params);
-
-        } catch (FeignException.NotFound ex) {
-
-            throw new ResourceNotFoundException(ex.getMessage());
-
-        } catch (FeignException.Unauthorized ex) {
-
-            throw new UnauthorizedRequestException(ex.getMessage());
-
-        }
-
-    }
-
-    public List <MarketHolidaysDTO> getUpcomingMarketHolidays () {
-
-        try {
-
-            return marketOperationsClient.getUpcomingMarketHolidays();
-
-        } catch (FeignException.NotFound ex) {
-
-            throw new ResourceNotFoundException(ex.getMessage());
-
-        } catch (FeignException.Unauthorized ex) {
-
-            throw new UnauthorizedRequestException(ex.getMessage());
-
-        }
-
-    }
-
-    public TradingStatusDTO getCurrentTradingStatus () {
-
-        try {
-
-            return marketOperationsClient.getCurrentTradingStatus();
-
-        } catch (FeignException.NotFound ex) {
-
-            throw new ResourceNotFoundException(ex.getMessage());
-
-        } catch (FeignException.Unauthorized ex) {
-
-            throw new UnauthorizedRequestException(ex.getMessage());
-
-        }
-
-    }
-
-    public ConditionsCodeDTO getConditionsCode (String sip, Map <String, String> params) {
-
-        try {
-
-            setupConditionsCodeParams(sip, params);
-
-            return marketOperationsClient.getConditionsCode(params);
-
-        } catch (FeignException.NotFound ex) {
-
-            throw new ResourceNotFoundException(ex.getMessage());
-
-        } catch (FeignException.Unauthorized ex) {
-
-            throw new UnauthorizedRequestException(ex.getMessage());
-
-        }
-
-    }
-
-    private void setupExchangesParams (Map <String, String> params) {
-
-        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
-
-        params.put("locale", MarketOperationsParameters.GLOBAL.getLabel());
-
-    }
-
-    private void setupConditionsCodeParams (String sip, Map <String, String> params) {
-
-        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
-
-        params.put("data_type", MarketOperationsParameters.TRADE.getLabel());
-
-        checkIfSIPQueryParamIsValid(sip);
-
-    }
-
-    private void checkIfSIPQueryParamIsValid (String sip) {
-
-        if (!SIPName.isSIPValid(sip)) {
-
-            throw new InvalidSIPException("Invalid SIP: " + sip);
-
-        }
-
-    }
+    ConditionsCodeDTO getConditionsCode (String sip, Map <String, String> params);
 
 }

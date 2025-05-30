@@ -5,7 +5,7 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
-import org.cryptolullaby.service.PostsService;
+import org.cryptolullaby.service.impl.PostsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("/domain/posts")
 public class PostsController {
 
-    private final PostsService postsService;
+    private final PostsServiceImpl postsService;
 
-    public PostsController (PostsService postsService) {
+    public PostsController (PostsServiceImpl postsService) {
 
         this.postsService = postsService;
 

@@ -3,7 +3,7 @@ package org.cryptolullaby.controller;
 import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
-import org.cryptolullaby.service.CommentsService;
+import org.cryptolullaby.service.impl.CommentsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/comments")
 public class CommentsController {
 
-    private final CommentsService commentsService;
+    private final CommentsServiceImpl commentsService;
 
-    public CommentsController (CommentsService commentsService) {
+    public CommentsController (CommentsServiceImpl commentsService) {
 
         this.commentsService = commentsService;
 

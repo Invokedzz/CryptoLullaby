@@ -2,25 +2,9 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.model.enums.RolesName;
-import org.cryptolullaby.repository.RolesRepository;
-import org.springframework.stereotype.Service;
 
-@Service
-public class RolesService {
+public interface RolesService {
 
-    private final RolesRepository rolesRepository;
-
-    public RolesService (RolesRepository rolesRepository) {
-
-        this.rolesRepository = rolesRepository;
-
-    }
-
-    public Roles createIfRoleNotExistOrElseReturnIt (RolesName name) {
-
-        return rolesRepository.findByName(name)
-                .orElseGet(() -> rolesRepository.save(new Roles(name)));
-
-    }
+    Roles createIfRoleNotExistOrElseReturnIt (RolesName name);
 
 }
