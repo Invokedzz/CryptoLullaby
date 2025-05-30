@@ -1,5 +1,6 @@
 package org.cryptolullaby.controller;
 
+import org.cryptolullaby.model.dto.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
@@ -49,6 +50,15 @@ public class CryptoMarketController {
         var status = marketOperationsService.getCurrentTradingStatus();
 
         return ResponseEntity.status(HttpStatus.OK).body(status);
+
+    }
+
+    @GetMapping("/conditions")
+    public ResponseEntity <ConditionsCodeDTO> currentConditions (Map <String, String> params) {
+
+        var conditions = marketOperationsService.getConditionsCode(params);
+
+        return ResponseEntity.status(HttpStatus.OK).body(conditions);
 
     }
 

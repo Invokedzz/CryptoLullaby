@@ -4,10 +4,11 @@ import feign.FeignException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
+import org.cryptolullaby.model.dto.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
-import org.cryptolullaby.model.enums.ExchangesParameters;
+import org.cryptolullaby.model.enums.MarketOperationsParameters;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,11 +81,39 @@ public class MarketOperationsService {
 
     }
 
+    public ConditionsCodeDTO getConditionsCode (Map <String, String> params) {
+
+        try {
+
+            setupConditionsCodeParams(params);
+
+            return marketOperationsClient.getConditionsCode(params);
+
+        } catch (FeignException.NotFound ex) {
+
+            throw new ResourceNotFoundException(ex.getMessage());
+
+        } catch (FeignException.Unauthorized ex) {
+
+            throw new UnauthorizedRequestException(ex.getMessage());
+
+        }
+
+    }
+
     private void setupExchangesParams (Map <String, String> params) {
 
-        params.put("asset_class", ExchangesParameters.CRYPTO.getLabel());
+        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
 
-        params.put("locale", ExchangesParameters.GLOBAL.getLabel());
+        params.put("locale", MarketOperationsParameters.GLOBAL.getLabel());
+
+    }
+
+    private void setupConditionsCodeParams (Map <String, String> params) {
+
+        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
+
+        params.put("data_type", MarketOperationsParameters.TRADE.getLabel());
 
     }
 

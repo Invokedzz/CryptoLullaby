@@ -2,17 +2,23 @@ package org.cryptolullaby.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ExchangesParameters {
+public enum MarketOperationsParameters {
 
     CRYPTO("crypto"),
 
     GLOBAL("global"),
 
+    TRADE("trade"),
+
+    BBO("bbo"),
+
+    NBBO("nbbo"),
+
     US("us");
 
     private final String label;
 
-    ExchangesParameters (String label) {
+    MarketOperationsParameters (String label) {
 
         this.label = label;
 

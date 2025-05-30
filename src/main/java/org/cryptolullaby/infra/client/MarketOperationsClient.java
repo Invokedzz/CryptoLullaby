@@ -1,6 +1,7 @@
 package org.cryptolullaby.infra.client;
 
 import org.cryptolullaby.config.PolygonConfig;
+import org.cryptolullaby.model.dto.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
@@ -24,6 +25,6 @@ public interface MarketOperationsClient {
     TradingStatusDTO getCurrentTradingStatus ();
 
     @GetMapping("/v3/reference/conditions")
-    void getConditionsCode ();
+    ConditionsCodeDTO getConditionsCode (@RequestParam Map <String, String> params);
 
 }
