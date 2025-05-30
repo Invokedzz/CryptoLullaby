@@ -1,4 +1,4 @@
-package org.cryptolullaby.model.dto;
+package org.cryptolullaby.model.dto.posts;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

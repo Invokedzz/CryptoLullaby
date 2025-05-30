@@ -1,9 +1,9 @@
 package org.cryptolullaby.controller;
 
-import org.cryptolullaby.model.dto.ConditionsCodeDTO;
-import org.cryptolullaby.model.dto.MarketExchangeDTO;
-import org.cryptolullaby.model.dto.MarketHolidaysDTO;
-import org.cryptolullaby.model.dto.TradingStatusDTO;
+import org.cryptolullaby.model.dto.market.ConditionsCodeDTO;
+import org.cryptolullaby.model.dto.market.MarketExchangeDTO;
+import org.cryptolullaby.model.dto.market.MarketHolidaysDTO;
+import org.cryptolullaby.model.dto.market.TradingStatusDTO;
 import org.cryptolullaby.service.MarketOperationsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

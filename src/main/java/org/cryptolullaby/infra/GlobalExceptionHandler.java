@@ -3,7 +3,7 @@ package org.cryptolullaby.infra;
 import org.cryptolullaby.exception.BadRequestException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
-import org.cryptolullaby.model.dto.ExceptionDTO;
+import org.cryptolullaby.model.dto.general.ExceptionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

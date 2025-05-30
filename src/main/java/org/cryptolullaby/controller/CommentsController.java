@@ -1,8 +1,8 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.model.dto.CreateCommentDTO;
-import org.cryptolullaby.model.dto.EditCommentDTO;
+import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
+import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.service.CommentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

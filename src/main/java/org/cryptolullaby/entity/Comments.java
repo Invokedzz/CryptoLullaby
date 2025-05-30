@@ -1,7 +1,7 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.dto.CreateCommentDTO;
-import org.cryptolullaby.model.dto.EditCommentDTO;
+import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
+import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

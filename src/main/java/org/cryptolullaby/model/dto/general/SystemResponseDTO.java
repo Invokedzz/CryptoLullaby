@@ -1,3 +1,3 @@
-package org.cryptolullaby.model.dto;
+package org.cryptolullaby.model.dto.general;
 
 public record SystemResponseDTO (String text) {}

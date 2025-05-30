@@ -1,21 +1,17 @@
 package org.cryptolullaby.service;
 
-import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
-import org.cryptolullaby.model.dto.CreatePostDTO;
-import org.cryptolullaby.model.dto.EditPostsDTO;
-import org.cryptolullaby.model.dto.PostsDTO;
+import org.cryptolullaby.model.dto.posts.CreatePostDTO;
+import org.cryptolullaby.model.dto.posts.EditPostsDTO;
+import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.validation.PostsValidator;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostsService {
@@ -27,6 +23,10 @@ public class PostsService {
     private final UsersService usersService;
 
     private final CloudinaryService cloudinaryService;
+
+    private static final int PAGE = 0;
+
+    private static final int SIZE = 20;
 
     public PostsService (PostsRepository postsRepository,
                          PostsValidator postsValidator,
@@ -55,7 +55,7 @@ public class PostsService {
 
     public List <PostsDTO> getPostsByTitle (String title, int page, int size) {
 
-        return findPostsByTitle(title, page, size);
+        return findPostsByTitle(title);
 
     }
 
@@ -79,9 +79,9 @@ public class PostsService {
 
     }
 
-    private List <PostsDTO> findPostsByTitle (String title, int page, int size) {
+    private List <PostsDTO> findPostsByTitle (String title) {
 
-        var pageable = getPageable(page, size);
+        var pageable = getPageable();
 
         var posts = postsRepository
                 .findByTitle(title, pageable)
@@ -100,9 +100,9 @@ public class PostsService {
 
     }
 
-    private Pageable getPageable (int page, int size) {
+    private Pageable getPageable () {
 
-        return PageRequest.of(page, size);
+        return PageRequest.of(PAGE, SIZE);
 
     }
 

@@ -1,11 +1,10 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.model.dto.CreatePostDTO;
-import org.cryptolullaby.model.dto.EditPostsDTO;
-import org.cryptolullaby.model.dto.PostsDTO;
-import org.cryptolullaby.model.dto.SystemResponseDTO;
-import org.cryptolullaby.service.CloudinaryService;
+import org.cryptolullaby.model.dto.posts.CreatePostDTO;
+import org.cryptolullaby.model.dto.posts.EditPostsDTO;
+import org.cryptolullaby.model.dto.posts.PostsDTO;
+import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.service.PostsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

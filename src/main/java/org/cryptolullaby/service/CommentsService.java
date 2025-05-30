@@ -2,8 +2,8 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Comments;
 import org.cryptolullaby.exception.CommentNotFoundException;
-import org.cryptolullaby.model.dto.CreateCommentDTO;
-import org.cryptolullaby.model.dto.EditCommentDTO;
+import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
+import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.repository.CommentsRepository;
 import org.springframework.stereotype.Service;
 

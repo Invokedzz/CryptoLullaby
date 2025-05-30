@@ -1,4 +1,4 @@
-package org.cryptolullaby.model.dto;
+package org.cryptolullaby.model.dto.market;
 
 public record CurrenciesDTO (
 

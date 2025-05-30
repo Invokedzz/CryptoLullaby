@@ -1,4 +1,4 @@
-package org.cryptolullaby.model.dto;
+package org.cryptolullaby.model.dto.users;
 
 import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;

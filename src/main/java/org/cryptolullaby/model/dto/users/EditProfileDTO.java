@@ -1,4 +1,4 @@
-package org.cryptolullaby.model.dto;
+package org.cryptolullaby.model.dto.users;
 
 import jakarta.validation.constraints.Pattern;
 import org.cryptolullaby.entity.Interest;

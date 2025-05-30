@@ -1,7 +1,9 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.model.dto.*;
+import org.cryptolullaby.model.dto.general.ImageDTO;
+import org.cryptolullaby.model.dto.general.SystemResponseDTO;
+import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

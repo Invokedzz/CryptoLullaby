@@ -1,7 +1,7 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.dto.RegisterDTO;
-import org.cryptolullaby.model.dto.EditProfileDTO;
+import org.cryptolullaby.model.dto.users.RegisterDTO;
+import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
