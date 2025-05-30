@@ -1,5 +1,6 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
 import org.cryptolullaby.model.dto.CreatePostDTO;
@@ -44,7 +45,11 @@ public class PostsService {
 
     public void createPost (CreatePostDTO createPostDTO) {
 
-        postsRepository.save(new Posts(createPostDTO));
+        var post = new Posts(createPostDTO);
+
+        cloudinaryService.checkImgPropertiesThenSetURL(post.getImg(), createPostDTO.img());
+
+        postsRepository.save(post);
 
     }
 
