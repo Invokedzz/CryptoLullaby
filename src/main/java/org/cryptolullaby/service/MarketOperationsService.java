@@ -1,6 +1,7 @@
 package org.cryptolullaby.service;
 
 import feign.FeignException;
+import org.cryptolullaby.exception.InvalidSIPException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
@@ -9,6 +10,7 @@ import org.cryptolullaby.model.dto.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.TradingStatusDTO;
 import org.cryptolullaby.model.enums.MarketOperationsParameters;
+import org.cryptolullaby.model.enums.SIPName;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -81,11 +83,11 @@ public class MarketOperationsService {
 
     }
 
-    public ConditionsCodeDTO getConditionsCode (Map <String, String> params) {
+    public ConditionsCodeDTO getConditionsCode (String sip, Map <String, String> params) {
 
         try {
 
-            setupConditionsCodeParams(params);
+            setupConditionsCodeParams(sip, params);
 
             return marketOperationsClient.getConditionsCode(params);
 
@@ -109,11 +111,23 @@ public class MarketOperationsService {
 
     }
 
-    private void setupConditionsCodeParams (Map <String, String> params) {
+    private void setupConditionsCodeParams (String sip, Map <String, String> params) {
 
         params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
 
         params.put("data_type", MarketOperationsParameters.TRADE.getLabel());
+
+        checkIfSIPQueryParamIsValid(sip);
+
+    }
+
+    private void checkIfSIPQueryParamIsValid (String sip) {
+
+        if (!SIPName.isSIPValid(sip)) {
+
+            throw new InvalidSIPException("Invalid SIP: " + sip);
+
+        }
 
     }
 

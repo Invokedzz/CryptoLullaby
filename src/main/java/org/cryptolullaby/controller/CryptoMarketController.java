@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -54,9 +55,9 @@ public class CryptoMarketController {
     }
 
     @GetMapping("/conditions")
-    public ResponseEntity <ConditionsCodeDTO> currentConditions (Map <String, String> params) {
+    public ResponseEntity <ConditionsCodeDTO> currentConditions (@RequestParam String sip, Map <String, String> params) {
 
-        var conditions = marketOperationsService.getConditionsCode(params);
+        var conditions = marketOperationsService.getConditionsCode(sip, params);
 
         return ResponseEntity.status(HttpStatus.OK).body(conditions);
 
