@@ -2,17 +2,21 @@ package org.cryptolullaby.service.impl;
 
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.validation.PostsValidator;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostsServiceImpl implements PostsService {
@@ -24,10 +28,6 @@ public class PostsServiceImpl implements PostsService {
     private final UsersServiceImpl usersService;
 
     private final CloudinaryServiceImpl cloudinaryService;
-
-    private static final int PAGE = 0;
-
-    private static final int SIZE = 20;
 
     public PostsServiceImpl (PostsRepository postsRepository,
                             PostsValidator postsValidator,
@@ -54,9 +54,26 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
-    public List <PostsDTO> getPostsByTitle (String title, int page, int size) {
+    public PagedResponseDTO <PostsDTO> getAllActivePosts (Pageable pageable) {
 
-        return findPostsByTitle(title);
+        var posts = postsRepository.findAllByIsActive (true, pageable);
+
+        var dtos = posts.getContent().stream().map(PostsDTO::new).toList();
+
+        return new PagedResponseDTO<>(
+
+                dtos,
+                posts.getNumber(),
+                posts.getSize(),
+                posts.getTotalPages()
+
+        );
+
+    }
+
+    public List <PostsDTO> getPostsByTitle (String title, Pageable pageable) {
+
+        return findPostsByTitle(title, pageable);
 
     }
 
@@ -80,30 +97,17 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
-    private List <PostsDTO> findPostsByTitle (String title) {
+    private List <PostsDTO> findPostsByTitle (String title, Pageable pageable) {
 
-        var pageable = getPageable();
-
-        var posts = postsRepository
-                .findByTitle(title, pageable)
-                .stream()
-                .filter(post -> post.getIsActive().equals(true))
-                .map(PostsDTO::new)
-                .toList();
+        var posts = findAllActivePostsByTitle(title, pageable);
 
         if (posts.isEmpty()) {
 
-            throw new PostNotFoundException("We weren't able to find any posts with the title " + title);
+            throw new PostNotFoundException("We weren't able to find any posts with the title: " + title);
 
         }
 
         return posts;
-
-    }
-
-    private Pageable getPageable () {
-
-        return PageRequest.of(PAGE, SIZE);
 
     }
 
@@ -112,6 +116,17 @@ public class PostsServiceImpl implements PostsService {
         return postsRepository
                 .findById(id)
                 .orElseThrow(() -> new PostNotFoundException("Post not found!"));
+
+    }
+
+    private List <PostsDTO> findAllActivePostsByTitle (String title, Pageable pageable) {
+
+        return postsRepository
+                .findByTitle(title, pageable)
+                .stream()
+                .filter(post -> post.getIsActive().equals(true))
+                .map(PostsDTO::new)
+                .toList();
 
     }
 

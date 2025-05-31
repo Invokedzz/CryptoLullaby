@@ -1,11 +1,15 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.service.impl.PostsServiceImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,29 +37,46 @@ public class PostsController {
 
     }
 
-    /* @GetMapping("/posts")
-    public ResponseEntity <Void> getPosts () {
+    @GetMapping("/all")
+    public ResponseEntity <PagedResponseDTO<PostsDTO>> allPosts (
 
-       // postsService.getPosts();
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+    )
 
-    } */
-
-    @GetMapping
-    public ResponseEntity <List<PostsDTO>> postsByTitle (@RequestParam String title,
-                                                         @RequestParam(defaultValue = "0") int page,
-                                                         @RequestParam(defaultValue = "20") int size)
     {
 
-        var posts = postsService.getPostsByTitle(title, page, size);
+        var posts = postsService.getAllActivePosts(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+
+    }
+
+    @GetMapping
+    public ResponseEntity <List<PostsDTO>> postsByTitle (
+
+            @RequestParam String title,
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var posts = postsService.getPostsByTitle(title, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
 
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity <SystemResponseDTO> editPostById (@PathVariable String id, @Valid @ModelAttribute EditPostsDTO editPostsDTO) {
+    public ResponseEntity <SystemResponseDTO> editPostById (
+
+            @PathVariable String id,
+            @Valid @ModelAttribute EditPostsDTO editPostsDTO
+
+    )
+
+    {
 
         postsService.editPostById(id, editPostsDTO);
 
