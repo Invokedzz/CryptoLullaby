@@ -10,13 +10,10 @@ import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.validation.PostsValidator;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostsServiceImpl implements PostsService {
@@ -56,22 +53,15 @@ public class PostsServiceImpl implements PostsService {
 
     public PagedResponseDTO <PostsDTO> getAllActivePosts (Pageable pageable) {
 
-        var posts = postsRepository.findAllByIsActive (true, pageable);
+        var pages = postsRepository.findAllByIsActive(true, pageable);
 
-        var dtos = posts.getContent().stream().map(PostsDTO::new).toList();
+        var posts = getPagesContentAndRenderItToDTO(pages);
 
-        return new PagedResponseDTO<>(
-
-                dtos,
-                posts.getNumber(),
-                posts.getSize(),
-                posts.getTotalPages()
-
-        );
+        return paginationPostsStructure(pages, posts);
 
     }
 
-    public List <PostsDTO> getPostsByTitle (String title, Pageable pageable) {
+    public PagedResponseDTO <PostsDTO> getPostsByTitle (String title, Pageable pageable) {
 
         return findPostsByTitle(title, pageable);
 
@@ -97,17 +87,15 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
-    private List <PostsDTO> findPostsByTitle (String title, Pageable pageable) {
+    private PagedResponseDTO <PostsDTO> findPostsByTitle (String title, Pageable pageable) {
 
-        var posts = findAllActivePostsByTitle(title, pageable);
+        var pages = findAllActivePostsByTitle(title, pageable);
 
-        if (posts.isEmpty()) {
+        var posts = getPagesContentAndRenderItToDTO(pages);
 
-            throw new PostNotFoundException("We weren't able to find any posts with the title: " + title);
+        postsValidator.checkIfPostListWithCertainTitleExists(posts);
 
-        }
-
-        return posts;
+        return paginationPostsStructure(pages, posts);
 
     }
 
@@ -119,14 +107,35 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
-    private List <PostsDTO> findAllActivePostsByTitle (String title, Pageable pageable) {
+    private List <PostsDTO> getPagesContentAndRenderItToDTO (Page <Posts> pages) {
 
-        return postsRepository
-                .findByTitle(title, pageable)
+        return pages
+                .getContent()
                 .stream()
-                .filter(post -> post.getIsActive().equals(true))
                 .map(PostsDTO::new)
                 .toList();
+
+    }
+
+    private Page <Posts> findAllActivePostsByTitle (String title, Pageable pageable) {
+
+        return postsRepository.findAllByTitleAndIsActive(title, true, pageable);
+
+    }
+
+    private PagedResponseDTO <PostsDTO> paginationPostsStructure (Page <Posts> pages, List <PostsDTO> posts) {
+
+        return new PagedResponseDTO<>(
+
+                posts,
+
+                pages.getNumber(),
+
+                pages.getSize(),
+
+                pages.getTotalPages()
+
+        );
 
     }
 

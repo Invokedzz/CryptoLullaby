@@ -3,6 +3,7 @@ package org.cryptolullaby.entity;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class Posts {
     @Id
     private String id;
 
+    @TextIndexed
     private String title;
 
     private String description;

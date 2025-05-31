@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/domain/posts")
 public class PostsController {
@@ -53,7 +51,7 @@ public class PostsController {
     }
 
     @GetMapping
-    public ResponseEntity <List<PostsDTO>> postsByTitle (
+    public ResponseEntity <PagedResponseDTO<PostsDTO>> postsByTitle (
 
             @RequestParam String title,
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
