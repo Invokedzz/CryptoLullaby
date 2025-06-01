@@ -35,22 +35,31 @@ public class CommentsController {
 
     }
 
-    /*@GetMapping
-    public ResponseEntity <Void> allCommentsFromACertainPost () {
+    @GetMapping("/")
+    public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsFromACertainPost (
 
-       // commentsService.getAllActiveComments();
+            @RequestParam String postId,
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+    )
 
-    } */
+    {
 
-    @GetMapping()
+        var comments = commentsService.getAllActiveCommentsFromACertainPost(postId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(comments);
+
+    }
+
+    @GetMapping
     public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsMadeByCertainUser (
 
             @RequestParam String userId,
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
-    ) {
+    )
+
+    {
 
         var comments = commentsService.getAllCommentsMadeByCertainUser(userId, pageable);
 

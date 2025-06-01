@@ -33,9 +33,13 @@ public class CommentsServiceImpl implements CommentsService {
 
     }
 
-    public void getAllActiveCommentsFromACertainPost () {
+    public PagedResponseDTO <CommentsDTO> getAllActiveCommentsFromACertainPost (String postId, Pageable pageable) {
 
+        var pages = findAllByPostId(postId, pageable);
 
+        var comments = getPagesContentAndRenderItToDTO(pages);
+
+        return paginationPostsStructure(pages, comments);
 
     }
 
