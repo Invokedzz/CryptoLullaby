@@ -1,9 +1,15 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
+import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.service.impl.CommentsServiceImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,21 +35,26 @@ public class CommentsController {
 
     }
 
-    @GetMapping
-    public ResponseEntity <Void> getComments () {
+    /*@GetMapping
+    public ResponseEntity <Void> allCommentsFromACertainPost () {
 
-        commentsService.getComments();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity <Void> getCommentById (@PathVariable String id) {
-
-        commentsService.getCommentById(id);
+       // commentsService.getAllActiveComments();
 
         return ResponseEntity.status(HttpStatus.OK).build();
+
+    } */
+
+    @GetMapping()
+    public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsMadeByCertainUser (
+
+            @RequestParam String userId,
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    ) {
+
+        var comments = commentsService.getAllCommentsMadeByCertainUser(userId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(comments);
 
     }
 
