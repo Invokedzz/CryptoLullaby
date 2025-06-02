@@ -13,8 +13,6 @@ public record PostsDTO (
 
         String description,
 
-        Integer likes,
-
         LocalDateTime createdAt,
 
         String userId
@@ -25,7 +23,7 @@ public record PostsDTO (
 
     public PostsDTO (Posts post) {
 
-        this (post.getImg(), post.getTitle(), post.getDescription(), post.getLikes(), post.getCreatedAt(), post.getUserId());
+        this (post.getImg(), post.getTitle(), post.getDescription(), post.getCreatedAt(), post.getUserId());
 
     }
 

@@ -20,17 +20,10 @@ public class CommentsServiceImpl implements CommentsService, IPaginationStructur
 
     private final CommentsRepository commentsRepository;
 
-    private final UsersServiceImpl usersService;
 
-    private final PostsServiceImpl postsService;
-
-    public CommentsServiceImpl (CommentsRepository commentsRepository, UsersServiceImpl usersService, PostsServiceImpl postsService) {
+    public CommentsServiceImpl (CommentsRepository commentsRepository) {
 
         this.commentsRepository = commentsRepository;
-
-        this.usersService = usersService;
-
-        this.postsService = postsService;
 
     }
 

@@ -4,12 +4,8 @@ import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
 
 public interface LikesService {
 
-    void likeACertainPost (LikeAContentDTO likeAContentDTO);
+    void like (LikeAContentDTO likeAContentDTO);
 
-    void dislikeACertainPost (String postId);
-
-    void likeACertainComment (LikeAContentDTO likeAContentDTO);
-
-    void dislikeACertainComment (String commentId);
+    void dislike (LikeAContentDTO likeAContentDTO);
 
 }

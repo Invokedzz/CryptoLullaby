@@ -7,6 +7,7 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
+import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.cryptolullaby.validation.PostsValidator;
@@ -23,25 +24,15 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
     private final PostsValidator postsValidator;
 
-    private final UsersServiceImpl usersService;
-
-    private final LikesServiceImpl likesService;
-
-    private final CloudinaryServiceImpl cloudinaryService;
+    private final CloudinaryService cloudinaryService;
 
     public PostsServiceImpl (PostsRepository postsRepository,
                             PostsValidator postsValidator,
-                            UsersServiceImpl usersService,
-                            LikesServiceImpl likesService,
-                            CloudinaryServiceImpl cloudinaryService) {
+                            CloudinaryService cloudinaryService) {
 
         this.postsRepository = postsRepository;
 
         this.postsValidator = postsValidator;
-
-        this.usersService = usersService;
-
-        this.likesService = likesService;
 
         this.cloudinaryService = cloudinaryService;
 

@@ -4,6 +4,7 @@ import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
 import org.cryptolullaby.repository.LikesRepository;
 import org.cryptolullaby.service.LikesService;
+import org.cryptolullaby.service.UsersService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,27 +18,9 @@ public class LikesServiceImpl implements LikesService {
 
     }
 
-    public void likeACertainPost (LikeAContentDTO likeAContentDTO) {
+    public void like (LikeAContentDTO likeAContentDTO) {
 
-        var alreadyLiked = likesRepository.existsByPostIdAndUserId(likeAContentDTO.postId(), likeAContentDTO.userId());
-
-        if (!alreadyLiked) {
-
-            likesRepository.save(new Likes(likeAContentDTO));
-
-        }
-
-    }
-
-    public void dislikeACertainPost (String postId) {
-
-        likesRepository.deleteLikesByPostId(postId);
-
-    }
-
-    public void likeACertainComment (LikeAContentDTO likeAContentDTO) {
-
-        var alreadyLiked = likesRepository.existsByCommentIdAndUserId(likeAContentDTO.commentId(), likeAContentDTO.userId());
+        var alreadyLiked = likesRepository.existsByEntityIdAndUserId(likeAContentDTO.entityId(), likeAContentDTO.userId());
 
         if (!alreadyLiked) {
 
@@ -47,9 +30,9 @@ public class LikesServiceImpl implements LikesService {
 
     }
 
-    public void dislikeACertainComment (String commentId) {
+    public void dislike (LikeAContentDTO likeAContentDTO) {
 
-        likesRepository.deleteLikesByCommentId(commentId);
+
 
     }
 
