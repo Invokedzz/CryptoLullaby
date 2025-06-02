@@ -6,7 +6,6 @@ import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.service.impl.CommentsServiceImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -61,7 +60,7 @@ public class CommentsController {
 
     {
 
-        var comments = commentsService.getAllCommentsMadeByCertainUser(userId, pageable);
+        var comments = commentsService.getAllActiveCommentsMadeByCertainUser(userId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(comments);
 

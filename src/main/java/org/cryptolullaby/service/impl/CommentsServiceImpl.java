@@ -50,7 +50,7 @@ public class CommentsServiceImpl implements CommentsService, IPaginationStructur
 
     }
 
-    public PagedResponseDTO <CommentsDTO> getAllCommentsMadeByCertainUser (String userId, Pageable pageable) {
+    public PagedResponseDTO <CommentsDTO> getAllActiveCommentsMadeByCertainUser(String userId, Pageable pageable) {
 
         var pages = findAllByUserId(userId, pageable);
 
