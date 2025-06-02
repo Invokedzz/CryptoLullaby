@@ -12,7 +12,7 @@ public interface CommentsService {
 
     PagedResponseDTO <CommentsDTO> getAllActiveCommentsFromACertainPost (String postId, Pageable pageable);
 
-    PagedResponseDTO <CommentsDTO> getAllActiveCommentsMadeByCertainUser (String userId, Pageable pageable);
+    PagedResponseDTO <CommentsDTO> getAllActiveCommentsMadeByACertainUser (String userId, Pageable pageable);
 
     void editCommentById (String id, EditCommentDTO editCommentDTO);
 

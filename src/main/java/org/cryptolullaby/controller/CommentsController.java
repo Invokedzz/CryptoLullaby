@@ -51,7 +51,7 @@ public class CommentsController {
     }
 
     @GetMapping
-    public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsMadeByCertainUser (
+    public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsMadeByACertainUser (
 
             @RequestParam String userId,
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
@@ -60,9 +60,41 @@ public class CommentsController {
 
     {
 
-        var comments = commentsService.getAllActiveCommentsMadeByCertainUser(userId, pageable);
+        var comments = commentsService.getAllActiveCommentsMadeByACertainUser(userId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(comments);
+
+    }
+
+    @PostMapping("/{commentId}/{userId}/like")
+    public ResponseEntity <Void> likeACertainComment (
+
+            @PathVariable String commentId,
+            @PathVariable String userId
+
+    )
+
+    {
+
+        commentsService.likeComment();
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    @PostMapping("/{commentId}/{userId}/dislike")
+    public ResponseEntity <Void> dislikeACertainComment (
+
+            @PathVariable String commentId,
+            @PathVariable String userId
+
+    )
+
+    {
+
+        commentsService.dislikeComment();
+
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 

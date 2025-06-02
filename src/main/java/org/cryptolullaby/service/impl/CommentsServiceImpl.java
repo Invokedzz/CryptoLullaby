@@ -20,7 +20,6 @@ public class CommentsServiceImpl implements CommentsService, IPaginationStructur
 
     private final CommentsRepository commentsRepository;
 
-
     public CommentsServiceImpl (CommentsRepository commentsRepository) {
 
         this.commentsRepository = commentsRepository;
@@ -43,7 +42,7 @@ public class CommentsServiceImpl implements CommentsService, IPaginationStructur
 
     }
 
-    public PagedResponseDTO <CommentsDTO> getAllActiveCommentsMadeByCertainUser(String userId, Pageable pageable) {
+    public PagedResponseDTO <CommentsDTO> getAllActiveCommentsMadeByACertainUser (String userId, Pageable pageable) {
 
         var pages = findAllByUserId(userId, pageable);
 
@@ -70,6 +69,18 @@ public class CommentsServiceImpl implements CommentsService, IPaginationStructur
         comment.deactivate();
 
         commentsRepository.save(comment);
+
+    }
+
+    public void likeComment () {
+
+
+
+    }
+
+    public void dislikeComment () {
+
+
 
     }
 

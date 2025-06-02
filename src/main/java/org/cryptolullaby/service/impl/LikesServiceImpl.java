@@ -2,6 +2,7 @@ package org.cryptolullaby.service.impl;
 
 import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
+import org.cryptolullaby.model.enums.EntityTypeName;
 import org.cryptolullaby.repository.LikesRepository;
 import org.cryptolullaby.service.LikesService;
 import org.cryptolullaby.service.UsersService;
@@ -33,6 +34,12 @@ public class LikesServiceImpl implements LikesService {
     public void dislike (LikeAContentDTO likeAContentDTO) {
 
 
+
+    }
+
+    public long countTheNumberOfLikes (String entityId, EntityTypeName entityTypeName) {
+
+        return 1L;
 
     }
 

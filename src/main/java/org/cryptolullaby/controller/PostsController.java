@@ -66,6 +66,38 @@ public class PostsController {
 
     }
 
+    @PostMapping("/{postId}/{userId}/like")
+    public ResponseEntity <Void> likeACertainPost (
+
+            @PathVariable String postId,
+            @PathVariable String userId
+
+    )
+
+    {
+
+        postsService.likePost();
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    @PostMapping("/{postId}/{userId}/dislike")
+    public ResponseEntity <Void> dislikeACertainPost (
+
+            @PathVariable String postId,
+            @PathVariable String userId
+
+    )
+
+    {
+
+        postsService.dislikePost();
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @PutMapping("/edit/{id}")
     public ResponseEntity <SystemResponseDTO> editPostById (
 

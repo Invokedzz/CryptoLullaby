@@ -90,13 +90,17 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
     }
 
-    public void likeACertainPost () {}
+    public void likePost () {
 
-    public void dislikeACertainPost () {}
 
-    public void likeACertainComment () {}
 
-    public void dislikeACertainComment () {}
+    }
+
+    public void dislikePost () {
+
+
+
+    }
 
     @Override
     public List <PostsDTO> getPagesContentAndRenderItToDTO (Page <Posts> pages) {
