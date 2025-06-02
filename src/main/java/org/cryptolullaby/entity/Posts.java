@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document("posts")
 public class Posts {
@@ -21,8 +23,6 @@ public class Posts {
 
     private Images img;
 
-    private Integer likes;
-
     private LocalDateTime createdAt;
 
     private String userId;
@@ -34,7 +34,7 @@ public class Posts {
     public Posts (
 
             String id, String title, String description, Images img,
-            Integer likes, LocalDateTime createdAt, String userId, Boolean isActive
+            LocalDateTime createdAt, String userId, Boolean isActive
 
     )
 
@@ -47,8 +47,6 @@ public class Posts {
         this.description = description;
 
         this.img = img;
-
-        this.likes = likes;
 
         this.createdAt = createdAt;
 
@@ -65,8 +63,6 @@ public class Posts {
         this.description = createPostDTO.description();
 
         this.img = new Images();
-
-        this.likes = 0;
 
         this.createdAt = LocalDateTime.now();
 
@@ -137,18 +133,6 @@ public class Posts {
     public void setImgUrl (Images img) {
 
         this.img = img;
-
-    }
-
-    public Integer getLikes () {
-
-        return likes;
-
-    }
-
-    public void setLikes (Integer likes) {
-
-        this.likes = likes;
 
     }
 

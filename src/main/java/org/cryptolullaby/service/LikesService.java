@@ -1,12 +1,14 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
+
 public interface LikesService {
 
-    void likeACertainPost (String postId);
+    void likeACertainPost (LikeAContentDTO likeAContentDTO);
 
     void dislikeACertainPost (String postId);
 
-    void likeACertainComment (String commentId);
+    void likeACertainComment (LikeAContentDTO likeAContentDTO);
 
     void dislikeACertainComment (String commentId);
 

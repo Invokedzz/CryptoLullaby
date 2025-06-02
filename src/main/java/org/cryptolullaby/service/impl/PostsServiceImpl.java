@@ -25,11 +25,14 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
     private final UsersServiceImpl usersService;
 
+    private final LikesServiceImpl likesService;
+
     private final CloudinaryServiceImpl cloudinaryService;
 
     public PostsServiceImpl (PostsRepository postsRepository,
                             PostsValidator postsValidator,
                             UsersServiceImpl usersService,
+                            LikesServiceImpl likesService,
                             CloudinaryServiceImpl cloudinaryService) {
 
         this.postsRepository = postsRepository;
@@ -38,9 +41,17 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
         this.usersService = usersService;
 
+        this.likesService = likesService;
+
         this.cloudinaryService = cloudinaryService;
 
     }
+
+    /*
+    *
+    * Public methods
+    *
+    * */
 
     public void createPost (CreatePostDTO createPostDTO) {
 
@@ -88,6 +99,14 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
     }
 
+    public void likeACertainPost () {}
+
+    public void dislikeACertainPost () {}
+
+    public void likeACertainComment () {}
+
+    public void dislikeACertainComment () {}
+
     @Override
     public List <PostsDTO> getPagesContentAndRenderItToDTO (Page <Posts> pages) {
 
@@ -115,6 +134,12 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
         );
 
     }
+
+    /*
+    *
+    * Private methods
+    *
+    * */
 
     private PagedResponseDTO <PostsDTO> findPostsByTitle (String title, Pageable pageable) {
 

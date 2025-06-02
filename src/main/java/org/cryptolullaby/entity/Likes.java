@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,21 +12,19 @@ public class Likes {
     @Id
     private String id;
 
-    private int counter;
-
     private LocalDateTime timestamp;
 
     private String userId;
 
     private String postId;
 
+    private String commentId;
+
     public Likes () {}
 
-    public Likes (String id, int counter, LocalDateTime timestamp, String userId, String postId) {
+    public Likes (String id, LocalDateTime timestamp, String userId, String postId, String commentId) {
 
         this.id = id;
-
-        this.counter = counter;
 
         this.timestamp = timestamp;
 
@@ -33,17 +32,23 @@ public class Likes {
 
         this.postId = postId;
 
+        this.commentId = commentId;
+
+    }
+
+    public Likes (LikeAContentDTO likeAContentDTO) {
+
+        this.timestamp = LocalDateTime.now();
+
+        this.userId = likeAContentDTO.userId();
+
+        this.postId = likeAContentDTO.postId();
+
     }
 
     public String getId () {
 
         return id;
-
-    }
-
-    public int getCounter () {
-
-        return counter;
 
     }
 
@@ -68,18 +73,6 @@ public class Likes {
     public String getPostId () {
 
         return postId;
-
-    }
-
-    public void like () {
-
-        this.counter++;
-
-    }
-
-    public void dislike () {
-
-        this.counter--;
 
     }
 
