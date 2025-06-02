@@ -1,15 +1,14 @@
 package org.cryptolullaby.service.impl;
 
 import org.cryptolullaby.entity.Comments;
-import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.CommentNotFoundException;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
-import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.CommentsRepository;
 import org.cryptolullaby.service.CommentsService;
+import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CommentsServiceImpl implements CommentsService {
+public class CommentsServiceImpl implements CommentsService, IPaginationStructure <CommentsDTO, Comments> {
 
     private final CommentsRepository commentsRepository;
 
-    public CommentsServiceImpl (CommentsRepository commentsRepository) {
+    private final UsersServiceImpl usersService;
+
+    private final PostsServiceImpl postsService;
+
+    public CommentsServiceImpl (CommentsRepository commentsRepository, UsersServiceImpl usersService, PostsServiceImpl postsService) {
 
         this.commentsRepository = commentsRepository;
+
+        this.usersService = usersService;
+
+        this.postsService = postsService;
 
     }
 
@@ -39,7 +46,7 @@ public class CommentsServiceImpl implements CommentsService {
 
         var comments = getPagesContentAndRenderItToDTO(pages);
 
-        return paginationPostsStructure(pages, comments);
+        return setupPaginationStructure (pages, comments);
 
     }
 
@@ -49,7 +56,7 @@ public class CommentsServiceImpl implements CommentsService {
 
         var comments = getPagesContentAndRenderItToDTO(pages);
 
-        return paginationPostsStructure(pages, comments);
+        return setupPaginationStructure (pages, comments);
 
     }
 
@@ -73,7 +80,25 @@ public class CommentsServiceImpl implements CommentsService {
 
     }
 
-    private List <CommentsDTO> getPagesContentAndRenderItToDTO (Page <Comments> pages) {
+    @Override
+    public PagedResponseDTO <CommentsDTO> setupPaginationStructure (Page <Comments> pages, List <CommentsDTO> elements) {
+
+        return new PagedResponseDTO<>(
+
+                elements,
+
+                pages.getNumber(),
+
+                pages.getSize(),
+
+                pages.getTotalPages()
+
+        );
+
+    }
+
+    @Override
+    public List <CommentsDTO> getPagesContentAndRenderItToDTO (Page <Comments> pages) {
 
         return pages
                 .getContent()
@@ -92,22 +117,6 @@ public class CommentsServiceImpl implements CommentsService {
     private Page <Comments> findAllByUserId (String userId, Pageable pageable) {
 
         return commentsRepository.findAllByUserIdAndIsActive(userId, true, pageable);
-
-    }
-
-    private PagedResponseDTO <CommentsDTO> paginationPostsStructure (Page <Comments> pages, List <CommentsDTO> comments) {
-
-        return new PagedResponseDTO<>(
-
-                comments,
-
-                pages.getNumber(),
-
-                pages.getSize(),
-
-                pages.getTotalPages()
-
-        );
 
     }
 

@@ -8,6 +8,7 @@ import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.service.PostsService;
+import org.cryptolullaby.util.IPaginationStructure;
 import org.cryptolullaby.validation.PostsValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostsServiceImpl implements PostsService {
+public class PostsServiceImpl implements PostsService, IPaginationStructure <PostsDTO, Posts> {
 
     private final PostsRepository postsRepository;
 
@@ -57,7 +58,7 @@ public class PostsServiceImpl implements PostsService {
 
         var posts = getPagesContentAndRenderItToDTO(pages);
 
-        return paginationPostsStructure(pages, posts);
+        return setupPaginationStructure (pages, posts);
 
     }
 
@@ -87,6 +88,34 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
+    @Override
+    public List <PostsDTO> getPagesContentAndRenderItToDTO (Page <Posts> pages) {
+
+        return pages
+                .getContent()
+                .stream()
+                .map(PostsDTO::new)
+                .toList();
+
+    }
+
+    @Override
+    public PagedResponseDTO <PostsDTO> setupPaginationStructure (Page <Posts> pages, List <PostsDTO> elements) {
+
+        return new PagedResponseDTO<>(
+
+                elements,
+
+                pages.getNumber(),
+
+                pages.getSize(),
+
+                pages.getTotalPages()
+
+        );
+
+    }
+
     private PagedResponseDTO <PostsDTO> findPostsByTitle (String title, Pageable pageable) {
 
         var pages = findAllActivePostsByTitle(title, pageable);
@@ -95,7 +124,7 @@ public class PostsServiceImpl implements PostsService {
 
         postsValidator.checkIfPostListWithCertainTitleExists(posts);
 
-        return paginationPostsStructure(pages, posts);
+        return setupPaginationStructure (pages, posts);
 
     }
 
@@ -107,35 +136,9 @@ public class PostsServiceImpl implements PostsService {
 
     }
 
-    private List <PostsDTO> getPagesContentAndRenderItToDTO (Page <Posts> pages) {
-
-        return pages
-                .getContent()
-                .stream()
-                .map(PostsDTO::new)
-                .toList();
-
-    }
-
     private Page <Posts> findAllActivePostsByTitle (String title, Pageable pageable) {
 
         return postsRepository.findAllByTitleAndIsActive(title, true, pageable);
-
-    }
-
-    private PagedResponseDTO <PostsDTO> paginationPostsStructure (Page <Posts> pages, List <PostsDTO> posts) {
-
-        return new PagedResponseDTO<>(
-
-                posts,
-
-                pages.getNumber(),
-
-                pages.getSize(),
-
-                pages.getTotalPages()
-
-        );
 
     }
 

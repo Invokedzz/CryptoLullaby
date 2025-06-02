@@ -72,7 +72,7 @@ public class CommentsController {
 
         commentsService.editCommentById(id, editCommentDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
