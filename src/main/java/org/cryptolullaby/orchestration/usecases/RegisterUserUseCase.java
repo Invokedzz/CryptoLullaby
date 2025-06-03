@@ -1,9 +1,12 @@
 package org.cryptolullaby.orchestration.usecases;
 
 import org.cryptolullaby.entity.Images;
+import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
+import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.PasswordService;
 import org.cryptolullaby.service.RolesService;
@@ -51,6 +54,24 @@ public class RegisterUserUseCase {
             setRoleIdInUserAccount(user);
 
             setupProfileImage(user.getImg(), registerDTO.img());
+
+            usersService.save(user);
+
+        }
+
+    }
+
+    public void confirmRegistration (String id, InterestDTO interestDTO) {
+
+        var user = usersService.findUserById(id);
+
+        if (interestDTO.interests() != null) {
+
+            var interests = usersService.getSanitizedInterestList(interestDTO.interests());
+
+            user.setInterests(interests);
+
+            user.activate();
 
             usersService.save(user);
 

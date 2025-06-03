@@ -80,11 +80,7 @@ public class Users {
 
         if (editProfileDTO.password() != null) {
 
-            if (editProfileDTO.password().equals(editProfileDTO.confirmNewPassword())) {
-
-                this.password = editProfileDTO.password();
-
-            }
+            this.password = editProfileDTO.password();
 
         }
 

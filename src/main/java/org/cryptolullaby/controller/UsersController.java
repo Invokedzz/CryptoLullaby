@@ -5,7 +5,6 @@ import org.cryptolullaby.model.dto.general.ImageDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.orchestration.UserOrchestrationFacade;
-import org.cryptolullaby.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class UsersController {
     @PostMapping("/register")
     public ResponseEntity <SystemResponseDTO> createUser (@Valid @ModelAttribute RegisterDTO register) {
 
-        orchestrationFacade.registerUser(register);
+        orchestrationFacade.register(register);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new SystemResponseDTO("User created successfully!"));
 
@@ -41,9 +40,9 @@ public class UsersController {
 
     {
 
-        orchestrationFacade.confirmUserActivation(id, interestDTO);
+        orchestrationFacade.confirmRegistration(id, interestDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("User activated successfully!"));
+        return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("Account activated successfully!"));
 
     }
 
@@ -91,7 +90,7 @@ public class UsersController {
 
     {
 
-       // usersService.editProfileImageById(id, imageDTO.file());
+        orchestrationFacade.editUserImage(id, imageDTO.file());
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

@@ -25,7 +25,7 @@ public class PasswordService {
 
         if (!passwordEncoder.matches(rawPassword, encodedPassword)) {
 
-            throw new DivergentPasswordsException("Passwords do not match");
+            throw new DivergentPasswordsException("Passwords do not match!");
 
         }
 

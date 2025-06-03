@@ -24,7 +24,7 @@ public class CloudinaryService {
 
     private final Cloudinary cloudinary;
 
-    private final Set <String> allowedImageTypes = Set.of("image/png", "image/jpeg");
+    private static final Set <String> ALLOWED_IMAGE_TYPES = Set.of("image/png", "image/jpeg");
 
     public CloudinaryService(Cloudinary cloudinary) {
 
@@ -54,7 +54,7 @@ public class CloudinaryService {
 
     public void renderImage (Images images, MultipartFile file) {
 
-        if (file.getContentType() != null && allowedImageTypes.contains(file.getContentType())) {
+        if (file.getContentType() != null && ALLOWED_IMAGE_TYPES.contains(file.getContentType())) {
 
             var picture = sendImageToCloud(file);
 

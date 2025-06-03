@@ -1,7 +1,5 @@
 package org.cryptolullaby.validation;
 
-import org.cryptolullaby.entity.Users;
-import org.cryptolullaby.exception.DivergentPasswordsException;
 import org.cryptolullaby.exception.EmailAlreadyExistsException;
 import org.cryptolullaby.exception.UsernameAlreadyExistsException;
 import org.cryptolullaby.repository.UsersRepository;
