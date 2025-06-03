@@ -54,11 +54,11 @@ public class UsersController {
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity <Void> findProfileById (@PathVariable String id) {
+    public ResponseEntity <ProfileDTO> findProfileById (@PathVariable String id) {
 
-      //  var user = usersService.findProfileById(id);
+        var user = orchestrationFacade.getProfile(id);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(user);
 
     }
 

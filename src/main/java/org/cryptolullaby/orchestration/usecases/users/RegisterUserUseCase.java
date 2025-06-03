@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases;
+package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
@@ -6,7 +6,6 @@ import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
-import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.PasswordService;
 import org.cryptolullaby.service.RolesService;
@@ -55,7 +54,7 @@ public class RegisterUserUseCase {
 
             setupProfileImage(user.getImg(), registerDTO.img());
 
-            usersService.save(user);
+            saveChangesInTheDatabase(user);
 
         }
 
@@ -63,17 +62,17 @@ public class RegisterUserUseCase {
 
     public void confirmRegistration (String id, InterestDTO interestDTO) {
 
-        var user = usersService.findUserById(id);
+        var user = findUserById(id);
 
         if (interestDTO.interests() != null) {
 
-            var interests = usersService.getSanitizedInterestList(interestDTO.interests());
+            var interests = sanitizeInterests(interestDTO.interests());
 
             user.setInterests(interests);
 
             user.activate();
 
-            usersService.save(user);
+            saveChangesInTheDatabase(user);
 
         }
 
@@ -97,6 +96,18 @@ public class RegisterUserUseCase {
 
     }
 
+    private void saveChangesInTheDatabase (Users user) {
+
+        usersService.save(user);
+
+    }
+
+    private List <Interest> sanitizeInterests (List <Interest> interests) {
+
+        return usersService.getSanitizedInterestList(interests);
+
+    }
+
     private void setRoleIdInUserAccount (Users user) {
 
         var roles = List.of(rolesService.getDefaultRole());
@@ -109,6 +120,12 @@ public class RegisterUserUseCase {
                         .toList()
 
         );
+
+    }
+
+    private Users findUserById (String id) {
+
+        return usersService.findUserById(id);
 
     }
 
