@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.model.enums.RolesName;
@@ -10,16 +10,17 @@ public class RolesService {
 
     private final RolesRepository rolesRepository;
 
-    public RolesService(RolesRepository rolesRepository) {
+    public RolesService (RolesRepository rolesRepository) {
 
         this.rolesRepository = rolesRepository;
 
     }
 
-    public Roles createIfRoleNotExistOrElseReturnIt (RolesName name) {
+    public Roles getDefaultRole () {
 
-        return rolesRepository.findByName(name)
-                .orElseGet(() -> rolesRepository.save(new Roles(name)));
+        return rolesRepository
+                .findByName(RolesName.USER)
+                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.USER)));
 
     }
 

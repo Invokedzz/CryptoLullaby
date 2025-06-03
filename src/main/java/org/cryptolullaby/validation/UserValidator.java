@@ -18,39 +18,11 @@ public class UserValidator {
 
     }
 
-    public void checkIfPasswordsAreTheSame (String password, String confirmPassword) {
+    public void checkIfUserComponentsAlreadyExist (String username, String email) {
 
-        if (password != null && confirmPassword != null) {
+        checkIfUsernameAlreadyExists(username);
 
-            if (!password.equals(confirmPassword)) {
-
-                throw new DivergentPasswordsException("Passwords do not match!");
-
-            }
-
-        }
-
-    }
-
-    public void comparePasswordsInOrderToEditAccount (String oldPassword, String newPassword) {
-
-        if (newPassword != null) {
-
-            if (oldPassword.equals(newPassword)) {
-
-                throw new DivergentPasswordsException("Your new password must be different from your old password!");
-
-            }
-
-        }
-
-    }
-
-    public void checkIfUserComponentsAlreadyExist (Users user) {
-
-        checkIfUsernameAlreadyExists(user.getUsername());
-
-        checkIfEmailAlreadyExists(user.getEmail());
+        checkIfEmailAlreadyExists(email);
 
     }
 

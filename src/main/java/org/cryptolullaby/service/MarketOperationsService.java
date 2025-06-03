@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import feign.FeignException;
 import org.cryptolullaby.exception.InvalidSIPException;

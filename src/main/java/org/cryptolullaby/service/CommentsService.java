@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Comments;
 import org.cryptolullaby.exception.CommentNotFoundException;

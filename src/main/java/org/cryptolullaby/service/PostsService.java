@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
@@ -46,7 +46,7 @@ public class PostsService implements IPaginationStructure <PostsDTO, Posts> {
 
         var post = new Posts(createPostDTO);
 
-        cloudinaryService.checkImgPropertiesThenSetURL(post.getImg(), createPostDTO.img());
+        cloudinaryService.renderImage(post.getImg(), createPostDTO.img());
 
         postsRepository.save(post);
 

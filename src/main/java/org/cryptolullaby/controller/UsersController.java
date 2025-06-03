@@ -4,7 +4,8 @@ import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.general.ImageDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
-import org.cryptolullaby.service.impl.UsersService;
+import org.cryptolullaby.orchestration.UserOrchestrationFacade;
+import org.cryptolullaby.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,27 +14,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/users")
 public class UsersController {
 
-    private final UsersService usersService;
+    private final UserOrchestrationFacade orchestrationFacade;
 
-    public UsersController (UsersService usersService) {
+    public UsersController (UserOrchestrationFacade orchestrationFacade) {
 
-        this.usersService = usersService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
     @PostMapping("/register")
     public ResponseEntity <SystemResponseDTO> createUser (@Valid @ModelAttribute RegisterDTO register) {
 
-        usersService.createUser(register);
+        orchestrationFacade.registerUser(register);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new SystemResponseDTO("User created successfully!"));
 
     }
 
     @PostMapping("/confirm/activation/{id}")
-    public ResponseEntity <SystemResponseDTO> confirmInterestsThenActivateAccount (@PathVariable String id, @RequestBody InterestDTO interestDTO) {
+    public ResponseEntity <SystemResponseDTO> confirmInterestsThenActivateAccount (
 
-        usersService.confirmProfileActivation(id, interestDTO);
+            @PathVariable String id,
+            @RequestBody InterestDTO interestDTO
+
+    )
+
+    {
+
+        orchestrationFacade.confirmUserActivation(id, interestDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("User activated successfully!"));
 
@@ -47,27 +55,43 @@ public class UsersController {
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity <ProfileDTO> findProfileById (@PathVariable String id) {
+    public ResponseEntity <Void> findProfileById (@PathVariable String id) {
 
-        var user = usersService.findProfileById(id);
+      //  var user = usersService.findProfileById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ProfileDTO(user));
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
     @PutMapping("/profile/edit/{id}")
-    public ResponseEntity <SystemResponseDTO> editProfileById (@PathVariable String id, @Valid @ModelAttribute EditProfileDTO profileDTO) {
+    public ResponseEntity <SystemResponseDTO> editProfileById (
 
-        usersService.editProfileById(id, profileDTO);
+            @PathVariable String id,
+
+            @Valid @ModelAttribute EditProfileDTO profileDTO
+
+    )
+
+    {
+
+        orchestrationFacade.editUserById(id, profileDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("Profile edited successfully!"));
 
     }
 
     @PutMapping("/profile/edit/pfp/{id}")
-    public ResponseEntity <Void> editProfileImageById (@PathVariable String id, @Valid @ModelAttribute ImageDTO imageDTO) {
+    public ResponseEntity <Void> editProfileImageById (
 
-        usersService.editProfileImageById(id, imageDTO.file());
+            @PathVariable String id,
+
+            @Valid @ModelAttribute ImageDTO imageDTO
+
+    )
+
+    {
+
+       // usersService.editProfileImageById(id, imageDTO.file());
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -76,7 +100,7 @@ public class UsersController {
     @DeleteMapping("/profile/deactivate/{id}")
     public ResponseEntity <Void> deactivateProfileById (@PathVariable String id) {
 
-        usersService.deactivateProfileById(id);
+        orchestrationFacade.deactivateUserById(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

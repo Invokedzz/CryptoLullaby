@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeAContentDTO;

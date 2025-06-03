@@ -1,4 +1,4 @@
-package org.cryptolullaby.service.impl;
+package org.cryptolullaby.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class CloudinaryService {
@@ -23,13 +24,15 @@ public class CloudinaryService {
 
     private final Cloudinary cloudinary;
 
+    private final Set <String> allowedImageTypes = Set.of("image/png", "image/jpeg");
+
     public CloudinaryService(Cloudinary cloudinary) {
 
         this.cloudinary = cloudinary;
 
     }
 
-    private Map <?, ?> uploadImageToCloud (MultipartFile file) {
+    private Map <?, ?> sendImageToCloud (MultipartFile file) {
 
         try {
 
@@ -49,11 +52,11 @@ public class CloudinaryService {
 
     }
 
-    public void checkImgPropertiesThenSetURL (Images images, MultipartFile file) {
+    public void renderImage (Images images, MultipartFile file) {
 
-        if (Objects.requireNonNull(file.getContentType()).matches("image/jpeg") || file.getContentType().matches("image/png")) {
+        if (file.getContentType() != null && allowedImageTypes.contains(file.getContentType())) {
 
-            var picture = uploadImageToCloud(file);
+            var picture = sendImageToCloud(file);
 
             if (picture != null && picture.containsKey("url")) {
 
