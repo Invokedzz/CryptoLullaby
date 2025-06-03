@@ -4,16 +4,14 @@ import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
 import org.cryptolullaby.model.enums.EntityTypeName;
 import org.cryptolullaby.repository.LikesRepository;
-import org.cryptolullaby.service.LikesService;
-import org.cryptolullaby.service.UsersService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LikesServiceImpl implements LikesService {
+public class LikesService {
 
     private final LikesRepository likesRepository;
 
-    public LikesServiceImpl (LikesRepository likesRepository) {
+    public LikesService(LikesRepository likesRepository) {
 
         this.likesRepository = likesRepository;
 

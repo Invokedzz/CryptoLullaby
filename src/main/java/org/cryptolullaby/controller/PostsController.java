@@ -6,7 +6,7 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
-import org.cryptolullaby.service.impl.PostsServiceImpl;
+import org.cryptolullaby.service.impl.PostsService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/posts")
 public class PostsController {
 
-    private final PostsServiceImpl postsService;
+    private final PostsService postsService;
 
-    public PostsController (PostsServiceImpl postsService) {
+    public PostsController (PostsService postsService) {
 
         this.postsService = postsService;
 

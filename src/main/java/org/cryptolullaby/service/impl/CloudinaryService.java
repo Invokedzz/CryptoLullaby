@@ -3,7 +3,6 @@ package org.cryptolullaby.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.cryptolullaby.entity.Images;
-import org.cryptolullaby.service.CloudinaryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,14 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class CloudinaryServiceImpl implements CloudinaryService {
+public class CloudinaryService {
 
     @Value("${default.image.url}")
     private String defaultImgURL;
 
     private final Cloudinary cloudinary;
 
-    public CloudinaryServiceImpl (Cloudinary cloudinary) {
+    public CloudinaryService(Cloudinary cloudinary) {
 
         this.cloudinary = cloudinary;
 

@@ -10,20 +10,16 @@ import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
-import org.cryptolullaby.service.CloudinaryService;
-import org.cryptolullaby.service.RolesService;
-import org.cryptolullaby.service.UsersService;
 import org.cryptolullaby.validation.UserValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UsersService {
 
     private final UsersRepository usersRepository;
 
@@ -35,11 +31,11 @@ public class UsersServiceImpl implements UsersService {
 
     private final CloudinaryService cloudinaryService;
 
-    public UsersServiceImpl (UsersRepository usersRepository,
-                             RolesService rolesService,
-                             PasswordEncoder passwordEncoder,
-                             UserValidator userValidator,
-                             CloudinaryService cloudinaryService) {
+    public UsersService(UsersRepository usersRepository,
+                        RolesService rolesService,
+                        PasswordEncoder passwordEncoder,
+                        UserValidator userValidator,
+                        CloudinaryService cloudinaryService) {
 
         this.usersRepository = usersRepository;
 

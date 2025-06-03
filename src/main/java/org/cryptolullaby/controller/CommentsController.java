@@ -5,7 +5,7 @@ import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
-import org.cryptolullaby.service.impl.CommentsServiceImpl;
+import org.cryptolullaby.service.impl.CommentsService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/comments")
 public class CommentsController {
 
-    private final CommentsServiceImpl commentsService;
+    private final CommentsService commentsService;
 
-    public CommentsController (CommentsServiceImpl commentsService) {
+    public CommentsController (CommentsService commentsService) {
 
         this.commentsService = commentsService;
 

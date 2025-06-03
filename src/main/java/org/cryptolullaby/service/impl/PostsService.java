@@ -7,8 +7,6 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
-import org.cryptolullaby.service.CloudinaryService;
-import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.cryptolullaby.validation.PostsValidator;
 import org.springframework.data.domain.Page;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostsServiceImpl implements PostsService, IPaginationStructure <PostsDTO, Posts> {
+public class PostsService implements IPaginationStructure <PostsDTO, Posts> {
 
     private final PostsRepository postsRepository;
 
@@ -26,9 +24,9 @@ public class PostsServiceImpl implements PostsService, IPaginationStructure <Pos
 
     private final CloudinaryService cloudinaryService;
 
-    public PostsServiceImpl (PostsRepository postsRepository,
-                            PostsValidator postsValidator,
-                            CloudinaryService cloudinaryService) {
+    public PostsService(PostsRepository postsRepository,
+                        PostsValidator postsValidator,
+                        CloudinaryService cloudinaryService) {
 
         this.postsRepository = postsRepository;
 

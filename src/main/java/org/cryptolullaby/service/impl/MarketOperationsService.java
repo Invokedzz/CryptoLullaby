@@ -11,18 +11,17 @@ import org.cryptolullaby.model.dto.market.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.market.TradingStatusDTO;
 import org.cryptolullaby.model.enums.MarketOperationsParameters;
 import org.cryptolullaby.model.enums.SIPName;
-import org.cryptolullaby.service.MarketOperationsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class MarketOperationsServiceImpl implements MarketOperationsService {
+public class MarketOperationsService {
 
     private final MarketOperationsClient marketOperationsClient;
 
-    public MarketOperationsServiceImpl (MarketOperationsClient marketOperationsClient) {
+    public MarketOperationsService(MarketOperationsClient marketOperationsClient) {
 
         this.marketOperationsClient = marketOperationsClient;
 

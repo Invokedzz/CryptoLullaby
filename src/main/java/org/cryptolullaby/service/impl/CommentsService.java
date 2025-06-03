@@ -7,7 +7,6 @@ import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.repository.CommentsRepository;
-import org.cryptolullaby.service.CommentsService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CommentsServiceImpl implements CommentsService, IPaginationStructure <CommentsDTO, Comments> {
+public class CommentsService implements IPaginationStructure <CommentsDTO, Comments> {
 
     private final CommentsRepository commentsRepository;
 
-    public CommentsServiceImpl (CommentsRepository commentsRepository) {
+    public CommentsService(CommentsRepository commentsRepository) {
 
         this.commentsRepository = commentsRepository;
 

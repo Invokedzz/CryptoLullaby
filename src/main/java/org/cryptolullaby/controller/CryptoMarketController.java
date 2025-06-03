@@ -4,7 +4,7 @@ import org.cryptolullaby.model.dto.market.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.market.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.market.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.market.TradingStatusDTO;
-import org.cryptolullaby.service.impl.MarketOperationsServiceImpl;
+import org.cryptolullaby.service.impl.MarketOperationsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,9 @@ import java.util.Map;
 @RequestMapping("/domain/market")
 public class CryptoMarketController {
 
-    private final MarketOperationsServiceImpl marketOperationsService;
+    private final MarketOperationsService marketOperationsService;
 
-    public CryptoMarketController (MarketOperationsServiceImpl marketOperationsService) {
+    public CryptoMarketController (MarketOperationsService marketOperationsService) {
 
         this.marketOperationsService = marketOperationsService;
 
