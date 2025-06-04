@@ -19,6 +19,8 @@ public class ProfileUseCase {
 
     private final CloudinaryService cloudinaryService;
 
+    private static final boolean DEFAULT_IMAGE_ICON = true;
+
     public ProfileUseCase (UsersService usersService, CloudinaryService cloudinaryService) {
 
         this.usersService = usersService;
@@ -58,7 +60,9 @@ public class ProfileUseCase {
 
         var user = findUserById(id);
 
-        setupProfileImage(user.getImg(), file);
+        var img = setupProfileImage(file);
+
+        user.setImgUrl(img);
 
         saveChangesInTheDatabase(user);
 
@@ -74,9 +78,9 @@ public class ProfileUseCase {
 
     }
 
-    private void setupProfileImage (Images images, MultipartFile file) {
+    private Images setupProfileImage (MultipartFile file) {
 
-        cloudinaryService.renderImage(images, file);
+       return cloudinaryService.renderImage(file, DEFAULT_IMAGE_ICON);
 
     }
 

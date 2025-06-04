@@ -2,7 +2,6 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
-import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.validation.PostsValidator;
 import org.springframework.data.domain.Page;
@@ -29,6 +28,8 @@ public class PostsService {
 
     public void save (Posts post) {
 
+        postsValidator.checkIfPostIsActuallyActive(post.getIsActive());
+
         postsRepository.save(post);
 
     }
@@ -49,9 +50,13 @@ public class PostsService {
 
     public Page <Posts> findAllActivePostsByTitle (String title, Pageable pageable) {
 
-        return postsRepository.findAllByTitleAndIsActive(
+        var posts = postsRepository.findAllByTitleAndIsActive(
                 title, IS_ACTIVE, pageable
         );
+
+        postsValidator.checkIfPostListWithCertainTitleExists(posts);
+
+        return posts;
 
     }
 

@@ -52,7 +52,7 @@ public class CloudinaryService {
 
     }
 
-    public void renderImage (Images images, MultipartFile file) {
+    public Images renderImage (MultipartFile file, boolean useDefaultImg) {
 
         if (file.getContentType() != null && ALLOWED_IMAGE_TYPES.contains(file.getContentType())) {
 
@@ -60,15 +60,19 @@ public class CloudinaryService {
 
             if (picture != null && picture.containsKey("url")) {
 
-                images.setUrl(picture.get("url").toString());
-
-                return;
+                return new Images(picture.get("url").toString());
 
             }
 
         }
 
-        images.setUrl(defaultImgURL);
+        if (useDefaultImg) {
+
+            return new Images(defaultImgURL);
+
+        }
+
+        return null;
 
     }
 

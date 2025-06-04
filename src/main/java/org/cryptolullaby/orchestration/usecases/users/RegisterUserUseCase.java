@@ -26,6 +26,8 @@ public class RegisterUserUseCase {
 
     private final CloudinaryService cloudinaryService;
 
+    private static final boolean DEFAULT_IMAGE_ICON = true;
+
     public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService) {
 
         this.usersService = usersService;
@@ -52,7 +54,9 @@ public class RegisterUserUseCase {
 
             setRoleIdInUserAccount(user);
 
-            setupProfileImage(user.getImg(), registerDTO.img());
+            var img = setupProfileImage(registerDTO.img());
+
+            user.setImgUrl(img);
 
             saveChangesInTheDatabase(user);
 
@@ -90,9 +94,9 @@ public class RegisterUserUseCase {
 
     }
 
-    private void setupProfileImage (Images images, MultipartFile file) {
+    private Images setupProfileImage (MultipartFile file) {
 
-        cloudinaryService.renderImage(images, file);
+        return cloudinaryService.renderImage(file, DEFAULT_IMAGE_ICON);
 
     }
 

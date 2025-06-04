@@ -1,6 +1,5 @@
 package org.cryptolullaby.orchestration.usecases.posts;
 
-import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
@@ -23,7 +22,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
     *
     * TO DO:
     *
-    * 1) Don't let the dumb as heck user edit a deactivated post
+    * 1) Don't let the dumb as heck user edit a deactivated post -> FIXED 04/06/2025
     * 2) Adjust the "editPostById" method - it's deleting instead of editing
     * 3) Adapt the cloudinaryService for posts as well
     *
@@ -32,6 +31,8 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
     private final PostsService postsService;
 
     private final CloudinaryService cloudinaryService;
+
+    private static final boolean DEFAULT_IMAGE_ICON = false;
 
     public PostsUseCase (PostsService postsService, CloudinaryService cloudinaryService) {
 
@@ -45,7 +46,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
         var post = new Posts(createPostDTO);
 
-        setupPostImage(post.getImg(), createPostDTO.img());
+        setupPostImage(createPostDTO.img());
 
         postsService.save(post);
 
@@ -119,9 +120,9 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
     }
 
-    private void setupPostImage (Images images, MultipartFile file) {
+    private void setupPostImage (MultipartFile file) {
 
-        cloudinaryService.renderImage(images, file);
+        cloudinaryService.renderImage(file, DEFAULT_IMAGE_ICON);
 
     }
 
