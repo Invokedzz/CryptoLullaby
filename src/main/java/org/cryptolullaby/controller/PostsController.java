@@ -6,6 +6,7 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
+import org.cryptolullaby.orchestration.PostsOrchestrationFacade;
 import org.cryptolullaby.service.PostsService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,18 +19,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/posts")
 public class PostsController {
 
-    private final PostsService postsService;
+    private final PostsOrchestrationFacade orchestrationFacade;
 
-    public PostsController (PostsService postsService) {
+    public PostsController (PostsOrchestrationFacade orchestrationFacade) {
 
-        this.postsService = postsService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
     @PostMapping
     public ResponseEntity <Void> createPost (@Valid @ModelAttribute CreatePostDTO createPostDTO) {
 
-        postsService.createPost(createPostDTO);
+        orchestrationFacade.createPost(createPostDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
@@ -44,7 +45,7 @@ public class PostsController {
 
     {
 
-        var posts = postsService.getAllActivePosts(pageable);
+        var posts = orchestrationFacade.getAllActivePosts(pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
 
@@ -60,12 +61,13 @@ public class PostsController {
 
     {
 
-        var posts = postsService.getPostsByTitle(title, pageable);
+        var posts = orchestrationFacade.getAllActivePostsByTitle(title, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
 
     }
 
+    /*
     @PostMapping("/{postId}/{userId}/like")
     public ResponseEntity <Void> likeACertainPost (
 
@@ -96,7 +98,7 @@ public class PostsController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
-    }
+    } */
 
     @PutMapping("/edit/{id}")
     public ResponseEntity <SystemResponseDTO> editPostById (
@@ -108,7 +110,7 @@ public class PostsController {
 
     {
 
-        postsService.editPostById(id, editPostsDTO);
+        orchestrationFacade.editPostById(id, editPostsDTO);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -117,7 +119,7 @@ public class PostsController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity <Void> deactivatePostById (@PathVariable String id) {
 
-        postsService.deactivatePostById(id);
+        orchestrationFacade.deactivatePostById(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
