@@ -48,13 +48,13 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
         setupPostImage(createPostDTO.img());
 
-        postsService.save(post);
+        saveChangesInTheDatabase(post);
 
     }
 
     public PagedResponseDTO <PostsDTO> getAllActivePosts (Pageable pageable) {
 
-        var pages = postsService.findAllByIsActive(pageable);
+        var pages = findAllActivePosts(pageable);
 
         var posts = getPagesContentAndRenderItToDTO(pages);
 
@@ -64,7 +64,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
     public PagedResponseDTO <PostsDTO> getAllActivePostsByTitle (String title, Pageable pageable) {
 
-        var pages = postsService.findAllActivePostsByTitle(title, pageable);
+        var pages = findAllActivePostsByTitle(title, pageable);
 
         var posts = getPagesContentAndRenderItToDTO(pages);
 
@@ -74,21 +74,21 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
     public void editPostById (String id, EditPostsDTO editPostDTO) {
 
-        var post = postsService.findPostById(id);
+        var post = findPostById(id);
 
         post.editPost(editPostDTO);
 
-        postsService.save(post);
+        saveChangesInTheDatabase(post);
 
     }
 
     public void deactivatePostById (String id) {
 
-        var post = postsService.findPostById(id);
+        var post = findPostById(id);
 
         post.deactivate();
 
-        postsService.save(post);
+        saveChangesInTheDatabase(post);
 
     }
 
@@ -117,6 +117,30 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
                 .stream()
                 .map(PostsDTO::new)
                 .toList();
+
+    }
+
+    private Page <Posts> findAllActivePosts (Pageable pageable) {
+
+        return postsService.findAllByIsActive(pageable);
+
+    }
+
+    private Page <Posts> findAllActivePostsByTitle (String title, Pageable pageable) {
+
+        return postsService.findAllActivePostsByTitle(title, pageable);
+
+    }
+
+    private Posts findPostById (String id) {
+
+        return postsService.findPostById(id);
+
+    }
+
+    private void saveChangesInTheDatabase (Posts post) {
+
+        postsService.save(post);
 
     }
 

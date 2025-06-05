@@ -1,6 +1,7 @@
 package org.cryptolullaby.orchestration.usecases.comments;
 
 import org.cryptolullaby.entity.Comments;
+import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
@@ -33,13 +34,13 @@ public class CommentsUseCase implements IPaginationStructure <CommentsDTO, Comme
 
         var comment = new Comments(createCommentDTO);
 
-        commentsService.save(comment);
+        saveChangesInTheDatabase(comment);
 
     }
 
     public PagedResponseDTO <CommentsDTO> getAllCommentsFromACertainPost (String postId, Pageable pageable) {
 
-        var pages = commentsService.findAllByPostIdAndIsActive(postId, pageable);
+        var pages = findAllByPostIdAndIsActive(postId, pageable);
 
         var comments = getPagesContentAndRenderItToDTO(pages);
 
@@ -49,7 +50,7 @@ public class CommentsUseCase implements IPaginationStructure <CommentsDTO, Comme
 
     public PagedResponseDTO <CommentsDTO> getAllCommentsMadeByACertainUser (String userId, Pageable pageable) {
 
-        var pages = commentsService.findAllByUserIdAndIsActive(userId, pageable);
+        var pages = findAllByUserIdAndIsActive(userId, pageable);
 
         var comments = getPagesContentAndRenderItToDTO(pages);
 
@@ -59,21 +60,21 @@ public class CommentsUseCase implements IPaginationStructure <CommentsDTO, Comme
 
     public void editACommentById (String id, EditCommentDTO editCommentDTO) {
 
-        var comment = commentsService.findCommentById(id);
+        var comment = findCommentById(id);
 
         comment.editComment(editCommentDTO);
 
-        commentsService.save(comment);
+        saveChangesInTheDatabase(comment);
 
     }
 
     public void deactivateACommentById (String id) {
 
-        var comment = commentsService.findCommentById(id);
+        var comment = findCommentById(id);
 
         comment.deactivate();
 
-        commentsService.save(comment);
+        saveChangesInTheDatabase(comment);
 
     }
 
@@ -102,6 +103,30 @@ public class CommentsUseCase implements IPaginationStructure <CommentsDTO, Comme
                 .stream()
                 .map(CommentsDTO::new)
                 .toList();
+
+    }
+
+    private void saveChangesInTheDatabase (Comments comments) {
+
+        commentsService.save(comments);
+
+    }
+
+    private Comments findCommentById (String id) {
+
+        return commentsService.findCommentById(id);
+
+    }
+
+    private Page <Comments> findAllByUserIdAndIsActive (String userId, Pageable pageable) {
+
+        return commentsService.findAllByUserIdAndIsActive(userId, pageable);
+
+    }
+
+    private Page <Comments> findAllByPostIdAndIsActive (String postId, Pageable pageable) {
+
+        return commentsService.findAllByPostIdAndIsActive(postId, pageable);
 
     }
 
