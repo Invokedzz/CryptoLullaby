@@ -74,19 +74,19 @@ public class Posts {
 
     public void editPost (EditPostsDTO editPostsDTO) {
 
-        if (title != null) {
+        if (editPostsDTO.title() != null) {
 
             this.title = editPostsDTO.title();
 
         }
 
-        if (description != null) {
+        if (editPostsDTO.description() != null) {
 
             this.description = editPostsDTO.description();
 
         }
 
-        if (img != null) {
+        if (editPostsDTO.img() != null) {
 
             this.img = new Images();
 

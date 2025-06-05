@@ -23,7 +23,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
     * TO DO:
     *
     * 1) Don't let the dumb as heck user edit a deactivated post -> FIXED 04/06/2025
-    * 2) Adjust the "editPostById" method - it's deleting instead of editing
+    * 2) Adjust the "editPostById" method - it's deleting instead of editing -> FIXED 05/06/2025
     * 3) Adapt the cloudinaryService for posts as well -> FIXED 04/06/2025
     *
     * */
@@ -78,6 +78,8 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
         post.editPost(editPostDTO);
 
+        setupImageForEdit(post, editPostDTO);
+
         saveChangesInTheDatabase(post);
 
     }
@@ -117,6 +119,18 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
                 .stream()
                 .map(PostsDTO::new)
                 .toList();
+
+    }
+
+    private void setupImageForEdit (Posts post, EditPostsDTO editPostDTO) {
+
+        if (editPostDTO.img() != null && !editPostDTO.img().isEmpty()) {
+
+            var image = cloudinaryService.renderImage(editPostDTO.img(), DEFAULT_IMAGE_ICON);
+
+            post.setImgUrl(image);
+
+        }
 
     }
 
