@@ -6,6 +6,7 @@ import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
+import org.cryptolullaby.orchestration.usecases.users.SendEmailUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,17 +17,23 @@ public class UserOrchestrationFacade {
 
     private final ProfileUseCase profileUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase) {
+    private final SendEmailUseCase sendEmailUseCase;
+
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailUseCase sendEmailUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 
         this.profileUseCase = profileUseCase;
+
+        this.sendEmailUseCase = sendEmailUseCase;
 
     }
 
     public void register (RegisterDTO registerDTO) {
 
         registerUserUseCase.register(registerDTO);
+
+        sendEmailUseCase.send(registerDTO.email());
 
     }
 

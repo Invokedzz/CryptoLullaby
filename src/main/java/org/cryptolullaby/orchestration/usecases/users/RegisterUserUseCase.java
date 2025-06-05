@@ -61,8 +61,6 @@ public class RegisterUserUseCase {
 
             saveChangesInTheDatabase(user);
 
-            emailService.sendEmailToUser(user.getEmail());
-
         }
 
     }
