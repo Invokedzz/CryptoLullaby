@@ -24,7 +24,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
     *
     * 1) Don't let the dumb as heck user edit a deactivated post -> FIXED 04/06/2025
     * 2) Adjust the "editPostById" method - it's deleting instead of editing
-    * 3) Adapt the cloudinaryService for posts as well
+    * 3) Adapt the cloudinaryService for posts as well -> FIXED 04/06/2025
     *
     * */
 

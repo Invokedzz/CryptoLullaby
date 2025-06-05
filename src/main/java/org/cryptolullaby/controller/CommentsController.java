@@ -5,7 +5,7 @@ import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
-import org.cryptolullaby.service.CommentsService;
+import org.cryptolullaby.orchestration.CommentsOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/comments")
 public class CommentsController {
 
-    private final CommentsService commentsService;
+    private final CommentsOrchestrationFacade orchestrationFacade;
 
-    public CommentsController (CommentsService commentsService) {
+    public CommentsController (CommentsOrchestrationFacade orchestrationFacade) {
 
-        this.commentsService = commentsService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
     @PostMapping
     public ResponseEntity <Void> createComment (@Valid @RequestBody CreateCommentDTO createCommentDTO) {
 
-        commentsService.createComment(createCommentDTO);
+       orchestrationFacade.createComment(createCommentDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
@@ -44,7 +44,7 @@ public class CommentsController {
 
     {
 
-        var comments = commentsService.getAllActiveCommentsFromACertainPost(postId, pageable);
+        var comments = orchestrationFacade.getAllCommentsFromACertainPost(postId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(comments);
 
@@ -60,12 +60,13 @@ public class CommentsController {
 
     {
 
-        var comments = commentsService.getAllActiveCommentsMadeByACertainUser(userId, pageable);
+        var comments = orchestrationFacade.getAllCommentsMadeByACertainUser(userId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(comments);
 
     }
 
+    /*
     @PostMapping("/{commentId}/{userId}/like")
     public ResponseEntity <Void> likeACertainComment (
 
@@ -97,11 +98,12 @@ public class CommentsController {
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
+    */
 
     @PutMapping("/edit/{id}")
     public ResponseEntity <Void> editCommentById (@PathVariable String id, @Valid @RequestBody EditCommentDTO editCommentDTO) {
 
-        commentsService.editCommentById(id, editCommentDTO);
+        orchestrationFacade.editACommentById(id, editCommentDTO);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
@@ -110,7 +112,7 @@ public class CommentsController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity <Void> deactivateCommentById (@PathVariable String id) {
 
-        commentsService.deactivateCommentById(id);
+        orchestrationFacade.deactivateACommentById(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
