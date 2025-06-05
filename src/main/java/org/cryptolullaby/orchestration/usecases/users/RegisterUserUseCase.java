@@ -6,10 +6,7 @@ import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
-import org.cryptolullaby.service.CloudinaryService;
-import org.cryptolullaby.service.PasswordService;
-import org.cryptolullaby.service.RolesService;
-import org.cryptolullaby.service.UsersService;
+import org.cryptolullaby.service.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +23,11 @@ public class RegisterUserUseCase {
 
     private final CloudinaryService cloudinaryService;
 
+    private final EmailService emailService;
+
     private static final boolean DEFAULT_IMAGE_ICON = true;
 
-    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService) {
+    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService, EmailService emailService) {
 
         this.usersService = usersService;
 
@@ -37,6 +36,8 @@ public class RegisterUserUseCase {
         this.passwordService = passwordService;
 
         this.cloudinaryService = cloudinaryService;
+
+        this.emailService = emailService;
 
     }
 
@@ -59,6 +60,8 @@ public class RegisterUserUseCase {
             user.setImgUrl(img);
 
             saveChangesInTheDatabase(user);
+
+            emailService.sendEmailToUser(user.getEmail());
 
         }
 
