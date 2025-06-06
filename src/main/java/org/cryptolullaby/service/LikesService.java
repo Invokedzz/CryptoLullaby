@@ -1,7 +1,6 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Likes;
-import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
 import org.cryptolullaby.model.enums.EntityTypeName;
 import org.cryptolullaby.repository.LikesRepository;
 import org.springframework.stereotype.Service;
@@ -11,33 +10,33 @@ public class LikesService {
 
     private final LikesRepository likesRepository;
 
-    public LikesService(LikesRepository likesRepository) {
+    public LikesService (LikesRepository likesRepository) {
 
         this.likesRepository = likesRepository;
 
     }
 
-    public void like (LikeAContentDTO likeAContentDTO) {
+    public void save (Likes likes) {
 
-        var alreadyLiked = likesRepository.existsByEntityIdAndUserId(likeAContentDTO.entityId(), likeAContentDTO.userId());
-
-        if (!alreadyLiked) {
-
-            likesRepository.save(new Likes(likeAContentDTO));
-
-        }
+        likesRepository.save(likes);
 
     }
 
-    public void dislike (LikeAContentDTO likeAContentDTO) {
+    public void delete (Likes likes) {
 
-
+        likesRepository.delete(likes);
 
     }
 
-    public long countTheNumberOfLikes (String entityId, EntityTypeName entityTypeName) {
+    public long countNumberOfLikes (String entityId, EntityTypeName entityType) {
 
-        return 1L;
+        return likesRepository.countLikesByEntityIdAndEntityType(entityId, entityType);
+
+    }
+
+    public boolean hasUserLiked (String userId, String entityId, EntityTypeName entityType) {
+
+        return likesRepository.findByUserIdAndEntityIdAndEntityType(userId, entityId, entityType);
 
     }
 

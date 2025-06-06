@@ -1,6 +1,6 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.dto.likes.LikeAContentDTO;
+import org.cryptolullaby.model.dto.likes.LikeDTO;
 import org.cryptolullaby.model.enums.EntityTypeName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -37,7 +37,7 @@ public class Likes {
 
     }
 
-    public Likes (LikeAContentDTO likeAContentDTO) {
+    public Likes (LikeDTO likeAContentDTO, EntityTypeName entityType) {
 
         this.timestamp = LocalDateTime.now();
 
@@ -45,7 +45,7 @@ public class Likes {
 
         this.entityId = likeAContentDTO.entityId();
 
-        this.entityType = likeAContentDTO.entityType();
+        this.entityType = entityType;
 
     }
 
@@ -76,6 +76,12 @@ public class Likes {
     public String getEntityId () {
 
         return entityId;
+
+    }
+
+    public EntityTypeName getEntityType () {
+
+        return entityType;
 
     }
 

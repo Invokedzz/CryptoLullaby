@@ -31,9 +31,9 @@ public class UserOrchestrationFacade {
 
     public void register (RegisterDTO registerDTO) {
 
-        registerUserUseCase.register(registerDTO);
+        registerANewUser(registerDTO);
 
-        sendEmailUseCase.send(registerDTO.email());
+        sendAnEmailAfterRegistration(registerDTO.email());
 
     }
 
@@ -64,6 +64,18 @@ public class UserOrchestrationFacade {
     public void deactivateUserById (String id) {
 
         profileUseCase.deactivateUserAccount(id);
+
+    }
+
+    private void registerANewUser (RegisterDTO registerDTO) {
+
+        registerUserUseCase.register(registerDTO);
+
+    }
+
+    private void sendAnEmailAfterRegistration (String email) {
+
+        sendEmailUseCase.send(email);
 
     }
 
