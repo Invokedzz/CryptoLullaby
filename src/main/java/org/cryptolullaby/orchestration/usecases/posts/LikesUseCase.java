@@ -27,17 +27,27 @@ public class LikesUseCase {
 
         if (!hasLiked) {
 
-            likesService.save(new Likes(likeAContentDTO, entityTypeName));
+            saveChangesInTheDatabase(new Likes(likeAContentDTO, entityTypeName));
 
             return;
 
         }
 
-        likesService.deleteByUserIdAndEntityId(likeAContentDTO.userId(), likeAContentDTO.entityId());
+        deleteLikeByUserIdAndEntityId(likeAContentDTO.userId(), likeAContentDTO.entityId());
 
     }
 
-    public void countTheNumberOfLikes () {}
+    private void saveChangesInTheDatabase (Likes like) {
+
+        likesService.save(like);
+
+    }
+
+    private void deleteLikeByUserIdAndEntityId (String userId, String entityId) {
+
+        likesService.deleteByUserIdAndEntityId(userId, entityId);
+
+    }
 
     private boolean hasUserAlreadyLiked (String userId, String entityId, EntityTypeName entityType) {
 

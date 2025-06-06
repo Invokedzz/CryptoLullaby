@@ -15,15 +15,17 @@ public record PostsDTO (
 
         LocalDateTime createdAt,
 
+        long likes,
+
         String userId
 
 )
 
 {
 
-    public PostsDTO (Posts post) {
+    public PostsDTO (Posts post, long likes) {
 
-        this (post.getImg(), post.getTitle(), post.getDescription(), post.getCreatedAt(), post.getUserId());
+        this (post.getImg(), post.getTitle(), post.getDescription(), post.getCreatedAt(), likes, post.getUserId());
 
     }
 

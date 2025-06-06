@@ -5,7 +5,9 @@ import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
+import org.cryptolullaby.model.enums.EntityTypeName;
 import org.cryptolullaby.service.CloudinaryService;
+import org.cryptolullaby.service.LikesService;
 import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
@@ -30,13 +32,17 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
 
     private final PostsService postsService;
 
+    private final LikesService likesService;
+
     private final CloudinaryService cloudinaryService;
 
     private static final boolean DEFAULT_IMAGE_ICON = false;
 
-    public PostsUseCase (PostsService postsService, CloudinaryService cloudinaryService) {
+    public PostsUseCase (PostsService postsService, LikesService likesService, CloudinaryService cloudinaryService) {
 
         this.postsService = postsService;
+
+        this.likesService = likesService;
 
         this.cloudinaryService = cloudinaryService;
 
@@ -117,7 +123,13 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
         return pages
                 .getContent()
                 .stream()
-                .map(PostsDTO::new)
+                .map(post -> {
+
+                    long numberOfLikes = likesService.countNumberOfLikes(post.getId(), EntityTypeName.POST);
+
+                    return new PostsDTO(post, numberOfLikes);
+
+                })
                 .toList();
 
     }

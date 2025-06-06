@@ -5,6 +5,7 @@ import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
+import org.cryptolullaby.model.dto.likes.LikeDTO;
 import org.cryptolullaby.orchestration.CommentsOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,39 +67,14 @@ public class CommentsController {
 
     }
 
-    /*
-    @PostMapping("/{commentId}/{userId}/like")
-    public ResponseEntity <Void> likeACertainComment (
+    @PutMapping
+    public ResponseEntity <Void> likeACertainComment (@RequestBody LikeDTO likeDTO) {
 
-            @PathVariable String commentId,
-            @PathVariable String userId
+        orchestrationFacade.likeACertainComment(likeDTO);
 
-    )
-
-    {
-
-        commentsService.likeComment();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
-
-    @PostMapping("/{commentId}/{userId}/dislike")
-    public ResponseEntity <Void> dislikeACertainComment (
-
-            @PathVariable String commentId,
-            @PathVariable String userId
-
-    )
-
-    {
-
-        commentsService.dislikeComment();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    }
-    */
 
     @PutMapping("/edit/{id}")
     public ResponseEntity <Void> editCommentById (@PathVariable String id, @Valid @RequestBody EditCommentDTO editCommentDTO) {
