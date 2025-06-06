@@ -33,7 +33,7 @@ public class LikesUseCase {
 
         }
 
-        likesService.delete(new Likes(likeAContentDTO, entityTypeName));
+        likesService.deleteByUserIdAndEntityId(likeAContentDTO.userId(), likeAContentDTO.entityId());
 
     }
 

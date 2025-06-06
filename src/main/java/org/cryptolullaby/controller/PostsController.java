@@ -2,6 +2,7 @@ package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
+import org.cryptolullaby.model.dto.likes.LikeDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
@@ -67,38 +68,14 @@ public class PostsController {
 
     }
 
-    /*
-    @PostMapping("/{postId}/{userId}/like")
-    public ResponseEntity <Void> likeACertainPost (
+    @PutMapping
+    public ResponseEntity <Void> likeACertainPost (@RequestBody LikeDTO likeDTO) {
 
-            @PathVariable String postId,
-            @PathVariable String userId
+        orchestrationFacade.likeACertainPost(likeDTO);
 
-    )
-
-    {
-
-        postsService.likePost();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
-
-    @PostMapping("/{postId}/{userId}/dislike")
-    public ResponseEntity <Void> dislikeACertainPost (
-
-            @PathVariable String postId,
-            @PathVariable String userId
-
-    )
-
-    {
-
-        postsService.dislikePost();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    } */
 
     @PutMapping("/edit/{id}")
     public ResponseEntity <SystemResponseDTO> editPostById (

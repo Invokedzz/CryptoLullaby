@@ -22,9 +22,9 @@ public class LikesService {
 
     }
 
-    public void delete (Likes likes) {
+    public void deleteByUserIdAndEntityId (String userId, String entityId) {
 
-        likesRepository.delete(likes);
+        likesRepository.deleteByUserIdAndEntityId(userId, entityId);
 
     }
 
@@ -36,7 +36,7 @@ public class LikesService {
 
     public boolean hasUserLiked (String userId, String entityId, EntityTypeName entityType) {
 
-        return likesRepository.findByUserIdAndEntityIdAndEntityType(userId, entityId, entityType);
+        return likesRepository.existsByUserIdAndEntityIdAndEntityType(userId, entityId, entityType);
 
     }
 
