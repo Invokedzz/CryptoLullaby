@@ -1,6 +1,7 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.service.EmailService;
+import org.cryptolullaby.service.RabbitMQService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -8,9 +9,13 @@ public class SendEmailUseCase {
 
     private final EmailService emailService;
 
-    public SendEmailUseCase (EmailService emailService) {
+    private final RabbitMQService rabbitMQService;
+
+    public SendEmailUseCase (EmailService emailService, RabbitMQService rabbitMQService) {
 
         this.emailService = emailService;
+
+        this.rabbitMQService = rabbitMQService;
 
     }
 
@@ -22,7 +27,7 @@ public class SendEmailUseCase {
 
     private void sendEmailToUser (String to) {
 
-        emailService.sendEmailToUser(to);
+        rabbitMQService.sendToQueue(to);
 
     }
 

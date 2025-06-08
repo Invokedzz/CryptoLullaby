@@ -1,5 +1,6 @@
 package org.cryptolullaby.service;
 
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,6 +17,13 @@ public class EmailService {
     public EmailService (JavaMailSender mailSender) {
 
         this.mailSender = mailSender;
+
+    }
+
+    @RabbitListener(queues = "${rabbitmq.email.queue.name}")
+    public void listen (String to) {
+
+        sendEmailToUser(to);
 
     }
 
