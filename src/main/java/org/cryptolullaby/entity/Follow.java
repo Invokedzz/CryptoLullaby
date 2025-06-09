@@ -1,8 +1,11 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document("follow")
 public class Follow {
@@ -16,9 +19,11 @@ public class Follow {
 
     private FollowStatus followStatus;
 
+    private LocalDateTime requestAt;
+
     public Follow () {}
 
-    public Follow (String id, String followerId, String followingId, FollowStatus followStatus) {
+    public Follow (String id, String followerId, String followingId, FollowStatus followStatus, LocalDateTime requestAt) {
 
         this.id = id;
 
@@ -27,6 +32,20 @@ public class Follow {
         this.followingId = followingId;
 
         this.followStatus = followStatus;
+
+        this.requestAt = requestAt;
+
+    }
+
+    public Follow (FollowDTO followDTO) {
+
+        this.followerId = followDTO.followerId();
+
+        this.followingId = followDTO.followingId();
+
+        this.followStatus = FollowStatus.PENDING;
+
+        this.requestAt = LocalDateTime.now();
 
     }
 
@@ -57,6 +76,12 @@ public class Follow {
     public void setFollowStatus (FollowStatus followStatus) {
 
         this.followStatus = followStatus;
+
+    }
+
+    public LocalDateTime getFollowedAt () {
+
+        return requestAt;
 
     }
 

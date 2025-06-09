@@ -6,8 +6,6 @@ public enum FollowStatus {
 
     BLOCKED,
 
-    NOT_FOLLOWING,
-
     PENDING;
 
 }
