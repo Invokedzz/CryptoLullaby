@@ -1,5 +1,7 @@
 package org.cryptolullaby.controller;
 
+import org.cryptolullaby.model.dto.follow.FollowDTO;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.orchestration.FollowOrchestrationFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,38 +20,38 @@ public class FollowController {
     }
 
     @GetMapping("/{id}/followers")
-    public ResponseEntity <Void> allOfUsersFollowers (@PathVariable String id) {
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allOfUsersFollowers (@PathVariable String id) {
 
-        orchestrationFacade.getAllOfUsersFollowers();
+        var allFollowers = orchestrationFacade.getAllOfUsersFollowers();
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(allFollowers);
 
     }
 
     @GetMapping("/{id}/requests")
-    public ResponseEntity <Void> allFollowRequestsSentToACertainUser (@PathVariable String id) {
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsSentToACertainUser (@PathVariable String id) {
 
-        orchestrationFacade.getAllFollowRequestsSentToACertainUser();
+        var allFollowRequests = orchestrationFacade.getAllFollowRequestsSentToACertainUser();
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(allFollowRequests);
 
     }
 
     @GetMapping("/{id}/myrequests")
-    public ResponseEntity <Void> allFollowRequestsMadeByACertainUser (@PathVariable String id) {
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsMadeByACertainUser (@PathVariable String id) {
 
-        orchestrationFacade.getAllFollowRequestsMadeByACertainUser();
+        var allFollowRequests = orchestrationFacade.getAllFollowRequestsMadeByACertainUser();
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(allFollowRequests);
 
     }
 
     @GetMapping("/{id}/blocked")
-    public ResponseEntity <Void> allBlockedUsersBySomeCertainUser (@PathVariable String id) {
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allBlockedUsersBySomeCertainUser (@PathVariable String id) {
 
-        orchestrationFacade.getAllBlockedUsersBySomeCertainUser();
+        var allBlockedUsers = orchestrationFacade.getAllBlockedUsersBySomeCertainUser();
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(allBlockedUsers);
 
     }
 

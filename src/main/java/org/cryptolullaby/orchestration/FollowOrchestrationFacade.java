@@ -1,5 +1,7 @@
 package org.cryptolullaby.orchestration;
 
+import org.cryptolullaby.model.dto.follow.FollowDTO;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.orchestration.usecases.users.FollowUseCase;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,52 @@ public class FollowOrchestrationFacade {
 
     }
 
-    public void getAllOfUsersFollowers () {}
+    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers () {
 
-    public void getAllFollowRequestsSentToACertainUser () {}
+        return followUseCase.getAllOfUsersFollowers();
 
-    public void getAllFollowRequestsMadeByACertainUser () {}
+    }
 
-    public void getAllBlockedUsersBySomeCertainUser () {}
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser () {
 
-    public void follow () {}
+        return followUseCase.getAllFollowRequestsSentToACertainUser();
 
-    public void acceptFollowRequest () {}
+    }
 
-    public void rejectFollowRequest () {}
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser () {
 
-    public void block () {}
+        return followUseCase.getAllFollowRequestsMadeByACertainUser();
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser () {
+
+        return followUseCase.getAllBlockedUsersBySomeCertainUser();
+
+    }
+
+    public void follow () {
+
+        followUseCase.follow();
+
+    }
+
+    public void acceptFollowRequest () {
+
+        followUseCase.acceptFollowRequest();
+
+    }
+
+    public void rejectFollowRequest () {
+
+        followUseCase.rejectFollowRequest();
+
+    }
+
+    public void block () {
+
+        followUseCase.block();
+
+    }
 
 }

@@ -21,17 +21,79 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
+    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers () {
+
+        return null;
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser () {
+
+        return null;
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser () {
+
+        return null;
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser () {
+
+        return null;
+
+    }
+
+    public void follow () {
+
+
+
+    }
+
+    public void acceptFollowRequest () {
+
+
+
+    }
+
+    public void rejectFollowRequest () {
+
+
+
+    }
+
+    public void block () {
+
+
+
+    }
+
     @Override
     public PagedResponseDTO <FollowDTO> setupPaginationStructure (Page <Follow> pages, List <FollowDTO> elements) {
 
-        return null;
+        return new PagedResponseDTO<>(
+
+                elements,
+
+                pages.getNumber(),
+
+                pages.getSize(),
+
+                pages.getTotalPages()
+
+        );
 
     }
 
     @Override
     public List <FollowDTO> getPagesContentAndRenderItToDTO (Page <Follow> pages) {
 
-        return List.of();
+        return pages
+                .getContent()
+                .stream()
+                .map(FollowDTO::new)
+                .toList();
 
     }
 
