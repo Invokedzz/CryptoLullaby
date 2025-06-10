@@ -4,6 +4,9 @@ import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.orchestration.FollowOrchestrationFacade;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,37 +23,66 @@ public class FollowController {
 
     }
 
-    @GetMapping("/{id}/followers")
-    public ResponseEntity <PagedResponseDTO<FollowDTO>> allOfUsersFollowers (@PathVariable String id) {
+    @GetMapping("/{followingId}/followers")
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allOfUsersFollowers (
 
-        var allFollowers = orchestrationFacade.getAllOfUsersFollowers();
+            @PathVariable String followingId,
+            @PageableDefault(size = 5, sort = "requestAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var allFollowers = orchestrationFacade.getAllOfUsersFollowers(followingId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(allFollowers);
 
     }
 
-    @GetMapping("/{id}/requests")
-    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsSentToACertainUser (@PathVariable String id) {
+    @GetMapping("/{followingId}/requests")
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsSentToACertainUser (
 
-        var allFollowRequests = orchestrationFacade.getAllFollowRequestsSentToACertainUser();
+            @PathVariable String followingId,
+            @PageableDefault(size = 5, sort = "requestAt", direction = Sort.Direction.DESC) Pageable pageable
 
-        return ResponseEntity.status(HttpStatus.OK).body(allFollowRequests);
+    )
 
-    }
+    {
 
-    @GetMapping("/{id}/myrequests")
-    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsMadeByACertainUser (@PathVariable String id) {
-
-        var allFollowRequests = orchestrationFacade.getAllFollowRequestsMadeByACertainUser();
+        var allFollowRequests = orchestrationFacade.getAllFollowRequestsSentToACertainUser(followingId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(allFollowRequests);
 
     }
 
-    @GetMapping("/{id}/blocked")
-    public ResponseEntity <PagedResponseDTO<FollowDTO>> allBlockedUsersBySomeCertainUser (@PathVariable String id) {
+    @GetMapping("/{followerId}/myrequests")
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allFollowRequestsMadeByACertainUser (
 
-        var allBlockedUsers = orchestrationFacade.getAllBlockedUsersBySomeCertainUser();
+            @PathVariable String followerId,
+            @PageableDefault(size = 5, sort = "requestAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var allFollowRequests = orchestrationFacade.getAllFollowRequestsMadeByACertainUser(followerId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(allFollowRequests);
+
+    }
+
+    @GetMapping("/{followingId}/blocked")
+    public ResponseEntity <PagedResponseDTO<FollowDTO>> allBlockedUsersBySomeCertainUser (
+
+            @PathVariable String followingId,
+            @PageableDefault(size = 5, sort = "requestAt", direction = Sort.Direction.DESC) Pageable pageable
+
+
+    )
+
+    {
+
+        var allBlockedUsers = orchestrationFacade.getAllBlockedUsersBySomeCertainUser(followingId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(allBlockedUsers);
 

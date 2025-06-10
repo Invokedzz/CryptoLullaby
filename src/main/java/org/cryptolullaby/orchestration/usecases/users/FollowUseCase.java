@@ -8,6 +8,7 @@ import org.cryptolullaby.service.FollowService;
 import org.cryptolullaby.service.UsersService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,27 +28,43 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers () {
+    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers (String followingId, Pageable pageable) {
 
-        return null;
+        var pages = followService.findAllByStatusEqualsToFollowingAndFollowingId(followingId, pageable);
 
-    }
+        var follows = getPagesContentAndRenderItToDTO(pages);
 
-    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser () {
-
-        return null;
+        return setupPaginationStructure(pages, follows);
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser () {
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser (String followingId, Pageable pageable) {
 
-        return null;
+        var pages = followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowingId(followingId, pageable);
+
+        var follows = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, follows);
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser () {
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser (String followerId, Pageable pageable) {
 
-        return null;
+        var pages = followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowerId(followerId, pageable);
+
+        var follows = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, follows);
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser (String followingId, Pageable pageable) {
+
+        var pages = followService.findAllByStatusEqualsToBlockedAndFollowingId(followingId, pageable);
+
+        var follows = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, follows);
 
     }
 

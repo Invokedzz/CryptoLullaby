@@ -2,7 +2,6 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Follow;
 import org.cryptolullaby.exception.FollowerNotFoundException;
-import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
 import org.cryptolullaby.repository.FollowRepository;
 import org.springframework.data.domain.Page;
@@ -36,7 +35,7 @@ public class FollowService {
     }
 
     // get all users followers
-    public Page <FollowDTO> findAllByStatusEqualsToFollowingAndFollowingId (String followingId, Pageable pageable) {
+    public Page <Follow> findAllByStatusEqualsToFollowingAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
                 followingId, FollowStatus.FOLLOWING, pageable
@@ -45,7 +44,7 @@ public class FollowService {
     }
 
     // get all blocked users
-    public Page <FollowDTO> findAllByStatusEqualsToBlockedAndFollowingId (String followingId, Pageable pageable) {
+    public Page <Follow> findAllByStatusEqualsToBlockedAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
                 followingId, FollowStatus.BLOCKED, pageable
@@ -54,7 +53,7 @@ public class FollowService {
     }
 
     // get all follow requests sent to user
-    public Page <FollowDTO> findAllFollowRequestsByStatusEqualsToPendingAndFollowingId (String followingId, Pageable pageable) {
+    public Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
                 followingId, FollowStatus.PENDING, pageable
@@ -63,7 +62,7 @@ public class FollowService {
     }
 
     // get all follow requests made by user
-    public Page <FollowDTO> findAllFollowRequestsByStatusEqualsToPendingAndFollowerId (String followerId, Pageable pageable) {
+    public Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowerId (String followerId, Pageable pageable) {
 
         return followRepository.findByFollowerIdAndFollowStatus(
                 followerId, FollowStatus.PENDING, pageable
@@ -74,6 +73,12 @@ public class FollowService {
     public void delete (Follow follow) {
 
         followRepository.delete(follow);
+
+    }
+
+    public long countNumberOfFollowers (String followerId) {
+
+        return followRepository.countByFollowerIdAndFollowStatus(followerId, FollowStatus.FOLLOWING);
 
     }
 

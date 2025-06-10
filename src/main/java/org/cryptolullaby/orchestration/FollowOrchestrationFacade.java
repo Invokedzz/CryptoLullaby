@@ -3,6 +3,7 @@ package org.cryptolullaby.orchestration;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.orchestration.usecases.users.FollowUseCase;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,27 +17,27 @@ public class FollowOrchestrationFacade {
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers () {
+    public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers (String followingId, Pageable pageable) {
 
-        return followUseCase.getAllOfUsersFollowers();
-
-    }
-
-    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser () {
-
-        return followUseCase.getAllFollowRequestsSentToACertainUser();
+        return followUseCase.getAllOfUsersFollowers(followingId, pageable);
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser () {
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser (String followingId, Pageable pageable) {
 
-        return followUseCase.getAllFollowRequestsMadeByACertainUser();
+        return followUseCase.getAllFollowRequestsSentToACertainUser(followingId, pageable);
 
     }
 
-    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser () {
+    public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser (String followerId, Pageable pageable) {
 
-        return followUseCase.getAllBlockedUsersBySomeCertainUser();
+        return followUseCase.getAllFollowRequestsMadeByACertainUser(followerId, pageable);
+
+    }
+
+    public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser (String followingId, Pageable pageable) {
+
+        return followUseCase.getAllBlockedUsersBySomeCertainUser(followingId, pageable);
 
     }
 

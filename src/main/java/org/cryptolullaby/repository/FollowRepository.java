@@ -14,16 +14,14 @@ import java.util.Optional;
 @Repository
 public interface FollowRepository extends MongoRepository <Follow, String> {
 
-    void deleteByFollowingId (String followingId);
+    Page <Follow> findByFollowingIdAndFollowStatus (String followingId, FollowStatus followStatus, Pageable pageable);
 
-    Page <FollowDTO> findByFollowingIdAndFollowStatus (String followingId, FollowStatus followStatus, Pageable pageable);
-
-    Page<FollowDTO> findByFollowerIdAndFollowStatus (String followerId, FollowStatus followStatus, Pageable pageable);
+    Page <Follow> findByFollowerIdAndFollowStatus (String followerId, FollowStatus followStatus, Pageable pageable);
 
     Optional <Follow> findByFollowerId (String followerId);
 
     boolean existsByFollowerIdAndFollowingIdAndFollowStatus(String followerId, String followingId, FollowStatus followStatus);
 
-    void deleteByFollowerId (String followerId);
+    long countByFollowerIdAndFollowStatus(String followerId, FollowStatus followStatus);
 
 }

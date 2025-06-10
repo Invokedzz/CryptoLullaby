@@ -2,6 +2,9 @@ package org.cryptolullaby.model.dto.follow;
 
 import jakarta.validation.constraints.NotNull;
 import org.cryptolullaby.entity.Follow;
+import org.cryptolullaby.model.enums.FollowStatus;
+
+import java.time.LocalDateTime;
 
 public record FollowDTO (
 
@@ -9,7 +12,11 @@ public record FollowDTO (
         String followerId,
 
         @NotNull(message = "Following Id can't be null!")
-        String followingId
+        String followingId,
+
+        FollowStatus status,
+
+        LocalDateTime requestAt
 
 )
 
@@ -17,7 +24,7 @@ public record FollowDTO (
 
     public FollowDTO (Follow follow) {
 
-        this (follow.getFollowerId(), follow.getFollowingId());
+        this (follow.getFollowerId(), follow.getFollowingId(), follow.getFollowStatus(), follow.getFollowedAt());
 
     }
 
