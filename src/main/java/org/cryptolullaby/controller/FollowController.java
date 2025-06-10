@@ -1,5 +1,6 @@
 package org.cryptolullaby.controller;
 
+import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.orchestration.FollowOrchestrationFacade;
@@ -55,37 +56,37 @@ public class FollowController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity <Void> follow (@PathVariable String id) {
+    @PutMapping
+    public ResponseEntity <Void> follow (@Valid @RequestBody FollowDTO followDTO) {
 
-        orchestrationFacade.follow();
+        orchestrationFacade.follow(followDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
-    @PutMapping("/{id}/accept")
-    public ResponseEntity <Void> acceptFollowRequest (@PathVariable String id) {
+    @PutMapping("/{followerId}/accept")
+    public ResponseEntity <Void> acceptFollowRequest (@PathVariable String followerId) {
 
-        orchestrationFacade.acceptFollowRequest();
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-    }
-
-    @PutMapping("/{id}/reject")
-    public ResponseEntity <Void> rejectFollowRequest (@PathVariable String id) {
-
-        orchestrationFacade.rejectFollowRequest();
+        orchestrationFacade.acceptFollowRequest(followerId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @PutMapping("/{id}/block")
-    public ResponseEntity <Void> block (@PathVariable String id) {
+    @PutMapping("/{followerId}/reject")
+    public ResponseEntity <Void> rejectFollowRequest (@PathVariable String followerId) {
 
-        orchestrationFacade.block();
+        orchestrationFacade.rejectFollowRequest(followerId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    @PutMapping("/{followerId}/block")
+    public ResponseEntity <Void> block (@PathVariable String followerId) {
+
+        orchestrationFacade.block(followerId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

@@ -71,10 +71,9 @@ public class FollowService {
 
     }
 
-    // reject follow
-    public void deleteByFollowingId (String followingId) {
+    public void delete (Follow follow) {
 
-        followRepository.deleteByFollowingId(followingId);
+        followRepository.delete(follow);
 
     }
 
