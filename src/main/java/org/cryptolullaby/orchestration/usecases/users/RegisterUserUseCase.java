@@ -59,7 +59,7 @@ public class RegisterUserUseCase {
 
             user.setImgUrl(img);
 
-            saveChangesInTheDatabase(user);
+            saveChangesInTheDatabaseWithExternalValidation(user);
 
         }
 
@@ -104,6 +104,12 @@ public class RegisterUserUseCase {
     private void saveChangesInTheDatabase (Users user) {
 
         usersService.save(user);
+
+    }
+
+    private void saveChangesInTheDatabaseWithExternalValidation (Users user) {
+
+        usersService.saveWithValidation(user);
 
     }
 

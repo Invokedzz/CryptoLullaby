@@ -35,9 +35,15 @@ public class UsersService {
 
     }
 
-    public void save (Users user) {
+    public void saveWithValidation (Users user) {
 
-       // theseComponentsAreValidOrNot(user.getUsername(), user.getEmail());
+        theseComponentsAreValidOrNot(user.getUsername(), user.getEmail());
+
+        usersRepository.save(user);
+
+    }
+
+    public void save (Users user) {
 
         usersRepository.save(user);
 
