@@ -59,6 +59,12 @@ public class UsersService {
 
     }
 
+    public void checkIfBothIdsAreValid (String followerId, String followingId) {
+
+        userValidator.validate(followerId, followingId);
+
+    }
+
     public Users findUserByEmail (String email) {
 
         return usersRepository

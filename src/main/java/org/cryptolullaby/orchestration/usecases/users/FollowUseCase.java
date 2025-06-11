@@ -72,6 +72,11 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void follow (FollowDTO followDTO) {
 
+        usersService.checkIfBothIdsAreValid(
+                followDTO.followerId(),
+                followDTO.followingId()
+        );
+
         var doesRelationExist = followService.findByFollowerIdAndFollowingId(
                 followDTO.followerId(),
                 followDTO.followingId()
