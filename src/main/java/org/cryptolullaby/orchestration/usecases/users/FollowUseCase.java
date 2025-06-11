@@ -1,6 +1,8 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Follow;
+import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.exception.InvalidFollowInviteException;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
@@ -70,7 +72,31 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void follow (FollowDTO followDTO) {
 
-        followService.save(new Follow(followDTO));
+        var doesRelationExist = followService.findByFollowerIdAndFollowingId(
+                followDTO.followerId(),
+                followDTO.followingId()
+        );
+
+        if (doesRelationExist.isEmpty()) {
+
+            followService.save(new Follow(followDTO));
+
+        }
+
+        doesRelationExist.ifPresent(follow -> {
+
+            if (follow.getFollowStatus().equals(FollowStatus.BLOCKED)) {
+
+                throw new InvalidFollowInviteException("You can't follow a user that blocked you!");
+
+            }
+
+            followService.deleteByFollowerIdAndFollowingId(
+                    followDTO.followerId(),
+                    followDTO.followingId()
+            );
+
+        });
 
     }
 
@@ -131,6 +157,12 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
                 .stream()
                 .map(FollowDTO::new)
                 .toList();
+
+    }
+
+    private Users findUserByIdAndIsActive (String id) {
+
+        return usersService.findUserByIdAndActive(id);
 
     }
 

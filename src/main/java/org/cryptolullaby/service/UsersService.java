@@ -25,6 +25,8 @@ public class UsersService {
 
     private final UserValidator userValidator;
 
+    private static final boolean IS_ACTIVE = true;
+
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
         this.usersRepository = usersRepository;
@@ -46,6 +48,14 @@ public class UsersService {
         return usersRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("We couldn't find a user with id: " + id));
+
+    }
+
+    public Users findUserByIdAndActive (String id) {
+
+        return usersRepository
+                .findByIdAndIsActive(id, IS_ACTIVE)
+                .orElseThrow(() -> new UserNotFoundException("We couldn't find a user with this id: " + id));
 
     }
 

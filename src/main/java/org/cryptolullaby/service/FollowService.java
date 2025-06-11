@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class FollowService {
 
@@ -31,6 +33,18 @@ public class FollowService {
         return followRepository
                 .findByFollowerId(followerId)
                 .orElseThrow(() -> new FollowerNotFoundException("We weren't able to find a follower with this id: " + followerId));
+
+    }
+
+    public Optional <Follow> findByFollowerIdAndFollowingId (String followerId, String followingId) {
+
+        return followRepository.findByFollowerIdAndFollowingId(followerId, followingId);
+
+    }
+
+    public void deleteByFollowerIdAndFollowingId (String followerId, String followingId) {
+
+        followRepository.deleteByFollowerIdAndFollowingId(followerId, followingId);
 
     }
 
@@ -79,14 +93,6 @@ public class FollowService {
     public long countNumberOfFollowers (String followerId) {
 
         return followRepository.countByFollowerIdAndFollowStatus(followerId, FollowStatus.FOLLOWING);
-
-    }
-
-    public boolean doesStatusConditionExist (String followerId, String followingId, FollowStatus followStatus) {
-
-        return followRepository.existsByFollowerIdAndFollowingIdAndFollowStatus(
-                followerId, followingId, followStatus
-        );
 
     }
 
