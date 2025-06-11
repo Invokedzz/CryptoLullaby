@@ -1,7 +1,6 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Follow;
-import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.InvalidFollowInviteException;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
@@ -14,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
@@ -42,7 +42,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public PagedResponseDTO <FollowDTO> getAllFollowRequestsSentToACertainUser (String followingId, Pageable pageable) {
 
-        var pages = followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowingId(followingId, pageable);
+        var pages = findAllFollowRequestsByStatusEqualsToPendingAndFollowingId(followingId, pageable);
 
         var follows = getPagesContentAndRenderItToDTO(pages);
 
@@ -52,7 +52,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public PagedResponseDTO <FollowDTO> getAllFollowRequestsMadeByACertainUser (String followerId, Pageable pageable) {
 
-        var pages = followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowerId(followerId, pageable);
+        var pages = findAllFollowRequestsByStatusEqualsToPendingAndFollowerId(followerId, pageable);
 
         var follows = getPagesContentAndRenderItToDTO(pages);
 
@@ -62,7 +62,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public PagedResponseDTO <FollowDTO> getAllBlockedUsersBySomeCertainUser (String followingId, Pageable pageable) {
 
-        var pages = followService.findAllByStatusEqualsToBlockedAndFollowingId(followingId, pageable);
+        var pages = findAllByStatusEqualsToBlockedAndFollowingId(followingId, pageable);
 
         var follows = getPagesContentAndRenderItToDTO(pages);
 
@@ -72,15 +72,9 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void follow (FollowDTO followDTO) {
 
-        usersService.checkIfBothIdsAreValid(
-                followDTO.followerId(),
-                followDTO.followingId()
-        );
+        checkIfFollowerIdAndFollowingIdAreValid(followDTO.followerId(), followDTO.followingId());
 
-        var doesRelationExist = followService.findByFollowerIdAndFollowingId(
-                followDTO.followerId(),
-                followDTO.followingId()
-        );
+        var doesRelationExist = findByFollowerIdAndFollowingId(followDTO.followerId(), followDTO.followingId());
 
         if (doesRelationExist.isEmpty()) {
 
@@ -107,7 +101,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void acceptFollowRequest (String followerId) {
 
-        var follower = followService.findByFollowerId(followerId);
+        var follower = findByFollowerId(followerId);
 
         follower.setFollowStatus(FollowStatus.FOLLOWING);
 
@@ -117,7 +111,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void rejectFollowRequest (String followerId) {
 
-        var follower = followService.findByFollowerId(followerId);
+        var follower = findByFollowerId(followerId);
 
         if (follower.getFollowStatus().equals(FollowStatus.PENDING) || follower.getFollowStatus().equals(FollowStatus.FOLLOWING)) {
 
@@ -129,7 +123,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void block (String followerId) {
 
-        var follower = followService.findByFollowerId(followerId);
+        var follower = findByFollowerId(followerId);
 
         follower.setFollowStatus(FollowStatus.BLOCKED);
 
@@ -165,9 +159,39 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
-    private Users findUserByIdAndIsActive (String id) {
+    private Follow findByFollowerId (String followerId) {
 
-        return usersService.findUserByIdAndActive(id);
+        return followService.findByFollowerId(followerId);
+
+    }
+
+    private Page <Follow> findAllByStatusEqualsToBlockedAndFollowingId (String followingId, Pageable pageable) {
+
+        return followService.findAllByStatusEqualsToBlockedAndFollowingId(followingId, pageable);
+
+    }
+
+    private Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowerId (String followerId, Pageable pageable) {
+
+        return followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowerId(followerId, pageable);
+
+    }
+
+    private Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowingId (String followingId, Pageable pageable) {
+
+        return followService.findAllFollowRequestsByStatusEqualsToPendingAndFollowingId(followingId, pageable);
+
+    }
+
+    private void checkIfFollowerIdAndFollowingIdAreValid (String followerId, String followingId) {
+
+        usersService.checkIfBothIdsAreValid(followerId, followingId);
+
+    }
+
+    private Optional <Follow> findByFollowerIdAndFollowingId (String followerId, String followingId) {
+
+        return followService.findByFollowerIdAndFollowingId(followerId, followingId);
 
     }
 

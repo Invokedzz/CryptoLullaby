@@ -11,6 +11,8 @@ import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,8 +27,6 @@ public class UsersService {
 
     private final UserValidator userValidator;
 
-    private static final boolean IS_ACTIVE = true;
-
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
         this.usersRepository = usersRepository;
@@ -37,7 +37,7 @@ public class UsersService {
 
     public void save (Users user) {
 
-        theseComponentsAreValidOrNot(user.getUsername(), user.getEmail());
+       // theseComponentsAreValidOrNot(user.getUsername(), user.getEmail());
 
         usersRepository.save(user);
 
@@ -48,14 +48,6 @@ public class UsersService {
         return usersRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("We couldn't find a user with id: " + id));
-
-    }
-
-    public Users findUserByIdAndActive (String id) {
-
-        return usersRepository
-                .findByIdAndIsActive(id, IS_ACTIVE)
-                .orElseThrow(() -> new UserNotFoundException("We couldn't find a user with this id: " + id));
 
     }
 
