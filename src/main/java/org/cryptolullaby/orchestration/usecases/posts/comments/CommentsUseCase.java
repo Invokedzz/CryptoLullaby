@@ -1,13 +1,11 @@
 package org.cryptolullaby.orchestration.usecases.posts.comments;
 
 import org.cryptolullaby.entity.Comments;
-import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.service.CommentsService;
-import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +18,9 @@ public class CommentsUseCase implements IPaginationStructure <CommentsDTO, Comme
 
     private final CommentsService commentsService;
 
-    private final PostsService postsService;
-
-    public CommentsUseCase (CommentsService commentsService, PostsService postsService) {
+    public CommentsUseCase (CommentsService commentsService) {
 
         this.commentsService = commentsService;
-
-        this.postsService = postsService;
 
     }
 

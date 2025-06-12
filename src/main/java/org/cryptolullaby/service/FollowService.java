@@ -1,13 +1,16 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Follow;
+import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.FollowerNotFoundException;
+import org.cryptolullaby.model.dto.follow.UserFollowersDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
 import org.cryptolullaby.repository.FollowRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +28,16 @@ public class FollowService {
     public void save (Follow follow) {
 
         followRepository.save(follow);
+
+    }
+
+    public UserFollowersDTO getUserFollowers (String followingId) {
+
+        long followCount = countNumberOfFollowers(followingId);
+
+        var followers = followRepository.findByFollowingIdAndFollowStatus(followingId, FollowStatus.FOLLOWING);
+
+        return new UserFollowersDTO(followCount, followers);
 
     }
 
@@ -90,9 +103,9 @@ public class FollowService {
 
     }
 
-    public long countNumberOfFollowers (String followerId) {
+    public long countNumberOfFollowers (String followingId) {
 
-        return followRepository.countByFollowerIdAndFollowStatus(followerId, FollowStatus.FOLLOWING);
+        return followRepository.countByFollowingIdAndFollowStatus(followingId, FollowStatus.FOLLOWING);
 
     }
 

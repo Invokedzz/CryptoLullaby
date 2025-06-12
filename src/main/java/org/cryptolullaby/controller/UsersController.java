@@ -2,9 +2,13 @@ package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
 import org.cryptolullaby.model.dto.general.ImageDTO;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.orchestration.UserOrchestrationFacade;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,9 +58,17 @@ public class UsersController {
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity <ProfileDTO> findProfileById (@PathVariable String id) {
+    public ResponseEntity <PagedResponseDTO<ProfileDTO>> findProfileById (
 
-        var user = orchestrationFacade.getProfile(id);
+            @PathVariable String id,
+
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var user = orchestrationFacade.getProfile(id, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
 

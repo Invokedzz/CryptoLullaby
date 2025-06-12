@@ -13,6 +13,8 @@ import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,8 @@ public class UsersService {
     private final UsersRepository usersRepository;
 
     private final UserValidator userValidator;
+
+    private static final boolean IS_ACTIVE = true;
 
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
@@ -46,6 +50,14 @@ public class UsersService {
     public void save (Users user) {
 
         usersRepository.save(user);
+
+    }
+
+    public Page <Users> findByIdAndIsActive (String id, Pageable pageable) {
+
+        return usersRepository.findByIdAndIsActive(
+                id, IS_ACTIVE, pageable
+        );
 
     }
 

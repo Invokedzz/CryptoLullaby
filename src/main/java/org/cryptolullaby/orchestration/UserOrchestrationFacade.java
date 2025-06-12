@@ -1,5 +1,6 @@
 package org.cryptolullaby.orchestration;
 
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
@@ -7,6 +8,7 @@ import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
 import org.cryptolullaby.orchestration.usecases.users.SendEmailUseCase;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,9 +45,9 @@ public class UserOrchestrationFacade {
 
     }
 
-    public ProfileDTO getProfile (String id) {
+    public PagedResponseDTO<ProfileDTO> getProfile (String id, Pageable pageable) {
 
-        return profileUseCase.getUserProfileById(id);
+        return profileUseCase.getUserProfileById(id, pageable);
 
     }
 

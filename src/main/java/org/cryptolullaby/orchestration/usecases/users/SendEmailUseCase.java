@@ -7,13 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendEmailUseCase {
 
-    private final EmailService emailService;
-
     private final RabbitMQService rabbitMQService;
 
-    public SendEmailUseCase (EmailService emailService, RabbitMQService rabbitMQService) {
-
-        this.emailService = emailService;
+    public SendEmailUseCase (RabbitMQService rabbitMQService) {
 
         this.rabbitMQService = rabbitMQService;
 

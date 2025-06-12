@@ -25,11 +25,9 @@ public class RegisterUserUseCase {
 
     private final CloudinaryService cloudinaryService;
 
-    private final EmailService emailService;
-
     private static final boolean DEFAULT_IMAGE_ICON = true;
 
-    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService, EmailService emailService) {
+    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService) {
 
         this.usersService = usersService;
 
@@ -38,8 +36,6 @@ public class RegisterUserUseCase {
         this.passwordService = passwordService;
 
         this.cloudinaryService = cloudinaryService;
-
-        this.emailService = emailService;
 
     }
 
