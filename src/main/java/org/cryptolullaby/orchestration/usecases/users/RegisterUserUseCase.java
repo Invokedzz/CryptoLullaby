@@ -8,6 +8,8 @@ import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.service.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -41,6 +43,7 @@ public class RegisterUserUseCase {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void register (RegisterDTO registerDTO) {
 
         var user = new Users(registerDTO);
