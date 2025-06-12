@@ -5,6 +5,7 @@ import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
+import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
 import org.cryptolullaby.orchestration.usecases.users.SendEmailUseCase;
@@ -21,13 +22,17 @@ public class UserOrchestrationFacade {
 
     private final SendEmailUseCase sendEmailUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailUseCase sendEmailUseCase) {
+    private final EditProfileUseCase editProfileUseCase;
+
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailUseCase sendEmailUseCase, EditProfileUseCase editProfileUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 
         this.profileUseCase = profileUseCase;
 
         this.sendEmailUseCase = sendEmailUseCase;
+
+        this.editProfileUseCase = editProfileUseCase;
 
     }
 
@@ -53,19 +58,19 @@ public class UserOrchestrationFacade {
 
     public void editUserById (String id, EditProfileDTO profileDTO) {
 
-        profileUseCase.editUserProfile(id, profileDTO);
+        editProfileUseCase.editUserProfile(id, profileDTO);
 
     }
 
     public void editUserImage (String id, MultipartFile file) {
 
-        profileUseCase.editUserImage(id, file);
+        editProfileUseCase.editUserImage(id, file);
 
     }
 
     public void deactivateUserById (String id) {
 
-        profileUseCase.deactivateUserAccount(id);
+        editProfileUseCase.deactivateUserAccount(id);
 
     }
 
