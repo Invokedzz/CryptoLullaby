@@ -34,7 +34,7 @@ public class EmailService {
         message.setFrom(from);
         message.setText("test");
         message.setTo(to);
-        message.setSubject("testing aws");
+        message.setSubject("testing smtp");
 
         mailSender.send(message);
 

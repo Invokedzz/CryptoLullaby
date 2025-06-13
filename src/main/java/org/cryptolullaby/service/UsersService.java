@@ -1,23 +1,14 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Interest;
-import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.UserNotFoundException;
-import org.cryptolullaby.model.dto.users.InterestDTO;
-import org.cryptolullaby.model.dto.users.RegisterDTO;
-import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.enums.InterestName;
-import org.cryptolullaby.model.enums.RolesName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;

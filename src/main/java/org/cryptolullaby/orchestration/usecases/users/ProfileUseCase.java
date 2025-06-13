@@ -63,6 +63,12 @@ public class ProfileUseCase implements IPaginationStructure <ProfileDTO, Users> 
 
     }
 
+    /*
+    *
+    * TO DO: fix NullPointerException that is happening in this method; queries
+    *
+    * */
+
     @Override
     public List <ProfileDTO> getPagesContentAndRenderItToDTO (Page <Users> pages) {
 
