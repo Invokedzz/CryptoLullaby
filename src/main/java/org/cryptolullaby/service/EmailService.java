@@ -1,5 +1,6 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.repository.EmailRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,9 +15,13 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    public EmailService (JavaMailSender mailSender) {
+    private final EmailRepository emailRepository;
+
+    public EmailService (JavaMailSender mailSender, EmailRepository emailRepository) {
 
         this.mailSender = mailSender;
+
+        this.emailRepository = emailRepository;
 
     }
 
