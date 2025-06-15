@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RabbitMQService {
 
-    @Value("${rabbitmq.email.queue.name}")
+    @Value("${rabbitmq.register.email.queue}")
     private String emailQueue;
 
     private final RabbitTemplate rabbitTemplate;

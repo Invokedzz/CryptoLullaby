@@ -10,13 +10,35 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${rabbitmq.email.queue.name}")
-    private String queue;
+    @Value("${rabbitmq.register.email.queue}")
+    private String registerQueue;
+
+    @Value("${rabbitmq.reactivation.email.queue}")
+    private String reactivationQueue;
+
+    @Value("${rabbitmq.deactivation.email.queue}")
+    private String deactivationQueue;
+
+    private static final boolean IS_DURABLE = true;
 
     @Bean
-    public Queue queue () {
+    public Queue registerEmailQueue () {
 
-        return new Queue(queue, true);
+        return new Queue(registerQueue, IS_DURABLE);
+
+    }
+
+    @Bean
+    public Queue reactivationEmailQueue () {
+
+        return new Queue(reactivationQueue, IS_DURABLE);
+
+    }
+
+    @Bean
+    public Queue deactivationEmailQueue () {
+
+        return new Queue(deactivationQueue, IS_DURABLE);
 
     }
 

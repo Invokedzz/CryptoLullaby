@@ -25,23 +25,12 @@ public class EmailService {
 
     }
 
-    @RabbitListener(queues = "${rabbitmq.email.queue.name}")
-    public void listen (SimpleMailMessage message) {
-
-        sendEmailToUser(message);
-
-    }
-
-    public void sendEmailToUser (SimpleMailMessage message) {
+    public void sendRegisterEmailToUser (SimpleMailMessage message) {
 
         mailSender.send(message);
 
     }
 
-    public SimpleMailMessage simpleMailMessage () {
 
-        return new SimpleMailMessage();
-
-    }
 
 }

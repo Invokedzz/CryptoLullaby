@@ -8,7 +8,6 @@ import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
-import org.cryptolullaby.orchestration.usecases.users.SendEmailUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,17 +19,15 @@ public class UserOrchestrationFacade {
 
     private final ProfileUseCase profileUseCase;
 
-    private final SendEmailUseCase sendEmailUseCase;
+   // private final SendEmailUseCase sendEmailUseCase;
 
     private final EditProfileUseCase editProfileUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailUseCase sendEmailUseCase, EditProfileUseCase editProfileUseCase) {
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, EditProfileUseCase editProfileUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 
         this.profileUseCase = profileUseCase;
-
-        this.sendEmailUseCase = sendEmailUseCase;
 
         this.editProfileUseCase = editProfileUseCase;
 
@@ -40,7 +37,7 @@ public class UserOrchestrationFacade {
 
         registerANewUser(registerDTO);
 
-        sendAnEmailAfterRegistration(registerDTO.email());
+     //   sendAnEmailAfterRegistration(registerDTO.email());
 
     }
 
@@ -80,10 +77,10 @@ public class UserOrchestrationFacade {
 
     }
 
-    private void sendAnEmailAfterRegistration (String email) {
+   /* private void sendAnEmailAfterRegistration (String email) {
 
         sendEmailUseCase.send(email);
 
-    }
+    } */
 
 }
