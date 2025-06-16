@@ -4,7 +4,7 @@ import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
-import org.cryptolullaby.model.enums.EntityTypeName;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.service.*;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
@@ -88,7 +88,7 @@ public class ProfileUseCase implements IPaginationStructure <ProfileDTO, Users> 
                                             post.getTitle(),
                                             post.getDescription(),
                                             post.getCreatedAt(),
-                                            likesService.countNumberOfLikes(post.getId(), EntityTypeName.POST),
+                                            likesService.countNumberOfLikes(post.getId(), EntityType.POST),
                                             user.getId()
 
                             ))

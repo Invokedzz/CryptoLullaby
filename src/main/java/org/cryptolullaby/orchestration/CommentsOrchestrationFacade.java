@@ -5,7 +5,7 @@ import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.likes.LikeDTO;
-import org.cryptolullaby.model.enums.EntityTypeName;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.orchestration.usecases.posts.LikesUseCase;
 import org.cryptolullaby.orchestration.usecases.posts.comments.CommentsUseCase;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +46,7 @@ public class CommentsOrchestrationFacade {
 
     public void likeACertainComment (LikeDTO likeDTO) {
 
-        likesUseCase.like(likeDTO, EntityTypeName.COMMENT);
+        likesUseCase.like(likeDTO, EntityType.COMMENT);
 
     }
 

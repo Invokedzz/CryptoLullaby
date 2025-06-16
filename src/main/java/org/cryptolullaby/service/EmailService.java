@@ -1,36 +1,33 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Email;
+import org.cryptolullaby.exception.EmailNotFoundException;
 import org.cryptolullaby.repository.EmailRepository;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
 
-    @Value("${spring.mail.username}")
-    private String from;
-
-    private final JavaMailSender mailSender;
-
     private final EmailRepository emailRepository;
 
-    public EmailService (JavaMailSender mailSender, EmailRepository emailRepository) {
-
-        this.mailSender = mailSender;
+    public EmailService (EmailRepository emailRepository) {
 
         this.emailRepository = emailRepository;
 
     }
 
-    public void sendRegisterEmailToUser (SimpleMailMessage message) {
+    public void save (Email email) {
 
-        mailSender.send(message);
+        emailRepository.save(email);
 
     }
 
+    public Email findById (String id) {
 
+        return emailRepository
+                .findById(id)
+                .orElseThrow(() -> new EmailNotFoundException("We couldn't find an email with this id " + id));
+
+    }
 
 }

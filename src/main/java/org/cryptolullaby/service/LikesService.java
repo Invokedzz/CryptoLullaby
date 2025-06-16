@@ -1,7 +1,7 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Likes;
-import org.cryptolullaby.model.enums.EntityTypeName;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.repository.LikesRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,13 @@ public class LikesService {
 
     }
 
-    public long countNumberOfLikes (String entityId, EntityTypeName entityType) {
+    public long countNumberOfLikes (String entityId, EntityType entityType) {
 
         return likesRepository.countLikesByEntityIdAndEntityType(entityId, entityType);
 
     }
 
-    public boolean hasUserLiked (String userId, String entityId, EntityTypeName entityType) {
+    public boolean hasUserLiked (String userId, String entityId, EntityType entityType) {
 
         return likesRepository.existsByUserIdAndEntityIdAndEntityType(userId, entityId, entityType);
 

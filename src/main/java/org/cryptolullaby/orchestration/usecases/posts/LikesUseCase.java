@@ -2,7 +2,7 @@ package org.cryptolullaby.orchestration.usecases.posts;
 
 import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeDTO;
-import org.cryptolullaby.model.enums.EntityTypeName;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.service.LikesService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class LikesUseCase {
 
     }
 
-    public void like (LikeDTO likeAContentDTO, EntityTypeName entityTypeName) {
+    public void like (LikeDTO likeAContentDTO, EntityType entityTypeName) {
 
         var hasLiked = hasUserAlreadyLiked(
                 likeAContentDTO.userId(),
@@ -49,7 +49,7 @@ public class LikesUseCase {
 
     }
 
-    private boolean hasUserAlreadyLiked (String userId, String entityId, EntityTypeName entityType) {
+    private boolean hasUserAlreadyLiked (String userId, String entityId, EntityType entityType) {
 
         return likesService.hasUserLiked(userId, entityId, entityType);
 

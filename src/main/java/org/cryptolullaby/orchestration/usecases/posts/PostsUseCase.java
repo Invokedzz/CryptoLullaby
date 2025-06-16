@@ -5,7 +5,7 @@ import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
-import org.cryptolullaby.model.enums.EntityTypeName;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.LikesService;
 import org.cryptolullaby.service.PostsService;
@@ -125,7 +125,7 @@ public class PostsUseCase implements IPaginationStructure <PostsDTO, Posts> {
                 .stream()
                 .map(post -> {
 
-                    long numberOfLikes = likesService.countNumberOfLikes(post.getId(), EntityTypeName.POST);
+                    long numberOfLikes = likesService.countNumberOfLikes(post.getId(), EntityType.POST);
 
                     return new PostsDTO(post, numberOfLikes);
 

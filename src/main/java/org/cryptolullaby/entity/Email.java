@@ -1,8 +1,11 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.enums.EmailStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document("email")
 public class Email {
@@ -12,7 +15,7 @@ public class Email {
 
     private String from;
 
-    private String to;
+    private String [] to;
 
     private String subject;
 
@@ -20,11 +23,11 @@ public class Email {
 
     private EmailStatus status;
 
-    private String userId;
+    private LocalDateTime createdAt;
 
     public Email () {}
 
-    public Email (String from, String to, String subject, String content, EmailStatus status, String userId) {
+    public Email (String from, String [] to, String subject, String content, EmailStatus status, LocalDateTime createdAt) {
 
         this.from = from;
 
@@ -36,7 +39,23 @@ public class Email {
 
         this.status = status;
 
-        this.userId = userId;
+        this.createdAt = createdAt;
+
+    }
+
+    public Email (EmailDTO emailDTO) {
+
+        this.from = emailDTO.from();
+
+        this.to = emailDTO.to();
+
+        this.subject = emailDTO.subject();
+
+        this.content = emailDTO.content();
+
+        this.status = EmailStatus.SENT;
+
+        this.createdAt = LocalDateTime.now();
 
     }
 
@@ -58,13 +77,13 @@ public class Email {
 
     }
 
-    public String getTo () {
+    public String [] getTo () {
 
         return to;
 
     }
 
-    public void setTo (String to) {
+    public void setTo (String [] to) {
 
         this.to = to;
 
@@ -106,15 +125,15 @@ public class Email {
 
     }
 
-    public String getUserId () {
+    public LocalDateTime getCreatedAt () {
 
-        return userId;
+        return createdAt;
 
     }
 
-    public void setUserId (String userId) {
+    public void setCreatedAt (LocalDateTime createdAt) {
 
-        this.userId = userId;
+        this.createdAt = createdAt;
 
     }
 
