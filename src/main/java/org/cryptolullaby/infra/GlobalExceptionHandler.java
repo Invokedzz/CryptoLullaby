@@ -1,8 +1,6 @@
 package org.cryptolullaby.infra;
 
-import org.cryptolullaby.exception.BadRequestException;
-import org.cryptolullaby.exception.ResourceNotFoundException;
-import org.cryptolullaby.exception.UnauthorizedRequestException;
+import org.cryptolullaby.exception.*;
 import org.cryptolullaby.model.dto.general.ExceptionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,7 +96,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedRequestException.class)
-    public ResponseEntity <ExceptionDTO> unauthorizedException (UnauthorizedRequestException ex) {
+    public ResponseEntity <ExceptionDTO> handleUnauthorizedException (UnauthorizedRequestException ex) {
 
         ExceptionDTO exception = new ExceptionDTO(
 
@@ -109,6 +107,51 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
+
+    }
+
+    @ExceptionHandler(BadGatewayException.class)
+    public ResponseEntity <ExceptionDTO> handleBadGatewayException (BadGatewayException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.BAD_GATEWAY.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_GATEWAY);
+
+    }
+
+    @ExceptionHandler(GatewayTimeoutException.class)
+    public ResponseEntity <ExceptionDTO> handleGatewayTimeoutException (GatewayTimeoutException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.GATEWAY_TIMEOUT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.GATEWAY_TIMEOUT);
+
+    }
+
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity <ExceptionDTO> handleUnprocessableEntityException (UnprocessableEntityException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.UNPROCESSABLE_ENTITY);
 
     }
 

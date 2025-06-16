@@ -1,15 +1,15 @@
 package org.cryptolullaby.orchestration.usecases.email;
 
 import org.cryptolullaby.entity.Email;
+import org.cryptolullaby.exception.BadGatewayException;
+import org.cryptolullaby.exception.GatewayTimeoutException;
+import org.cryptolullaby.exception.UnprocessableEntityException;
 import org.cryptolullaby.model.dto.general.EmailDTO;
-import org.cryptolullaby.model.enums.EmailType;
 import org.cryptolullaby.service.EmailService;
-import org.cryptolullaby.service.RabbitMQService;
 import org.cryptolullaby.util.IEmailQueues;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,15 +38,31 @@ public class SendEmailUseCase implements IEmailQueues {
     @RabbitListener(queues = "${rabbitmq.register.email.queue}")
     public void sendEmailToUserAfterRegistration (String to) {
 
-        var email = structureEmail(
-                to, "Registration",
-                "Welcome to CryptoLullaby!");
+        try {
 
-        var emailDTO = buildEmailDTO(email);
+            var email = structureEmail(
+                    to, "Registration",
+                    "Welcome to CryptoLullaby!");
 
-        saveChangesInTheDatabase(new Email(emailDTO));
+            var emailDTO = buildEmailDTO(email);
 
-        mailSender.send(email);
+            saveChangesInTheDatabase(new Email(emailDTO));
+
+            mailSender.send(email);
+
+        } catch (MailSendException ex) {
+
+            throw new GatewayTimeoutException(ex.getMessage());
+
+        } catch (MailAuthenticationException ex) {
+
+            throw new BadGatewayException(ex.getMessage());
+
+        } catch (MailParseException ex) {
+
+            throw new UnprocessableEntityException(ex.getMessage());
+
+        }
 
     }
 
@@ -54,15 +70,31 @@ public class SendEmailUseCase implements IEmailQueues {
     @RabbitListener(queues = "${rabbitmq.reactivation.email.queue}")
     public void sendEmailToUserAfterAccountReactivation (String to) {
 
-        var email = structureEmail(
-                to, "Account Reactivation",
-                "We would like to inform that your account has been reactivated!");
+        try {
 
-        var emailDTO = buildEmailDTO(email);
+            var email = structureEmail(
+                    to, "Account Reactivation",
+                    "We would like to inform that your account has been reactivated!");
 
-        saveChangesInTheDatabase(new Email(emailDTO));
+            var emailDTO = buildEmailDTO(email);
 
-        mailSender.send(email);
+            saveChangesInTheDatabase(new Email(emailDTO));
+
+            mailSender.send(email);
+
+        } catch (MailSendException ex) {
+
+            throw new GatewayTimeoutException(ex.getMessage());
+
+        } catch (MailAuthenticationException ex) {
+
+            throw new BadGatewayException(ex.getMessage());
+
+        } catch (MailParseException ex) {
+
+            throw new UnprocessableEntityException(ex.getMessage());
+
+        }
 
     }
 
@@ -70,15 +102,31 @@ public class SendEmailUseCase implements IEmailQueues {
     @RabbitListener(queues = "${rabbitmq.deactivation.email.queue}")
     public void sendEmailToUserAfterAccountDeactivation (String to) {
 
-        var email = structureEmail(
-                to, "Account Deactivation",
-                "We would like to inform that your account has been deactivated!");
+        try {
 
-        var emailDTO = buildEmailDTO(email);
+            var email = structureEmail(
+                    to, "Account Deactivation",
+                    "We would like to inform that your account has been deactivated!");
 
-        saveChangesInTheDatabase(new Email(emailDTO));
+            var emailDTO = buildEmailDTO(email);
 
-        mailSender.send(email);
+            saveChangesInTheDatabase(new Email(emailDTO));
+
+            mailSender.send(email);
+
+        } catch (MailSendException ex) {
+
+            throw new GatewayTimeoutException(ex.getMessage());
+
+        } catch (MailAuthenticationException ex) {
+
+            throw new BadGatewayException(ex.getMessage());
+
+        } catch (MailParseException ex) {
+
+            throw new UnprocessableEntityException(ex.getMessage());
+
+        }
 
     }
 
