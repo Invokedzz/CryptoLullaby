@@ -1,9 +1,13 @@
 package org.cryptolullaby.controller;
 
+import org.cryptolullaby.model.dto.polygon.bars.PreviousDayBarDTO;
+import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
+import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.cryptolullaby.service.AggregateBarsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,24 +23,38 @@ public class AggregateBarsController {
 
     }
 
-    @GetMapping("/market/summary")
-    public ResponseEntity <Void> dailyMarketSummary () {
+    @GetMapping("/market/summary/{date}")
+    public ResponseEntity <DailyMarketSummaryDTO> dailyMarketSummary (@PathVariable String date) {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        var dailyMarket = aggregateBarsService.getDailyMarketSummary(date);
 
-    }
-
-    @GetMapping("/ticker/summary")
-    public ResponseEntity <Void> dailyTickerSummary () {
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(dailyMarket);
 
     }
 
-    @GetMapping("/previous/day")
-    public ResponseEntity <Void> previousDayBar () {
+    @GetMapping("/ticker/summary/{from}/{to}/{date}")
+    public ResponseEntity <DailyTickerDTO> dailyTickerSummary (
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+            @PathVariable String from,
+            @PathVariable String to,
+            @PathVariable String date
+
+    )
+
+    {
+
+        var dailyTicker = aggregateBarsService.getDailyTickerSummary(from, to, date);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dailyTicker);
+
+    }
+
+    @GetMapping("/previous/day/{cryptoTicker}")
+    public ResponseEntity <PreviousDayBarDTO> previousDayBar (@PathVariable String cryptoTicker) {
+
+        var dayBar = aggregateBarsService.getPreviousDayBar(cryptoTicker);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dayBar);
 
     }
 
