@@ -1,10 +1,7 @@
 package org.cryptolullaby.orchestration;
 
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
-import org.cryptolullaby.model.dto.users.EditProfileDTO;
-import org.cryptolullaby.model.dto.users.InterestDTO;
-import org.cryptolullaby.model.dto.users.ProfileDTO;
-import org.cryptolullaby.model.dto.users.RegisterDTO;
+import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
@@ -66,6 +63,14 @@ public class UserOrchestrationFacade {
     public void editUserImage (String id, MultipartFile file) {
 
         editProfileUseCase.editUserImage(id, file);
+
+    }
+
+    public void reactivateUserByEmail (ReactivateDTO reactivateDTO) {
+
+        editProfileUseCase.reactivateUserAccount(reactivateDTO);
+
+        sendReactivationEmail(reactivateDTO.email());
 
     }
 

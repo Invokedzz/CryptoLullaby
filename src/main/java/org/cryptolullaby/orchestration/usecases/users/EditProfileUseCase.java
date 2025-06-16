@@ -3,7 +3,9 @@ package org.cryptolullaby.orchestration.usecases.users;
 import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.exception.BadRequestException;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
+import org.cryptolullaby.model.dto.users.ReactivateDTO;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,16 @@ public class EditProfileUseCase {
 
     }
 
+    public void reactivateUserAccount (ReactivateDTO reactivateDTO) {
+
+        var user = findUserByEmail(reactivateDTO.email());
+
+        user.activate();
+
+        saveChangesInTheDatabase(user);
+
+    }
+
     public void deactivateUserAccount (String id) {
 
         var user = findUserById(id);
@@ -97,6 +109,12 @@ public class EditProfileUseCase {
     private List<Interest> sanitizeInterests (List <Interest> interests) {
 
         return usersService.getSanitizedInterestList(interests);
+
+    }
+
+    private Users findUserByEmail (String email) {
+
+        return usersService.findUserByEmail(email);
 
     }
 

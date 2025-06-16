@@ -2,6 +2,7 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.exception.EmailNotFoundException;
 import org.cryptolullaby.exception.UserNotFoundException;
 import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.repository.UsersRepository;
@@ -21,6 +22,8 @@ public class UsersService {
     private final UserValidator userValidator;
 
     private static final boolean IS_ACTIVE = true;
+
+    private static final boolean IS_INACTIVE = false;
 
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
@@ -69,8 +72,8 @@ public class UsersService {
     public Users findUserByEmail (String email) {
 
         return usersRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("We weren't able to find a user with this email: " + email));
+                .findByEmailAndIsActive(email, IS_INACTIVE)
+                .orElseThrow(() -> new EmailNotFoundException("We couldn't find a user with email: " + email));
 
     }
 
