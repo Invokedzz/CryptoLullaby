@@ -1,5 +1,6 @@
 package org.cryptolullaby.controller;
 
+import org.cryptolullaby.model.dto.polygon.treasury.TreasuryYieldsDTO;
 import org.cryptolullaby.service.TreasuryYieldsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,11 @@ public class TreasuryYieldsController {
     }
 
     @GetMapping
-    public ResponseEntity <Void> treasuryYields () {
+    public ResponseEntity <TreasuryYieldsDTO> treasuryYields () {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        var treasuryFields = treasuryYieldsService.getTreasuryYields();
+
+        return ResponseEntity.status(HttpStatus.OK).body(treasuryFields);
 
     }
 

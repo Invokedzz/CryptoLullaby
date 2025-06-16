@@ -1,10 +1,10 @@
 package org.cryptolullaby.infra.client;
 
 import org.cryptolullaby.config.PolygonConfig;
-import org.cryptolullaby.model.dto.market.ConditionsCodeDTO;
-import org.cryptolullaby.model.dto.market.MarketExchangeDTO;
-import org.cryptolullaby.model.dto.market.MarketHolidaysDTO;
-import org.cryptolullaby.model.dto.market.TradingStatusDTO;
+import org.cryptolullaby.model.dto.polygon.ConditionsCodeDTO;
+import org.cryptolullaby.model.dto.polygon.MarketExchangeDTO;
+import org.cryptolullaby.model.dto.polygon.MarketHolidaysDTO;
+import org.cryptolullaby.model.dto.polygon.TradingStatusDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
