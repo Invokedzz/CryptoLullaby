@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.users;
+package org.cryptolullaby.orchestration.usecases.email;
 
 import org.cryptolullaby.entity.Email;
 import org.cryptolullaby.model.dto.general.EmailDTO;
@@ -18,41 +18,19 @@ public class SendEmailUseCase implements IEmailQueues {
     @Value("${spring.mail.username}")
     private String from;
 
-    private final RabbitMQService rabbitMQService;
-
     private final SimpleMailMessage simpleMailMessage;
 
     private final MailSender mailSender;
 
     private final EmailService emailService;
 
-    public SendEmailUseCase (RabbitMQService rabbitMQService, SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
-
-        this.rabbitMQService = rabbitMQService;
+    public SendEmailUseCase (SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
 
         this.simpleMailMessage = simpleMailMessage;
 
         this.mailSender = mailSender;
 
         this.emailService = emailService;
-
-    }
-
-    public void sendRegisterEmail (String to) {
-
-        sendRegisterEmailToQueue(to);
-
-    }
-
-    public void sendReactivationEmail (String to) {
-
-        sendReactivationEmailToQueue(to);
-
-    }
-
-    public void sendDeactivationEmail (String to) {
-
-        sendDeactivationEmailToQueue(to);
 
     }
 
@@ -114,24 +92,6 @@ public class SendEmailUseCase implements IEmailQueues {
         structure.setText(text);
 
         return structure;
-
-    }
-
-    private void sendRegisterEmailToQueue (String to) {
-
-        rabbitMQService.sendToQueue(to, EmailType.REGISTRATION);
-
-    }
-
-    private void sendReactivationEmailToQueue (String to) {
-
-        rabbitMQService.sendToQueue(to, EmailType.REACTIVATION);
-
-    }
-
-    private void sendDeactivationEmailToQueue (String to) {
-
-        rabbitMQService.sendToQueue(to, EmailType.DEACTIVATION);
 
     }
 

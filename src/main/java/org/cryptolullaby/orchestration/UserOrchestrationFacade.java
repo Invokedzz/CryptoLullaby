@@ -5,10 +5,11 @@ import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
+import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
-import org.cryptolullaby.orchestration.usecases.users.SendEmailUseCase;
+import org.cryptolullaby.orchestration.usecases.email.SendEmailUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,17 +21,17 @@ public class UserOrchestrationFacade {
 
     private final ProfileUseCase profileUseCase;
 
-    private final SendEmailUseCase sendEmailUseCase;
+    private final SendEmailToQueueUseCase sendToQueueUseCase;
 
     private final EditProfileUseCase editProfileUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailUseCase sendEmailUseCase, EditProfileUseCase editProfileUseCase) {
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailToQueueUseCase sendToQueueUseCase, EditProfileUseCase editProfileUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 
         this.profileUseCase = profileUseCase;
 
-        this.sendEmailUseCase = sendEmailUseCase;
+        this.sendToQueueUseCase = sendToQueueUseCase;
 
         this.editProfileUseCase = editProfileUseCase;
 
@@ -40,7 +41,7 @@ public class UserOrchestrationFacade {
 
         registerANewUser(registerDTO);
 
-     //   sendAnEmailAfterRegistration(registerDTO.email());
+        sendRegisterEmail(registerDTO.email());
 
     }
 
@@ -80,10 +81,22 @@ public class UserOrchestrationFacade {
 
     }
 
-   /* private void sendAnEmailAfterRegistration (String email) {
+    private void sendRegisterEmail (String to) {
 
-        sendEmailUseCase.send(email);
+        sendToQueueUseCase.sendRegisterEmail(to);
 
-    } */
+    }
+
+    private void sendReactivationEmail (String to) {
+
+        sendToQueueUseCase.sendReactivationEmail(to);
+
+    }
+
+    private void sendDeactivationEmail (String to) {
+
+        sendToQueueUseCase.sendDeactivationEmail(to);
+
+    }
 
 }
