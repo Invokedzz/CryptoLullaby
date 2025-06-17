@@ -2,26 +2,38 @@ package org.cryptolullaby.model.enums;
 
 public enum CoinType {
 
-    BTC,
+    BTC("X:BTCUSD"),
 
-    DOGE,
+    DOGE("X:DOGEUSD"),
 
-    BCH,
+    BCH("X:BCHUSD"),
 
-    XLM,
+    XLM("X:XLMUSD"),
 
-    XRP,
+    XRP("X:XRPUSD"),
 
-    SHIB,
+    SHIB("X:SHIBUSD"),
 
-    LTC,
+    LTC("X:LTCUSD"),
 
-    XMR,
+    XMR("X:XMRUSD"),
 
-    KAS,
+    KAS("X:KASUSD"),
 
-    SKY2,
+    SKY2("X:SKY2USD");
 
-    AVU;
+    private final String label;
+
+    CoinType (String label) {
+
+        this.label = label;
+
+    }
+
+    public String getLabel() {
+
+        return label;
+
+    }
 
 }

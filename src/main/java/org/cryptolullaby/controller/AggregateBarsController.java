@@ -1,11 +1,11 @@
 package org.cryptolullaby.controller;
 
-import jakarta.validation.constraints.NotBlank;
 import org.cryptolullaby.model.dto.polygon.bars.PreviousDayBarDTO;
 import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.cryptolullaby.service.AggregateBarsService;
 import org.cryptolullaby.validation.annotations.CoinValues;
+import org.cryptolullaby.validation.annotations.CryptoTickerValues;
 import org.cryptolullaby.validation.annotations.CurrencyValues;
 import org.cryptolullaby.validation.annotations.LimitDateFormat;
 import org.springframework.http.HttpStatus;
@@ -30,11 +30,7 @@ public class AggregateBarsController {
     }
 
     @GetMapping("/market/summary/{date}")
-    public ResponseEntity <DailyMarketSummaryDTO> dailyMarketSummary (
-
-            @PathVariable @NotBlank @LimitDateFormat String date
-
-    )
+    public ResponseEntity <DailyMarketSummaryDTO> dailyMarketSummary (@PathVariable @LimitDateFormat String date)
 
     {
 
@@ -62,7 +58,7 @@ public class AggregateBarsController {
     }
 
     @GetMapping("/previous/day/{cryptoTicker}")
-    public ResponseEntity <PreviousDayBarDTO> previousDayBar (@PathVariable String cryptoTicker) {
+    public ResponseEntity <PreviousDayBarDTO> previousDayBar (@PathVariable @CryptoTickerValues String cryptoTicker) {
 
         var dayBar = aggregateBarsService.getPreviousDayBar(cryptoTicker);
 
