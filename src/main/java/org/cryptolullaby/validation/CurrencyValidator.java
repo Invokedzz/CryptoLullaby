@@ -2,17 +2,17 @@ package org.cryptolullaby.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.cryptolullaby.model.enums.Currency;
+import org.cryptolullaby.model.enums.CurrencyType;
 import org.cryptolullaby.validation.annotations.CurrencyValues;
 
 public class CurrencyValidator implements ConstraintValidator <CurrencyValues, String> {
 
-    private static final Currency [] CURRENCIES = Currency.values();
+    private static final CurrencyType[] CURRENCIES = CurrencyType.values();
 
     @Override
     public boolean isValid (String s, ConstraintValidatorContext constraintValidatorContext) {
 
-        for (Currency currency : CURRENCIES) {
+        for (CurrencyType currency : CURRENCIES) {
 
             if (s.equals(currency.name())) {
 
