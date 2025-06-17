@@ -1,5 +1,6 @@
 package org.cryptolullaby.model.dto.polygon.bars.ticker;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public record DailyTradesDTO(
@@ -12,8 +13,8 @@ public record DailyTradesDTO(
 
         double s,
 
-        int t,
+        BigDecimal t,
 
-        int x
+        BigDecimal x
 
 ) {}
