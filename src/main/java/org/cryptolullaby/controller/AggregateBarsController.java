@@ -1,16 +1,20 @@
 package org.cryptolullaby.controller;
 
+import jakarta.validation.constraints.NotBlank;
 import org.cryptolullaby.model.dto.polygon.bars.PreviousDayBarDTO;
 import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.cryptolullaby.service.AggregateBarsService;
+import org.cryptolullaby.validation.annotations.DateFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping("/domain/aggregate/bars")
 public class AggregateBarsController {
@@ -24,7 +28,13 @@ public class AggregateBarsController {
     }
 
     @GetMapping("/market/summary/{date}")
-    public ResponseEntity <DailyMarketSummaryDTO> dailyMarketSummary (@PathVariable String date) {
+    public ResponseEntity <DailyMarketSummaryDTO> dailyMarketSummary (
+
+            @PathVariable @NotBlank @DateFormat String date
+
+    )
+
+    {
 
         var dailyMarket = aggregateBarsService.getDailyMarketSummary(date);
 

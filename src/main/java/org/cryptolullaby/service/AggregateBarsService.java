@@ -10,6 +10,8 @@ import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class AggregateBarsService {
 

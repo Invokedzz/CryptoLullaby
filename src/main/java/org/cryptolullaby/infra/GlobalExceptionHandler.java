@@ -1,5 +1,7 @@
 package org.cryptolullaby.infra;
 
+import feign.FeignException;
+import jakarta.validation.ConstraintViolationException;
 import org.cryptolullaby.exception.*;
 import org.cryptolullaby.model.dto.general.ExceptionDTO;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 
@@ -152,6 +155,51 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exception, HttpStatus.UNPROCESSABLE_ENTITY);
+
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity <ExceptionDTO> handleSpringNotFoundException (NoResourceFoundException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(FeignException.Forbidden.class)
+    public ResponseEntity <ExceptionDTO> handleFeignForbiddenException (FeignException.Forbidden ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.FORBIDDEN);
+
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity <ExceptionDTO> handleConstraintViolationException (ConstraintViolationException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
 
     }
 
