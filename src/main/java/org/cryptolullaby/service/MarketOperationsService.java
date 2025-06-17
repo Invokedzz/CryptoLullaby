@@ -21,7 +21,13 @@ public class MarketOperationsService {
 
     private final MarketOperationsClient marketOperationsClient;
 
-    public MarketOperationsService(MarketOperationsClient marketOperationsClient) {
+    private static final String ASSET_CLASS = MarketOperationsParameters.CRYPTO.getLabel();
+
+    private static final String LOCALE = MarketOperationsParameters.GLOBAL.getLabel();
+
+    private static final String DATA_TYPE = MarketOperationsParameters.TRADE.getLabel();
+
+    public MarketOperationsService (MarketOperationsClient marketOperationsClient) {
 
         this.marketOperationsClient = marketOperationsClient;
 
@@ -87,7 +93,7 @@ public class MarketOperationsService {
 
         try {
 
-            setupConditionsCodeParams(sip, params);
+//            setupConditionsCodeParams(sip, params);
 
             return marketOperationsClient.getConditionsCode(params);
 
@@ -105,29 +111,17 @@ public class MarketOperationsService {
 
     private void setupExchangesParams (Map <String, String> params) {
 
-        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
+        params.put("asset_class", ASSET_CLASS);
 
-        params.put("locale", MarketOperationsParameters.GLOBAL.getLabel());
-
-    }
-
-    private void setupConditionsCodeParams (String sip, Map <String, String> params) {
-
-        params.put("asset_class", MarketOperationsParameters.CRYPTO.getLabel());
-
-        params.put("data_type", MarketOperationsParameters.TRADE.getLabel());
-
-        checkIfSIPQueryParamIsValid(sip);
+        params.put("locale", LOCALE);
 
     }
 
-    private void checkIfSIPQueryParamIsValid (String sip) {
+    private void setupConditionsCodeParams (Map <String, String> params) {
 
-        if (!SIPName.isSIPValid(sip)) {
+        params.put("asset_class", ASSET_CLASS);
 
-            throw new InvalidSIPException("Invalid SIP: " + sip);
-
-        }
+        params.put("data_type", DATA_TYPE);
 
     }
 

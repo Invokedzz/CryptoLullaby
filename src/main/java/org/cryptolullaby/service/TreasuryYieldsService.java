@@ -8,10 +8,16 @@ import org.cryptolullaby.infra.client.TreasuryYieldsClient;
 import org.cryptolullaby.model.dto.polygon.treasury.TreasuryYieldsDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class TreasuryYieldsService {
 
     private final TreasuryYieldsClient treasuryYieldsClient;
+
+    private static final int DEFAULT_LIMIT_REQUEST = 50;
+
+    private static final String DATE_SORT = "date.desc";
 
     public TreasuryYieldsService(TreasuryYieldsClient treasuryYieldsClient) {
 
@@ -19,11 +25,13 @@ public class TreasuryYieldsService {
 
     }
 
-    public TreasuryYieldsDTO getTreasuryYields () {
+    public TreasuryYieldsDTO getTreasuryYields (String date, Map <String, String> params) {
 
         try {
 
-            return treasuryYieldsClient.getTreasuryYields();
+            setupTreasuryYieldsParams(params);
+
+            return treasuryYieldsClient.getTreasuryYields(date, params);
 
         } catch (FeignException.NotFound ex) {
 
@@ -38,6 +46,14 @@ public class TreasuryYieldsService {
             throw new UnauthorizedRequestException(ex.getMessage());
 
         }
+
+    }
+
+    private void setupTreasuryYieldsParams (Map <String, String> params) {
+
+        params.put("limit", String.valueOf(DEFAULT_LIMIT_REQUEST));
+
+        params.put("sort", DATE_SORT);
 
     }
 
