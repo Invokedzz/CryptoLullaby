@@ -5,6 +5,7 @@ import org.cryptolullaby.model.dto.polygon.bars.PreviousDayBarDTO;
 import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.cryptolullaby.service.AggregateBarsService;
+import org.cryptolullaby.validation.annotations.CurrencyValues;
 import org.cryptolullaby.validation.annotations.LimitDateFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class AggregateBarsController {
     public ResponseEntity <DailyTickerDTO> dailyTickerSummary (
 
             @PathVariable String from,
-            @PathVariable String to,
+            @PathVariable @CurrencyValues String to,
             @PathVariable String date
 
     )
