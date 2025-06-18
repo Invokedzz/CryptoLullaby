@@ -15,7 +15,7 @@ public record PostsDTO (
 
         LocalDateTime createdAt,
 
-        long likes,
+        Long likes,
 
         String userId
 

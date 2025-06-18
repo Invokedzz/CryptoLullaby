@@ -2,19 +2,19 @@ package org.cryptolullaby.validation.annotations;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.cryptolullaby.validation.CoinValidator;
+import org.cryptolullaby.validation.BlockHTMLValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.PARAMETER})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = CoinValidator.class)
-public @interface CoinValues {
+@Constraint(validatedBy = BlockHTMLValidator.class)
+public @interface BlockHTML {
 
-    String message() default "Enter a valid coin!";
+    String message() default "Please bruh, no HTML injection!";
 
     Class<?>[] groups() default {};
 

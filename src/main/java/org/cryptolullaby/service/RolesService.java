@@ -24,4 +24,20 @@ public class RolesService {
 
     }
 
+    public Roles getModRole () {
+
+        return rolesRepository
+                .findByName(RolesName.MODERATOR)
+                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.MODERATOR)));
+
+    }
+
+    public Roles getAdminRole () {
+
+        return rolesRepository
+                .findByName(RolesName.ADMIN)
+                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.ADMIN)));
+
+    }
+
 }

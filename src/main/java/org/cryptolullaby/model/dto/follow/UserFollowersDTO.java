@@ -6,7 +6,7 @@ import java.util.List;
 
 public record UserFollowersDTO (
 
-        long numberOfFollowers,
+        Long numberOfFollowers,
 
         List <Follow> follows
 
