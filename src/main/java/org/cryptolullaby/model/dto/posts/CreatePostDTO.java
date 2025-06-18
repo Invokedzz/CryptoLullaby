@@ -17,12 +17,15 @@ public record CreatePostDTO (
         * */
 
 
+        @BlockHTML
         @NotBlank(message = "Title field cannot be blank!")
         @Length(min = 3, max = 50, message = "Title field must have 3 to 50 characters!")
         @Pattern(regexp = "^(?!\\s*$).+", message = "Title field must contain numbers, letters or special characters!")
         String title,
 
         @BlockHTML
+        @Length(max = 1024, message = "Description field cannot exceed 1024 characters!")
+        @Pattern(regexp = "^(?!\\s*$).+", message = "Description field must contain numbers, letters or special characters!")
         String description,
 
         MultipartFile img,
