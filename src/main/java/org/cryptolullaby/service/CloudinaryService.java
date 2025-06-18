@@ -2,6 +2,7 @@ package org.cryptolullaby.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.apache.tika.Tika;
 import org.cryptolullaby.entity.Images;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -54,7 +54,7 @@ public class CloudinaryService {
 
     public Images renderImage (MultipartFile file, boolean useDefaultImg) {
 
-        if (file.getContentType() != null && ALLOWED_IMAGE_TYPES.contains(file.getContentType())) {
+        if (file.getContentType() != null && isFileValid(file)) {
 
             var picture = sendImageToCloud(file);
 
@@ -73,6 +73,16 @@ public class CloudinaryService {
         }
 
         return null;
+
+    }
+
+    private boolean isFileValid (MultipartFile file) {
+
+        var tika = new Tika();
+
+        String type = tika.detect(file.getContentType());
+
+        return ALLOWED_IMAGE_TYPES.contains(type);
 
     }
 
