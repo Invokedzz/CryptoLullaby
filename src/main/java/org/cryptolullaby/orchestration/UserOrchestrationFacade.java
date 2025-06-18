@@ -6,7 +6,6 @@ import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
-import org.cryptolullaby.orchestration.usecases.email.SendEmailUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,7 +65,7 @@ public class UserOrchestrationFacade {
 
     }
 
-    public void reactivateUserByEmail (ReactivateDTO reactivateDTO) {
+    public void reactivateUserByEmail (EmailResponseDTO reactivateDTO) {
 
         editProfileUseCase.reactivateUserAccount(reactivateDTO);
 
@@ -74,9 +73,11 @@ public class UserOrchestrationFacade {
 
     }
 
-    public void deactivateUserById (String id) {
+    public void deactivateUserById (EmailResponseDTO emailResponseDTO) {
 
-        editProfileUseCase.deactivateUserAccount(id);
+        editProfileUseCase.deactivateUserAccount(emailResponseDTO);
+
+        sendDeactivationEmail(emailResponseDTO.email());
 
     }
 

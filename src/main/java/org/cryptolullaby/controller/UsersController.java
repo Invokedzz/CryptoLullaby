@@ -109,18 +109,18 @@ public class UsersController {
     }
 
     @PutMapping("/profile/reactivate")
-    public ResponseEntity <Void> reactivateProfileByEmail (@Valid @RequestBody ReactivateDTO reactivateDTO) {
+    public ResponseEntity <Void> reactivateProfileByEmail (@Valid @RequestBody EmailResponseDTO emailResponseDTO) {
 
-        orchestrationFacade.reactivateUserByEmail(reactivateDTO);
+        orchestrationFacade.reactivateUserByEmail(emailResponseDTO);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @DeleteMapping("/profile/deactivate/{id}")
-    public ResponseEntity <Void> deactivateProfileById (@PathVariable String id) {
+    @DeleteMapping("/profile/deactivate")
+    public ResponseEntity <Void> deactivateProfileById (@Valid @RequestBody EmailResponseDTO emailResponseDTO) {
 
-        orchestrationFacade.deactivateUserById(id);
+        orchestrationFacade.deactivateUserById(emailResponseDTO);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

@@ -23,8 +23,6 @@ public class UsersService {
 
     private static final boolean IS_ACTIVE = true;
 
-    private static final boolean IS_INACTIVE = false;
-
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
         this.usersRepository = usersRepository;
@@ -69,10 +67,10 @@ public class UsersService {
 
     }
 
-    public Users findUserByEmail (String email) {
+    public Users findUserByEmailAndIsActive (String email, boolean isActive) {
 
         return usersRepository
-                .findByEmailAndIsActive(email, IS_INACTIVE)
+                .findByEmailAndIsActive(email, isActive)
                 .orElseThrow(() -> new EmailNotFoundException("We couldn't find a user with email: " + email));
 
     }

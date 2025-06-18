@@ -3,9 +3,8 @@ package org.cryptolullaby.orchestration.usecases.users;
 import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
-import org.cryptolullaby.exception.BadRequestException;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
-import org.cryptolullaby.model.dto.users.ReactivateDTO;
+import org.cryptolullaby.model.dto.users.EmailResponseDTO;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;
 import org.springframework.stereotype.Service;
@@ -62,9 +61,12 @@ public class EditProfileUseCase {
 
     }
 
-    public void reactivateUserAccount (ReactivateDTO reactivateDTO) {
+    public void reactivateUserAccount (EmailResponseDTO emailResponseDTO) {
 
-        var user = findUserByEmail(reactivateDTO.email());
+        var user = findUserByEmail(
+                emailResponseDTO.email(),
+                false
+        );
 
         user.activate();
 
@@ -72,9 +74,12 @@ public class EditProfileUseCase {
 
     }
 
-    public void deactivateUserAccount (String id) {
+    public void deactivateUserAccount (EmailResponseDTO emailResponseDTO) {
 
-        var user = findUserById(id);
+        var user = findUserByEmail(
+                emailResponseDTO.email(),
+                true
+        );
 
         user.deactivate();
 
@@ -112,9 +117,9 @@ public class EditProfileUseCase {
 
     }
 
-    private Users findUserByEmail (String email) {
+    private Users findUserByEmail (String email, boolean isActive) {
 
-        return usersService.findUserByEmail(email);
+        return usersService.findUserByEmailAndIsActive(email, isActive);
 
     }
 
