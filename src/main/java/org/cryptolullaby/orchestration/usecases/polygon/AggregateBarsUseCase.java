@@ -1,4 +1,4 @@
-package org.cryptolullaby.service;
+package org.cryptolullaby.orchestration.usecases.polygon;
 
 import feign.FeignException;
 import org.cryptolullaby.exception.BadRequestException;
@@ -10,14 +10,12 @@ import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
-public class AggregateBarsService {
+public class AggregateBarsUseCase {
 
     private final AggregateBarsClient aggregateBarsClient;
 
-    public AggregateBarsService (AggregateBarsClient aggregateBarsClient) {
+    public AggregateBarsUseCase (AggregateBarsClient aggregateBarsClient) {
 
         this.aggregateBarsClient = aggregateBarsClient;
 

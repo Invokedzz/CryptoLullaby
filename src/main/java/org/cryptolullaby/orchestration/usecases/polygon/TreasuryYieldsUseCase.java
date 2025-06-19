@@ -1,4 +1,4 @@
-package org.cryptolullaby.service;
+package org.cryptolullaby.orchestration.usecases.polygon;
 
 import feign.FeignException;
 import org.cryptolullaby.exception.BadRequestException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class TreasuryYieldsService {
+public class TreasuryYieldsUseCase {
 
     private final TreasuryYieldsClient treasuryYieldsClient;
 
@@ -19,13 +19,13 @@ public class TreasuryYieldsService {
 
     private static final String DATE_SORT = "date.desc";
 
-    public TreasuryYieldsService(TreasuryYieldsClient treasuryYieldsClient) {
+    public TreasuryYieldsUseCase (TreasuryYieldsClient treasuryYieldsClient) {
 
         this.treasuryYieldsClient = treasuryYieldsClient;
 
     }
 
-    public TreasuryYieldsDTO getTreasuryYields (String date, Map <String, String> params) {
+    public TreasuryYieldsDTO getTreasuryYields (String date, Map<String, String> params) {
 
         try {
 

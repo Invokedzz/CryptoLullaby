@@ -1,7 +1,6 @@
-package org.cryptolullaby.service;
+package org.cryptolullaby.orchestration.usecases.polygon;
 
 import feign.FeignException;
-import org.cryptolullaby.exception.InvalidSIPException;
 import org.cryptolullaby.exception.ResourceNotFoundException;
 import org.cryptolullaby.exception.UnauthorizedRequestException;
 import org.cryptolullaby.infra.client.MarketOperationsClient;
@@ -10,14 +9,13 @@ import org.cryptolullaby.model.dto.polygon.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.polygon.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.polygon.TradingStatusDTO;
 import org.cryptolullaby.model.enums.MarketOperationsParameters;
-import org.cryptolullaby.model.enums.SIPName;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class MarketOperationsService {
+public class MarketOperationsUseCase {
 
     private final MarketOperationsClient marketOperationsClient;
 
@@ -27,13 +25,13 @@ public class MarketOperationsService {
 
     private static final String DATA_TYPE = MarketOperationsParameters.TRADE.getLabel();
 
-    public MarketOperationsService (MarketOperationsClient marketOperationsClient) {
+    public MarketOperationsUseCase (MarketOperationsClient marketOperationsClient) {
 
         this.marketOperationsClient = marketOperationsClient;
 
     }
 
-    public MarketExchangeDTO getMarketExchanges (Map <String, String> params) {
+    public MarketExchangeDTO getMarketExchanges (Map<String, String> params) {
 
         try {
 
@@ -53,7 +51,7 @@ public class MarketOperationsService {
 
     }
 
-    public List <MarketHolidaysDTO> getUpcomingMarketHolidays () {
+    public List<MarketHolidaysDTO> getUpcomingMarketHolidays () {
 
         try {
 

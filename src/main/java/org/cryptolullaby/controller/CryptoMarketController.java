@@ -4,7 +4,8 @@ import org.cryptolullaby.model.dto.polygon.ConditionsCodeDTO;
 import org.cryptolullaby.model.dto.polygon.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.polygon.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.polygon.TradingStatusDTO;
-import org.cryptolullaby.service.MarketOperationsService;
+import org.cryptolullaby.orchestration.MarketOperationsOrchestrationFacade;
+import org.cryptolullaby.orchestration.usecases.polygon.MarketOperationsUseCase;
 import org.cryptolullaby.validation.annotations.SIPValues;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +23,18 @@ import java.util.Map;
 @RequestMapping("/domain/market")
 public class CryptoMarketController {
 
-    private final MarketOperationsService marketOperationsService;
+    private final MarketOperationsOrchestrationFacade orchestrationFacade;
 
-    public CryptoMarketController (MarketOperationsService marketOperationsService) {
+    public CryptoMarketController (MarketOperationsOrchestrationFacade orchestrationFacade) {
 
-        this.marketOperationsService = marketOperationsService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
     @GetMapping("/exchanges")
     public ResponseEntity <MarketExchangeDTO> marketExchanges (Map <String, String> params) {
 
-        var exchanges = marketOperationsService.getMarketExchanges(params);
+        var exchanges = orchestrationFacade.getMarketExchanges(params);
 
         return ResponseEntity.status(HttpStatus.OK).body(exchanges);
 
@@ -42,7 +43,7 @@ public class CryptoMarketController {
     @GetMapping("/holidays")
     public ResponseEntity <List<MarketHolidaysDTO>> upcomingMarketHolidays () {
 
-        var holidays = marketOperationsService.getUpcomingMarketHolidays();
+        var holidays = orchestrationFacade.getUpcomingMarketHolidays();
 
         return ResponseEntity.status(HttpStatus.OK).body(holidays);
 
@@ -51,7 +52,7 @@ public class CryptoMarketController {
     @GetMapping("/trading/status")
     public ResponseEntity <TradingStatusDTO> currentTradingStatus () {
 
-        var status = marketOperationsService.getCurrentTradingStatus();
+        var status = orchestrationFacade.getCurrentTradingStatus();
 
         return ResponseEntity.status(HttpStatus.OK).body(status);
 
@@ -68,7 +69,7 @@ public class CryptoMarketController {
 
     {
 
-        var conditions = marketOperationsService.getConditionsCode(sip, params);
+        var conditions = orchestrationFacade.getConditionsCode(sip, params);
 
         return ResponseEntity.status(HttpStatus.OK).body(conditions);
 

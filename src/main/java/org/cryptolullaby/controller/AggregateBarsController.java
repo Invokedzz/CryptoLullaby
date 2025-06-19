@@ -3,7 +3,7 @@ package org.cryptolullaby.controller;
 import org.cryptolullaby.model.dto.polygon.bars.PreviousDayBarDTO;
 import org.cryptolullaby.model.dto.polygon.bars.market.DailyMarketSummaryDTO;
 import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
-import org.cryptolullaby.service.AggregateBarsService;
+import org.cryptolullaby.orchestration.AggregateBarsOrchestrationFacade;
 import org.cryptolullaby.validation.annotations.CoinValues;
 import org.cryptolullaby.validation.annotations.CryptoTickerValues;
 import org.cryptolullaby.validation.annotations.CurrencyValues;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/domain/aggregate/bars")
 public class AggregateBarsController {
 
-    private final AggregateBarsService aggregateBarsService;
+    private final AggregateBarsOrchestrationFacade orchestrationFacade;
 
-    public AggregateBarsController (AggregateBarsService aggregateBarsService) {
+    public AggregateBarsController (AggregateBarsOrchestrationFacade orchestrationFacade) {
 
-        this.aggregateBarsService = aggregateBarsService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
@@ -34,7 +34,7 @@ public class AggregateBarsController {
 
     {
 
-        var dailyMarket = aggregateBarsService.getDailyMarketSummary(date);
+        var dailyMarket = orchestrationFacade.getDailyMarketSummary(date);
 
         return ResponseEntity.status(HttpStatus.OK).body(dailyMarket);
 
@@ -51,7 +51,7 @@ public class AggregateBarsController {
 
     {
 
-        var dailyTicker = aggregateBarsService.getDailyTickerSummary(from, to, date);
+        var dailyTicker = orchestrationFacade.getDailyTickerSummary(from, to, date);
 
         return ResponseEntity.status(HttpStatus.OK).body(dailyTicker);
 
@@ -60,7 +60,7 @@ public class AggregateBarsController {
     @GetMapping("/previous/day/{cryptoTicker}")
     public ResponseEntity <PreviousDayBarDTO> previousDayBar (@PathVariable @CryptoTickerValues String cryptoTicker) {
 
-        var dayBar = aggregateBarsService.getPreviousDayBar(cryptoTicker);
+        var dayBar = orchestrationFacade.getPreviousDayBar(cryptoTicker);
 
         return ResponseEntity.status(HttpStatus.OK).body(dayBar);
 

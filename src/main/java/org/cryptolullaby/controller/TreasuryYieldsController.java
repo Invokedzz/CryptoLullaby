@@ -1,8 +1,7 @@
 package org.cryptolullaby.controller;
 
 import org.cryptolullaby.model.dto.polygon.treasury.TreasuryYieldsDTO;
-import org.cryptolullaby.service.TreasuryYieldsService;
-import org.springframework.data.domain.Sort;
+import org.cryptolullaby.orchestration.TreasuryYieldsOrchestrationFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +15,11 @@ import java.util.Map;
 @RequestMapping("/domain/treasury/yields")
 public class TreasuryYieldsController {
 
-    private final TreasuryYieldsService treasuryYieldsService;
+    private final TreasuryYieldsOrchestrationFacade orchestrationFacade;
 
-    public TreasuryYieldsController (TreasuryYieldsService treasuryYieldsService) {
+    public TreasuryYieldsController (TreasuryYieldsOrchestrationFacade orchestrationFacade) {
 
-        this.treasuryYieldsService = treasuryYieldsService;
+        this.orchestrationFacade = orchestrationFacade;
 
     }
 
@@ -35,7 +34,7 @@ public class TreasuryYieldsController {
 
     {
 
-        var treasuryFields = treasuryYieldsService.getTreasuryYields(date, params);
+        var treasuryFields = orchestrationFacade.getTreasuryYields(date, params);
 
         return ResponseEntity.status(HttpStatus.OK).body(treasuryFields);
 
