@@ -6,6 +6,7 @@ import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
+import org.cryptolullaby.service.KeycloakService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

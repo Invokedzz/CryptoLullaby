@@ -38,7 +38,7 @@ public class KeycloakClientConfig {
 
     }
 
-    @Bean
+    /*@Bean
     public UserRepresentation userRepresentation () {
 
         return new UserRepresentation();
@@ -50,6 +50,6 @@ public class KeycloakClientConfig {
 
         return new CredentialRepresentation();
 
-    }
+    } */
 
 }

@@ -25,9 +25,11 @@ public class RegisterUserUseCase {
 
     private final CloudinaryService cloudinaryService;
 
+    private final KeycloakService keycloakService;
+
     private static final boolean DEFAULT_IMAGE_ICON = true;
 
-    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService) {
+    public RegisterUserUseCase (UsersService usersService, RolesService rolesService, PasswordService passwordService, CloudinaryService cloudinaryService, KeycloakService keycloakService) {
 
         this.usersService = usersService;
 
@@ -36,6 +38,8 @@ public class RegisterUserUseCase {
         this.passwordService = passwordService;
 
         this.cloudinaryService = cloudinaryService;
+
+        this.keycloakService = keycloakService;
 
     }
 
@@ -59,6 +63,8 @@ public class RegisterUserUseCase {
             user.setImgUrl(img);
 
             saveChangesInTheDatabaseWithExternalValidation(user);
+
+            keycloakService.save(user);
 
         }
 
