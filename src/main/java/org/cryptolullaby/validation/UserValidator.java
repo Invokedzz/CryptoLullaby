@@ -26,15 +26,15 @@ public class UserValidator {
 
     }
 
-    public void validate (String firstUser, String secondUser) {
+    public void validate (String firstUserId, String secondUserId) {
 
-        checkIfIdsAreTheSame(firstUser, secondUser);
+        checkIfIdsAreTheSame(firstUserId, secondUserId);
 
-        var userList = usersRepository.findAllById(List.of(firstUser, secondUser));
+        var userList = usersRepository.findAllById(List.of(firstUserId, secondUserId));
 
-        var follower = findUserByFollowerIdAndActiveEqualsTrue(userList, firstUser);
+        var follower = findUserByFollowerIdAndActiveEqualsTrue(userList, firstUserId);
 
-        var following = findUserByFollowingIdAndActiveEqualsTrue(userList, secondUser);
+        var following = findUserByFollowingIdAndActiveEqualsTrue(userList, secondUserId);
 
         if (follower != null && following != null) {
 

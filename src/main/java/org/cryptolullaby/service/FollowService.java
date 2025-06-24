@@ -18,6 +18,12 @@ public class FollowService {
 
     private final FollowRepository followRepository;
 
+    private static final FollowStatus PENDING_STATUS = FollowStatus.PENDING;
+
+    private static final FollowStatus FOLLOWING_STATUS = FollowStatus.FOLLOWING;
+
+    private static final FollowStatus BLOCKED_STATUS = FollowStatus.BLOCKED;
+
     public FollowService (FollowRepository followRepository) {
 
         this.followRepository = followRepository;
@@ -35,7 +41,7 @@ public class FollowService {
 
         long followCount = countNumberOfFollowers(followingId);
 
-        var followers = followRepository.findByFollowingIdAndFollowStatus(followingId, FollowStatus.FOLLOWING);
+        var followers = followRepository.findByFollowingIdAndFollowStatus(followingId, FOLLOWING_STATUS);
 
         return new UserFollowersDTO(followCount, followers);
 
@@ -65,7 +71,7 @@ public class FollowService {
     public Page <Follow> findAllByStatusEqualsToFollowingAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
-                followingId, FollowStatus.FOLLOWING, pageable
+                followingId, FOLLOWING_STATUS, pageable
         );
 
     }
@@ -74,7 +80,7 @@ public class FollowService {
     public Page <Follow> findAllByStatusEqualsToBlockedAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
-                followingId, FollowStatus.BLOCKED, pageable
+                followingId, BLOCKED_STATUS, pageable
         );
 
     }
@@ -83,7 +89,7 @@ public class FollowService {
     public Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowingId (String followingId, Pageable pageable) {
 
         return followRepository.findByFollowingIdAndFollowStatus(
-                followingId, FollowStatus.PENDING, pageable
+                followingId, PENDING_STATUS, pageable
         );
 
     }
@@ -92,7 +98,7 @@ public class FollowService {
     public Page <Follow> findAllFollowRequestsByStatusEqualsToPendingAndFollowerId (String followerId, Pageable pageable) {
 
         return followRepository.findByFollowerIdAndFollowStatus(
-                followerId, FollowStatus.PENDING, pageable
+                followerId, PENDING_STATUS, pageable
         );
 
     }
@@ -105,7 +111,7 @@ public class FollowService {
 
     public long countNumberOfFollowers (String followingId) {
 
-        return followRepository.countByFollowingIdAndFollowStatus(followingId, FollowStatus.FOLLOWING);
+        return followRepository.countByFollowingIdAndFollowStatus(followingId, FOLLOWING_STATUS);
 
     }
 

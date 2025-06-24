@@ -10,6 +10,12 @@ public class RolesService {
 
     private final RolesRepository rolesRepository;
 
+    private static final RolesName USER_ROLE = RolesName.USER;
+
+    private static final RolesName MODERATOR_ROLE = RolesName.MODERATOR;
+
+    private static final RolesName ADMIN_ROLE = RolesName.ADMIN;
+
     public RolesService (RolesRepository rolesRepository) {
 
         this.rolesRepository = rolesRepository;
@@ -19,24 +25,24 @@ public class RolesService {
     public Roles getDefaultRole () {
 
         return rolesRepository
-                .findByName(RolesName.USER)
-                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.USER)));
+                .findByName(USER_ROLE)
+                .orElseGet(() -> rolesRepository.save(new Roles(USER_ROLE)));
 
     }
 
     public Roles getModRole () {
 
         return rolesRepository
-                .findByName(RolesName.MODERATOR)
-                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.MODERATOR)));
+                .findByName(MODERATOR_ROLE)
+                .orElseGet(() -> rolesRepository.save(new Roles(MODERATOR_ROLE)));
 
     }
 
     public Roles getAdminRole () {
 
         return rolesRepository
-                .findByName(RolesName.ADMIN)
-                .orElseGet(() -> rolesRepository.save(new Roles(RolesName.ADMIN)));
+                .findByName(ADMIN_ROLE)
+                .orElseGet(() -> rolesRepository.save(new Roles(ADMIN_ROLE)));
 
     }
 

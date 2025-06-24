@@ -61,9 +61,9 @@ public class UsersService {
 
     }
 
-    public void checkIfBothIdsAreValid (String firstUser, String secondUser) {
+    public void checkIfBothIdsAreValid (String firstUserId, String secondUserId) {
 
-        userValidator.validate(firstUser, secondUser);
+        userValidator.validate(firstUserId, secondUserId);
 
     }
 
