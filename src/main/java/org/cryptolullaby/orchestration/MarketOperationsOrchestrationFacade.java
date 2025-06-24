@@ -39,9 +39,9 @@ public class MarketOperationsOrchestrationFacade {
 
     }
 
-    public ConditionsCodeDTO getConditionsCode (String sip, Map <String, String> params) {
+    public ConditionsCodeDTO getConditionsCode (Map <String, String> params) {
 
-        return marketOperationsUseCase.getConditionsCode(sip, params);
+        return marketOperationsUseCase.getConditionsCode(params);
 
     }
 

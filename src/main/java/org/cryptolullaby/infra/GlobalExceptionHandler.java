@@ -2,6 +2,7 @@ package org.cryptolullaby.infra;
 
 import feign.FeignException;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.UnexpectedTypeException;
 import org.cryptolullaby.exception.*;
 import org.cryptolullaby.model.dto.general.ExceptionDTO;
 import org.springframework.http.HttpStatus;
@@ -206,6 +207,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity <ExceptionDTO> handleMissingServletRequestParameterException (MissingServletRequestParameterException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(UnexpectedTypeException.class)
+    public ResponseEntity <ExceptionDTO> handleUnexpectedTypeException (UnexpectedTypeException ex) {
 
         ExceptionDTO exception = new ExceptionDTO(
 

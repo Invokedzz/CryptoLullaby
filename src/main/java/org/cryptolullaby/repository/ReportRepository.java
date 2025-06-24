@@ -2,6 +2,9 @@ package org.cryptolullaby.repository;
 
 import org.cryptolullaby.entity.Report;
 import org.cryptolullaby.model.enums.EntityType;
+import org.cryptolullaby.model.enums.ReportStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +17,7 @@ public interface ReportRepository extends MongoRepository <Report, String> {
 
     long countReportByIdAndEntityType (String id, EntityType entityType);
 
+    Page<Report> findAllByReportedIdAndStatus(String reportedId, ReportStatus status, Pageable pageable);
+
+    Page<Report> findAllByReporterIdAndStatus(String reporterId, ReportStatus status, Pageable pageable);
 }

@@ -3,7 +3,10 @@ package org.cryptolullaby.service;
 import org.cryptolullaby.entity.Report;
 import org.cryptolullaby.exception.ReportNotFoundException;
 import org.cryptolullaby.model.enums.EntityType;
+import org.cryptolullaby.model.enums.ReportStatus;
 import org.cryptolullaby.repository.ReportRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +31,22 @@ public class ReportService {
         return reportRepository
                 .findById(id)
                 .orElseThrow(() -> new ReportNotFoundException("Report not found!"));
+
+    }
+
+    public Page <Report> findAllByStatusEqualsToReportedAndReporterId (String reporterId, Pageable pageable) {
+
+        return reportRepository.findAllByReporterIdAndStatus(
+                reporterId, ReportStatus.REPORTED, pageable
+        );
+
+    }
+
+    public Page <Report> findAllByStatusEqualsToReportedAndReportedId (String reportedId, Pageable pageable) {
+
+        return reportRepository.findAllByReportedIdAndStatus(
+                reportedId, ReportStatus.REPORTED, pageable
+        );
 
     }
 
