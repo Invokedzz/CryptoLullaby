@@ -61,13 +61,15 @@ public class CryptoMarketController {
     @GetMapping("/conditions")
     public ResponseEntity <ConditionsCodeDTO> currentConditions (
 
-            @RequestParam @SIPValues Map <String, String> params
+            @RequestParam @SIPValues String sip,
+
+            Map <String, String> params
 
     )
 
     {
 
-        var conditions = orchestrationFacade.getConditionsCode(params);
+        var conditions = orchestrationFacade.getConditionsCode(sip, params);
 
         return ResponseEntity.status(HttpStatus.OK).body(conditions);
 
