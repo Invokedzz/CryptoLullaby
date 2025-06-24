@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.posts;
+package org.cryptolullaby.orchestration.usecases.users.posts;
 
 import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.dto.likes.LikeDTO;

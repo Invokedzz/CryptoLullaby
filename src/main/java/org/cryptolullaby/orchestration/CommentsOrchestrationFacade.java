@@ -6,8 +6,8 @@ import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.likes.LikeDTO;
 import org.cryptolullaby.model.enums.EntityType;
-import org.cryptolullaby.orchestration.usecases.posts.LikesUseCase;
-import org.cryptolullaby.orchestration.usecases.posts.comments.CommentsUseCase;
+import org.cryptolullaby.orchestration.usecases.users.posts.LikesUseCase;
+import org.cryptolullaby.orchestration.usecases.users.posts.comments.CommentsUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

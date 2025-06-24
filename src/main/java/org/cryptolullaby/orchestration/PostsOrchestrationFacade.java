@@ -6,8 +6,8 @@ import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.enums.EntityType;
-import org.cryptolullaby.orchestration.usecases.posts.LikesUseCase;
-import org.cryptolullaby.orchestration.usecases.posts.PostsUseCase;
+import org.cryptolullaby.orchestration.usecases.users.posts.LikesUseCase;
+import org.cryptolullaby.orchestration.usecases.users.posts.PostsUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

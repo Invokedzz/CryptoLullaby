@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.posts;
+package org.cryptolullaby.orchestration.usecases.users.posts;
 
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;

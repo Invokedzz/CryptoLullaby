@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.posts.comments;
+package org.cryptolullaby.orchestration.usecases.users.posts.comments;
 
 import org.cryptolullaby.entity.Comments;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
