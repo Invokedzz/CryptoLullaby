@@ -4,6 +4,10 @@ public enum ProfileStatus {
 
     PUBLIC,
 
-    PRIVATE;
+    PRIVATE,
+
+    LIMITED_ACCESS,
+
+    BANNED;
 
 }
