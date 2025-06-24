@@ -18,6 +18,8 @@ public class Report {
 
     private String reportedId;
 
+    private String reason;
+
     private ReportStatus status;
 
     private EntityType entityType;
@@ -28,7 +30,7 @@ public class Report {
 
     public Report (
 
-            String id, String reporterId, String reportedId,
+            String id, String reporterId, String reportedId, String reason,
             ReportStatus status, EntityType entityType, LocalDateTime timestamp
 
     )
@@ -41,6 +43,8 @@ public class Report {
 
         this.reportedId = reportedId;
 
+        this.reason = reason;
+
         this.status = status;
 
         this.entityType = entityType;
@@ -49,15 +53,17 @@ public class Report {
 
     }
 
-    public Report (CreateReportDTO createReportDTO, EntityType entityType) {
+    public Report (CreateReportDTO createReportDTO) {
 
         this.reporterId = createReportDTO.reporterId();
 
         this.reportedId = createReportDTO.reportedId();
 
-        this.status = ReportStatus.PENDING;
+        this.reason = createReportDTO.reason();
 
-        this.entityType = entityType;
+        this.entityType = createReportDTO.type();
+
+        this.status = ReportStatus.PENDING;
 
         this.timestamp = LocalDateTime.now();
 

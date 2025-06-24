@@ -1,5 +1,6 @@
 package org.cryptolullaby.orchestration;
 
+import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,11 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public void report () {}
+    public void report (CreateReportDTO createReportDTO) {
+
+        reportUseCase.report(createReportDTO);
+
+    }
 
     public void getAllReportsMadeToAnEntity () {}
 

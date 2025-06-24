@@ -235,4 +235,19 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity <ExceptionDTO> handleIllegalStateException (IllegalStateException ex) {
+
+        ExceptionDTO exception = new ExceptionDTO(
+
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+
+        );
+
+        return new ResponseEntity<>(exception, HttpStatus.FORBIDDEN);
+
+    }
+
 }

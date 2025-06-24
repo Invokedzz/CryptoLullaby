@@ -1,6 +1,7 @@
 package org.cryptolullaby.model.dto.report;
 
 import jakarta.validation.constraints.NotNull;
+import org.cryptolullaby.model.enums.EntityType;
 
 public record CreateReportDTO (
 
@@ -8,6 +9,10 @@ public record CreateReportDTO (
         String reporterId,
 
         @NotNull(message = "Reported Id cannot be null!")
-        String reportedId
+        String reportedId,
+
+        String reason,
+
+        EntityType type
 
 ) {}
