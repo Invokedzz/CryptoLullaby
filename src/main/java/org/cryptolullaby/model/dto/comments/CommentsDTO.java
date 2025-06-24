@@ -25,8 +25,10 @@ public record CommentsDTO (
     public CommentsDTO (Comments comments) {
 
         this (
+
                 comments.getComment(), comments.getLikes(),
                 comments.getCreatedAt(), comments.getUserId(), comments.getPostId(), comments.getParentId()
+
         );
 
     }

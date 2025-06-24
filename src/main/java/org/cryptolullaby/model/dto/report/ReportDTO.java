@@ -1,5 +1,6 @@
 package org.cryptolullaby.model.dto.report;
 
+import org.cryptolullaby.entity.Report;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.model.enums.ReportStatus;
 
@@ -17,4 +18,18 @@ public record ReportDTO (
 
         LocalDateTime timestamp
 
-) {}
+)
+
+{
+
+    public ReportDTO (Report report) {
+
+        this (
+                report.getReporterId(), report.getReportedId(), report.getStatus(),
+                report.getEntityType(), report.getTimestamp()
+
+        );
+
+    }
+
+}

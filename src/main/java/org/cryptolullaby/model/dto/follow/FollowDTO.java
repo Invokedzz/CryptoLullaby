@@ -24,7 +24,12 @@ public record FollowDTO (
 
     public FollowDTO (Follow follow) {
 
-        this (follow.getFollowerId(), follow.getFollowingId(), follow.getFollowStatus(), follow.getFollowedAt());
+        this (
+
+                follow.getFollowerId(), follow.getFollowingId(),
+                follow.getFollowStatus(), follow.getFollowedAt()
+
+        );
 
     }
 
