@@ -17,6 +17,15 @@ import java.util.Map;
 @Service
 public class MarketOperationsUseCase {
 
+    /*
+    *
+    * TO DO: fix String sip @RequestParam
+    * 2025/06/24
+    *
+    * FIXED: 2025/06/04
+    *
+    * */
+
     private final MarketOperationsClient marketOperationsClient;
 
     private static final String ASSET_CLASS = MarketOperationsParameters.CRYPTO.getLabel();
@@ -91,7 +100,7 @@ public class MarketOperationsUseCase {
 
         try {
 
-//            setupConditionsCodeParams(sip, params);
+            setupConditionsCodeParams(sip, params);
 
             return marketOperationsClient.getConditionsCode(params);
 
@@ -115,7 +124,9 @@ public class MarketOperationsUseCase {
 
     }
 
-    private void setupConditionsCodeParams (Map <String, String> params) {
+    private void setupConditionsCodeParams (String sip, Map <String, String> params) {
+
+        params.put("sip", params.get(sip));
 
         params.put("asset_class", ASSET_CLASS);
 
