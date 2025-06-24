@@ -1,6 +1,8 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Report;
+import org.cryptolullaby.exception.ReportNotFoundException;
+import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.repository.ReportRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,38 @@ public class ReportService {
 
     }
 
-    public void save (Report report) {}
+    public void save (Report report) {
 
-    public void countNumberOfReports () {}
+        reportRepository.save(report);
 
-    public void hasUserReported () {}
+    }
+
+    public Report findReportById (String id) {
+
+        return reportRepository
+                .findById(id)
+                .orElseThrow(() -> new ReportNotFoundException("Report not found!"));
+
+    }
+
+    public void deleteReportByIdAndEntity (String id, EntityType entityType) {
+
+        reportRepository.deleteByIdAndEntityType(id, entityType);
+
+    }
+
+    public long countNumberOfReports (String id, EntityType entityType) {
+
+        return reportRepository.countReportByIdAndEntityType(id, entityType);
+
+    }
+
+    public boolean hasUserReported (String reporterId, String reportedId, EntityType entityType) {
+
+        return reportRepository.existsByReporterIdAndReportedIdAndEntityType(
+                reporterId, reportedId, entityType
+        );
+
+    }
 
 }

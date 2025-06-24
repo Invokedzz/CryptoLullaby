@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.model.enums.ReportStatus;
 import org.springframework.data.annotation.Id;
@@ -45,6 +46,20 @@ public class Report {
         this.entityType = entityType;
 
         this.timestamp = timestamp;
+
+    }
+
+    public Report (CreateReportDTO createReportDTO, EntityType entityType) {
+
+        this.reporterId = createReportDTO.reporterId();
+
+        this.reportedId = createReportDTO.reportedId();
+
+        this.status = ReportStatus.PENDING;
+
+        this.entityType = entityType;
+
+        this.timestamp = LocalDateTime.now();
 
     }
 
