@@ -18,6 +18,12 @@ public class RabbitMQService {
     @Value("${rabbitmq.deactivation.email.queue}")
     private String deactivationEmailQueue;
 
+    @Value("${rabbitmq.confirm.report.email.queue}")
+    private String confirmReportQueue;
+
+    @Value("${rabbitmq.deny.report.email.queue}")
+    private String denyReportQueue;
+
     private final RabbitTemplate rabbitTemplate;
 
     public RabbitMQService (RabbitTemplate rabbitTemplate) {
@@ -35,6 +41,10 @@ public class RabbitMQService {
             case REACTIVATION -> rabbitTemplate.convertAndSend(reactivationEmailQueue, to);
 
             case DEACTIVATION -> rabbitTemplate.convertAndSend(deactivationEmailQueue, to);
+
+            case CONFIRM_REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, to);
+
+            case DENY_REPORT -> rabbitTemplate.convertAndSend(denyReportQueue, to);
 
             default -> throw new BadRequestException("Invalid email type!");
 

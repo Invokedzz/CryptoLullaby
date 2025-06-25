@@ -1,9 +1,9 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
+import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
-import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.orchestration.ReportOrchestrationFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,13 +55,13 @@ public class ReportController {
 
     }
 
-    public ResponseEntity <Void> confirmReportRequest () {
+    public ResponseEntity <Void> confirmReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
-    public ResponseEntity <Void> denyReportRequest () {
+    public ResponseEntity <Void> denyReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

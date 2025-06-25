@@ -130,6 +130,55 @@ public class SendEmailUseCase implements IEmailQueues {
 
     }
 
+    @Override
+    @RabbitListener(queues = "${rabbitmq.confirm.report.email.queue}")
+    public void sendEmailAfterReportConfirmation (EmailDTO emailDTO) {
+
+        try {
+
+            System.out.println("h");
+
+        } catch (MailSendException ex) {
+
+            throw new GatewayTimeoutException(ex.getMessage());
+
+        } catch (MailAuthenticationException ex) {
+
+            throw new BadGatewayException(ex.getMessage());
+
+        } catch (MailParseException ex) {
+
+            throw new UnprocessableEntityException(ex.getMessage());
+
+        }
+
+    }
+
+    @Override
+    @RabbitListener(queues = "${rabbitmq.deny.report.email.queue}")
+    public void sendEmailAfterDenyReport (EmailDTO emailDTO) {
+
+        try {
+
+            System.out.println("h");
+
+        } catch (MailSendException ex) {
+
+            throw new GatewayTimeoutException(ex.getMessage());
+
+        } catch (MailAuthenticationException ex) {
+
+            throw new BadGatewayException(ex.getMessage());
+
+        } catch (MailParseException ex) {
+
+            throw new UnprocessableEntityException(ex.getMessage());
+
+        }
+
+    }
+
+
     private SimpleMailMessage structureEmail (String to, String subject, String text) {
 
         var structure = simpleMailMessage;
