@@ -34,15 +34,15 @@ public class SendEmailToQueueUseCase {
 
     }
 
-    public void sendConfirmReportEmail (String to) {
+    public void sendConfirmReportEmail (EmailDTO emailDTO) {
 
-        sendConfirmReportEmail(to);
+        sendReportConfirmEmailToQueue(emailDTO);
 
     }
 
-    public void sendDenyReportEmail (String to) {
+    public void sendDenyReportEmail (EmailDTO emailDTO) {
 
-        sendDenyReportEmailToQueue(to);
+        sendDenyReportEmailToQueue(emailDTO);
 
     }
 
@@ -64,15 +64,15 @@ public class SendEmailToQueueUseCase {
 
     }
 
-    private void sendReportConfirmEmailToQueue (String to) {
+    private void sendReportConfirmEmailToQueue (EmailDTO emailDTO) {
 
-        rabbitMQService.sendToQueue(to, EmailType.CONFIRM_REPORT);
+        rabbitMQService.sendToQueue(emailDTO, EmailType.CONFIRM_REPORT);
 
     }
 
-    private void sendDenyReportEmailToQueue (String to) {
+    private void sendDenyReportEmailToQueue (EmailDTO emailDTO) {
 
-        rabbitMQService.sendToQueue(to, EmailType.DENY_REPORT);
+        rabbitMQService.sendToQueue(emailDTO, EmailType.DENY_REPORT);
 
     }
 

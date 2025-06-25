@@ -44,13 +44,15 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public void getAllReportsMadeToAnEntity () {}
+    public void getAllEqualsToPendingStatusAndReporterId () {}
 
-    public void getAllReportsMadeToAnEntityById () {}
+    public void getAllEqualsToReportedStatusAndReporterId () {}
 
     public void getReportById () {}
 
-    public void deleteReportByIdAndEntity () {}
+    public void confirmReportRequest () {}
+
+    public void denyReportRequest () {}
 
     @Override
     public PagedResponseDTO <ReportDTO> setupPaginationStructure (Page <Report> pages, List <ReportDTO> elements) {

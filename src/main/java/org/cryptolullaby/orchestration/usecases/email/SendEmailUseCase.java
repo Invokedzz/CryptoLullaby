@@ -44,9 +44,9 @@ public class SendEmailUseCase implements IEmailQueues {
                     to, "Registration",
                     "Welcome to CryptoLullaby!");
 
-            var emailDTO = buildEmailDTO(email);
+            var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(emailDTO));
+            saveChangesInTheDatabase(new Email(buildEmail));
 
             mailSender.send(email);
 
@@ -76,9 +76,9 @@ public class SendEmailUseCase implements IEmailQueues {
                     to, "Account Reactivation",
                     "We would like to inform that your account has been reactivated!");
 
-            var emailDTO = buildEmailDTO(email);
+            var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(emailDTO));
+            saveChangesInTheDatabase(new Email(buildEmail));
 
             mailSender.send(email);
 
@@ -108,9 +108,9 @@ public class SendEmailUseCase implements IEmailQueues {
                     to, "Account Deactivation",
                     "We would like to inform that your account has been deactivated!");
 
-            var emailDTO = buildEmailDTO(email);
+            var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(emailDTO));
+            saveChangesInTheDatabase(new Email(buildEmail));
 
             mailSender.send(email);
 
@@ -131,12 +131,18 @@ public class SendEmailUseCase implements IEmailQueues {
     }
 
     @Override
-    @RabbitListener(queues = "${rabbitmq.confirm.report.email.queue}")
-    public void sendEmailAfterReportConfirmation (EmailDTO emailDTO) {
+    @RabbitListener(queues = {"${rabbitmq.confirm.report.email.queue}", "${rabbitmq.deny.report.email.queue}"})
+    public void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO) {
 
         try {
 
-            System.out.println("h");
+            var email = structureEmailByDTO(emailDTO);
+
+            var buildEmail = buildEmailDTO(email);
+
+            saveChangesInTheDatabase(new Email(buildEmail));
+
+            mailSender.send(email);
 
         } catch (MailSendException ex) {
 
@@ -154,13 +160,19 @@ public class SendEmailUseCase implements IEmailQueues {
 
     }
 
-    @Override
+    /*@Override
     @RabbitListener(queues = "${rabbitmq.deny.report.email.queue}")
     public void sendEmailAfterDenyReport (EmailDTO emailDTO) {
 
         try {
 
-            System.out.println("h");
+            var email = structureEmailByDTO(emailDTO);
+
+            var buildEmail = buildEmailDTO(email);
+
+            saveChangesInTheDatabase(new Email(buildEmail));
+
+            mailSender.send(email);
 
         } catch (MailSendException ex) {
 
@@ -176,7 +188,7 @@ public class SendEmailUseCase implements IEmailQueues {
 
         }
 
-    }
+    } */
 
 
     private SimpleMailMessage structureEmail (String to, String subject, String text) {
@@ -187,6 +199,19 @@ public class SendEmailUseCase implements IEmailQueues {
         structure.setFrom(from);
         structure.setSubject(subject);
         structure.setText(text);
+
+        return structure;
+
+    }
+
+    private SimpleMailMessage structureEmailByDTO (EmailDTO emailDTO) {
+
+        var structure = simpleMailMessage;
+
+        structure.setTo(emailDTO.to());
+        structure.setFrom(from);
+        structure.setSubject("About Report");
+        structure.setText(emailDTO.content());
 
         return structure;
 

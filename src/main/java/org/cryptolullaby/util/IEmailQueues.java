@@ -10,8 +10,6 @@ public interface IEmailQueues {
 
     void sendEmailToUserAfterAccountDeactivation (String to);
 
-    void sendEmailAfterReportConfirmation (EmailDTO emailDTO);
-
-    void sendEmailAfterDenyReport (EmailDTO emailDTO);
+    void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO);
 
 }

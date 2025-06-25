@@ -1,5 +1,6 @@
 package org.cryptolullaby.orchestration;
 
+import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
@@ -30,15 +31,15 @@ public class ReportOrchestrationFacade {
 
     public void getAllEqualsToReportedStatusAndReporterId () {}
 
-    public void confirmReportRequest () {
+    public void confirmReportRequest (EmailDTO emailDTO) {
 
-        sendEmailToQueueUseCase.sendConfirmReportEmail("");
+        sendEmailToQueueUseCase.sendConfirmReportEmail(emailDTO);
 
     }
 
-    public void denyReportRequest () {
+    public void denyReportRequest (EmailDTO emailDTO) {
 
-        sendEmailToQueueUseCase.sendDenyReportEmail("");
+        sendEmailToQueueUseCase.sendDenyReportEmail(emailDTO);
 
     }
 

@@ -1,5 +1,6 @@
 package org.cryptolullaby.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.cryptolullaby.util.IRabbitQueuesConfig;
 import org.springframework.amqp.core.Queue;
@@ -72,6 +73,8 @@ public class RabbitMQConfig implements IRabbitQueuesConfig {
     public Jackson2JsonMessageConverter messageConverter () {
 
         var mapper = new ObjectMapper();
+
+    //    mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
         return new Jackson2JsonMessageConverter(mapper);
 

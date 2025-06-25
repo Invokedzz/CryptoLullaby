@@ -55,13 +55,19 @@ public class ReportController {
 
     }
 
+    @PostMapping("/confirm")
     public ResponseEntity <Void> confirmReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
+
+        orchestrationFacade.confirmReportRequest(emailDTO);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
+    @PostMapping("/deny")
     public ResponseEntity <Void> denyReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
+
+        orchestrationFacade.denyReportRequest(emailDTO);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

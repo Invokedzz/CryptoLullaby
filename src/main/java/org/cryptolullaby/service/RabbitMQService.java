@@ -1,6 +1,7 @@
 package org.cryptolullaby.service;
 
 import org.cryptolullaby.exception.BadRequestException;
+import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.enums.EmailType;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,13 +43,23 @@ public class RabbitMQService {
 
             case DEACTIVATION -> rabbitTemplate.convertAndSend(deactivationEmailQueue, to);
 
-            case CONFIRM_REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, to);
-
-            case DENY_REPORT -> rabbitTemplate.convertAndSend(denyReportQueue, to);
-
             default -> throw new BadRequestException("Invalid email type!");
 
         };
+
+    }
+
+    public void sendToQueue (EmailDTO emailDTO, EmailType emailType) {
+
+        switch (emailType) {
+
+            case CONFIRM_REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, emailDTO);
+
+            case DENY_REPORT -> rabbitTemplate.convertAndSend(denyReportQueue, emailDTO);
+
+            default -> throw new BadRequestException("Invalid email type!");
+
+        }
 
     }
 
