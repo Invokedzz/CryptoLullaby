@@ -2,11 +2,10 @@ package org.cryptolullaby.orchestration;
 
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
-import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
+import org.cryptolullaby.infra.email.SendEmailToQueue;
 import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
-import org.cryptolullaby.service.KeycloakService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +17,11 @@ public class UserOrchestrationFacade {
 
     private final ProfileUseCase profileUseCase;
 
-    private final SendEmailToQueueUseCase sendToQueueUseCase;
+    private final SendEmailToQueue sendToQueueUseCase;
 
     private final EditProfileUseCase editProfileUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailToQueueUseCase sendToQueueUseCase, EditProfileUseCase editProfileUseCase) {
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailToQueue sendToQueueUseCase, EditProfileUseCase editProfileUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 

@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.email;
+package org.cryptolullaby.infra.email;
 
 import org.cryptolullaby.entity.Email;
 import org.cryptolullaby.exception.BadGatewayException;
@@ -13,7 +13,7 @@ import org.springframework.mail.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SendEmailUseCase implements IEmailQueues {
+public class EmailInfrastructureSetup implements IEmailQueues {
 
     @Value("${spring.mail.username}")
     private String from;
@@ -24,7 +24,7 @@ public class SendEmailUseCase implements IEmailQueues {
 
     private final EmailService emailService;
 
-    public SendEmailUseCase (SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
+    public EmailInfrastructureSetup(SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
 
         this.simpleMailMessage = simpleMailMessage;
 
@@ -159,37 +159,6 @@ public class SendEmailUseCase implements IEmailQueues {
         }
 
     }
-
-    /*@Override
-    @RabbitListener(queues = "${rabbitmq.deny.report.email.queue}")
-    public void sendEmailAfterDenyReport (EmailDTO emailDTO) {
-
-        try {
-
-            var email = structureEmailByDTO(emailDTO);
-
-            var buildEmail = buildEmailDTO(email);
-
-            saveChangesInTheDatabase(new Email(buildEmail));
-
-            mailSender.send(email);
-
-        } catch (MailSendException ex) {
-
-            throw new GatewayTimeoutException(ex.getMessage());
-
-        } catch (MailAuthenticationException ex) {
-
-            throw new BadGatewayException(ex.getMessage());
-
-        } catch (MailParseException ex) {
-
-            throw new UnprocessableEntityException(ex.getMessage());
-
-        }
-
-    } */
-
 
     private SimpleMailMessage structureEmail (String to, String subject, String text) {
 

@@ -2,7 +2,7 @@ package org.cryptolullaby.orchestration;
 
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
-import org.cryptolullaby.orchestration.usecases.email.SendEmailToQueueUseCase;
+import org.cryptolullaby.infra.email.SendEmailToQueue;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ public class ReportOrchestrationFacade {
 
     private final ReportUseCase reportUseCase;
 
-    private final SendEmailToQueueUseCase sendEmailToQueueUseCase;
+    private final SendEmailToQueue sendEmailToQueueUseCase;
 
-    public ReportOrchestrationFacade (ReportUseCase reportUseCase, SendEmailToQueueUseCase sendEmailToQueueUseCase) {
+    public ReportOrchestrationFacade (ReportUseCase reportUseCase, SendEmailToQueue sendEmailToQueueUseCase) {
 
         this.reportUseCase = reportUseCase;
 

@@ -1,4 +1,4 @@
-package org.cryptolullaby.orchestration.usecases.email;
+package org.cryptolullaby.infra.email;
 
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.enums.EmailType;
@@ -6,11 +6,11 @@ import org.cryptolullaby.service.RabbitMQService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SendEmailToQueueUseCase {
+public class SendEmailToQueue {
 
     private final RabbitMQService rabbitMQService;
 
-    public SendEmailToQueueUseCase (RabbitMQService rabbitMQService) {
+    public SendEmailToQueue(RabbitMQService rabbitMQService) {
 
         this.rabbitMQService = rabbitMQService;
 
