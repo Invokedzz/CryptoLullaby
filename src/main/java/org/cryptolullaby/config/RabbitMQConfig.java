@@ -74,8 +74,6 @@ public class RabbitMQConfig implements IRabbitQueuesConfig {
 
         var mapper = new ObjectMapper();
 
-    //    mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-
         return new Jackson2JsonMessageConverter(mapper);
 
     }
