@@ -87,6 +87,18 @@ public class Report {
 
     }
 
+    public String getReason () {
+
+        return reason;
+
+    }
+
+    public void setReason (String reason) {
+
+        this.reason = reason;
+
+    }
+
     public ReportStatus getStatus () {
 
         return status;

@@ -7,8 +7,10 @@ import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.orchestration.ReportOrchestrationFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
 @RestController
 @RequestMapping("/domain/report")
 public class ReportController {
@@ -32,32 +34,6 @@ public class ReportController {
 
     }
 
-    @GetMapping
-    public ResponseEntity <Void> allReportsMadeToAnEntity (@RequestParam EntityType entity) {
-
-        orchestrationFacade.getAllReportsMadeToAnEntity();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    }
-
-    @GetMapping("/{id}/")
-    public ResponseEntity <Void> allReportsMadeToAnEntityById (
-
-            @PathVariable String id,
-
-            @RequestParam EntityType entity
-
-    )
-
-    {
-
-        orchestrationFacade.getAllReportsMadeToAnEntityById();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity <Void> reportById (@PathVariable String id) {
 
@@ -67,10 +43,25 @@ public class ReportController {
 
     }
 
-    @DeleteMapping
-    public ResponseEntity <Void> deleteReportByIdAndEntity () {
+    public ResponseEntity <Void> allEqualsToPendingStatusAndReporterId () {
 
-        orchestrationFacade.deleteReportByIdAndEntity();
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    public ResponseEntity <Void> allEqualsToReportedStatusAndReporterId () {
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    public ResponseEntity <Void> confirmReportRequest () {
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    public ResponseEntity <Void> denyReportRequest () {
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
