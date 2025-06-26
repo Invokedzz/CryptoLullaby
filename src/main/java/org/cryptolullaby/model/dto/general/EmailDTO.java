@@ -3,7 +3,7 @@ package org.cryptolullaby.model.dto.general;
 import org.cryptolullaby.entity.Email;
 
 public record EmailDTO (
-
+//
         String from,
 
         String[] to,

@@ -9,17 +9,19 @@ import org.cryptolullaby.validation.annotations.BlockHTML;
 public record CreateReportDTO (
 
         @NotBlank(message = "Reporter Id cannot be blank!")
+        @Pattern(regexp = "^[a-fA-F0-9]{24}$", message = "ReporterId has an invalid ObjectId format!")
         String reporterId,
 
-        @NotBlank(message = "Reported Id cannot be blank!")
+        @NotNull(message = "Reported Id cannot be blank!")
+        @Pattern(regexp = "^[a-fA-F0-9]{24}$", message = "ReportedId has an invalid ObjectId format!")
         String reportedId,
 
         @BlockHTML
-        @NotNull(message = "Reason field cannot be null!")
+        @NotBlank(message = "Reason field cannot be null!")
         @Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]*$", message = "Reason field must contain letters and numbers!")
         String reason,
 
-        @NotNull(message = "Type cannot be null!")
+        @NotNull(message = "Type cannot be blank!")
         EntityType type
 
 ) {}

@@ -69,7 +69,7 @@ public class PostsController {
     }
 
     @PutMapping
-    public ResponseEntity <Void> likeACertainPost (@RequestBody LikeDTO likeDTO) {
+    public ResponseEntity <Void> likeACertainPost (@Valid @RequestBody LikeDTO likeDTO) {
 
         orchestrationFacade.likeACertainPost(likeDTO);
 

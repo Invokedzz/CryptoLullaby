@@ -17,8 +17,6 @@ public interface ReportRepository extends MongoRepository <Report, String> {
 
     long countReportByIdAndEntityType (String id, EntityType entityType);
 
-    Page <Report> findAllByReportedIdAndStatus(String reportedId, ReportStatus status, Pageable pageable);
-
     Page <Report> findAllByReporterIdAndStatus(String reporterId, ReportStatus status, Pageable pageable);
 
 }

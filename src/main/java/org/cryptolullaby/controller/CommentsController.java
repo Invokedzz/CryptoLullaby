@@ -68,7 +68,7 @@ public class CommentsController {
     }
 
     @PutMapping
-    public ResponseEntity <Void> likeACertainComment (@RequestBody LikeDTO likeDTO) {
+    public ResponseEntity <Void> likeACertainComment (@Valid @RequestBody LikeDTO likeDTO) {
 
         orchestrationFacade.likeACertainComment(likeDTO);
 
