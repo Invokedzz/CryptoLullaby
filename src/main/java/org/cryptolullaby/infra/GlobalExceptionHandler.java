@@ -19,6 +19,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -26,244 +27,112 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity <ExceptionDTO> handleNotFoundException (ResourceNotFoundException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity <ExceptionDTO> httpMessageNotReadableException (HttpMessageNotReadableException ex) {
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
 
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity <ExceptionDTO> handleMethodArgumentNotValidException (MethodArgumentNotValidException ex) {
 
-        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String msg = getBindingResultDefaultMessage(ex);
 
-        assert fieldError != null;
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                fieldError.getDefaultMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
-
-    }
-
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity <ExceptionDTO> handleBadRequestException (BadRequestException ex) {
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return buildResponse(HttpStatus.BAD_REQUEST, msg);
 
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity <ExceptionDTO> handlePayloadTooLargeException (MaxUploadSizeExceededException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.PAYLOAD_TOO_LARGE.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.PAYLOAD_TOO_LARGE);
+        return buildResponse(HttpStatus.PAYLOAD_TOO_LARGE, ex.getMessage());
 
     }
 
     @ExceptionHandler(UnauthorizedRequestException.class)
     public ResponseEntity <ExceptionDTO> handleUnauthorizedException (UnauthorizedRequestException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.UNAUTHORIZED.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
 
     }
 
     @ExceptionHandler(BadGatewayException.class)
     public ResponseEntity <ExceptionDTO> handleBadGatewayException (BadGatewayException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_GATEWAY.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_GATEWAY);
+        return buildResponse(HttpStatus.BAD_GATEWAY, ex.getMessage());
 
     }
 
     @ExceptionHandler(GatewayTimeoutException.class)
     public ResponseEntity <ExceptionDTO> handleGatewayTimeoutException (GatewayTimeoutException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.GATEWAY_TIMEOUT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.GATEWAY_TIMEOUT);
+        return buildResponse(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage());
 
     }
 
     @ExceptionHandler(UnprocessableEntityException.class)
     public ResponseEntity <ExceptionDTO> handleUnprocessableEntityException (UnprocessableEntityException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.UNPROCESSABLE_ENTITY);
+        return buildResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
 
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity <ExceptionDTO> handleSpringNotFoundException (NoResourceFoundException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
 
     }
 
     @ExceptionHandler(FeignException.Forbidden.class)
     public ResponseEntity <ExceptionDTO> handleFeignForbiddenException (FeignException.Forbidden ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.FORBIDDEN.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.FORBIDDEN);
-
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity <ExceptionDTO> handleConstraintViolationException (ConstraintViolationException ex) {
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
-
-    }
-
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity <ExceptionDTO> handleMissingServletRequestParameterException (MissingServletRequestParameterException ex) {
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
-
-    }
-
-    @ExceptionHandler(UnexpectedTypeException.class)
-    public ResponseEntity <ExceptionDTO> handleUnexpectedTypeException (UnexpectedTypeException ex) {
-
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
 
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity <ExceptionDTO> handleIllegalStateException (IllegalStateException ex) {
 
-        ExceptionDTO exception = new ExceptionDTO(
-
-                HttpStatus.FORBIDDEN.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-
-        );
-
-        return new ResponseEntity<>(exception, HttpStatus.FORBIDDEN);
+        return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
 
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity <ExceptionDTO> handleInputMismatchException (MethodArgumentTypeMismatchException ex) {
+    @ExceptionHandler({
+
+            MethodArgumentTypeMismatchException.class,
+            UnexpectedTypeException.class,
+            MissingServletRequestParameterException.class,
+            ConstraintViolationException.class,
+            BadRequestException.class,
+            HttpMessageNotReadableException.class,
+
+    })
+    public ResponseEntity <ExceptionDTO> handleBadRequestException (Exception ex) {
+
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+
+    }
+
+    private ResponseEntity <ExceptionDTO> buildResponse (HttpStatus status, String message) {
 
         ExceptionDTO exception = new ExceptionDTO(
 
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
+                status.value(),
+                message,
                 LocalDateTime.now()
 
         );
 
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception, status);
+
+    }
+
+    private String getBindingResultDefaultMessage (MethodArgumentNotValidException ex) {
+
+        return ex.getBindingResult()
+                 .getFieldErrors()
+                 .stream()
+                 .map(FieldError::getDefaultMessage)
+                 .collect(Collectors.joining(", "));
 
     }
 
