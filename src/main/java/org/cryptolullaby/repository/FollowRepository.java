@@ -26,6 +26,6 @@ public interface FollowRepository extends MongoRepository <Follow, String> {
 
     List <Follow> findByFollowingIdAndFollowStatus(String followingId, FollowStatus followStatus);
 
-
     long countByFollowingIdAndFollowStatus(String followingId, FollowStatus followStatus);
+
 }

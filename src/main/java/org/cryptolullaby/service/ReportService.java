@@ -36,7 +36,7 @@ public class ReportService {
 
     public Page <Report> findAllByStatusEqualsToPendingAndReporterId (String reporterId, Pageable pageable) {
 
-        return reportRepository.findAllByReportedIdAndStatus(
+        return reportRepository.findAllByReporterIdAndStatus(
                 reporterId, ReportStatus.PENDING, pageable
         );
 

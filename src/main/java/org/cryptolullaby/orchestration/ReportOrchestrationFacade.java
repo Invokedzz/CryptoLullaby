@@ -1,9 +1,13 @@
 package org.cryptolullaby.orchestration;
 
+import org.cryptolullaby.entity.Report;
 import org.cryptolullaby.model.dto.general.EmailDTO;
+import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
+import org.cryptolullaby.model.dto.report.ReportDTO;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,9 +31,21 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public void getAllEqualsToPendingStatusAndReporterId () {}
+    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatusAndReporterId (String reporterId, Pageable pageable) {
 
-    public void getAllEqualsToReportedStatusAndReporterId () {}
+        return reportUseCase.getAllEqualsToPendingStatusAndReporterId(
+                reporterId, pageable
+        );
+
+    }
+
+    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatusAndReporterId (String reporterId, Pageable pageable) {
+
+        return reportUseCase.getAllEqualsToReportedStatusAndReporterId(
+                reporterId, pageable
+        );
+
+    }
 
     public void confirmReportRequest (EmailDTO emailDTO) {
 
@@ -43,6 +59,10 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public void getReportById () {}
+    public Report getReportById (String id) {
+
+        return reportUseCase.getReportById(id);
+
+    }
 
 }

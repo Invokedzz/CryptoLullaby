@@ -11,6 +11,7 @@ import org.cryptolullaby.service.ReportService;
 import org.cryptolullaby.service.UsersService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,15 +45,47 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public void getAllEqualsToPendingStatusAndReporterId () {}
+    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatusAndReporterId (String reporterId, Pageable pageable) {
 
-    public void getAllEqualsToReportedStatusAndReporterId () {}
+        var pages = reportService.findAllByStatusEqualsToPendingAndReporterId(
+                reporterId, pageable
+        );
 
-    public void getReportById () {}
+        var reports = getPagesContentAndRenderItToDTO(pages);
 
-    public void confirmReportRequest () {}
+        return setupPaginationStructure(pages, reports);
 
-    public void denyReportRequest () {}
+    }
+
+    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatusAndReporterId (String reporterId, Pageable pageable) {
+
+        var pages = reportService.findAllByStatusEqualsToReportedAndReporterId(
+               reporterId, pageable
+        );
+
+        var reports = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, reports);
+
+    }
+
+    public Report getReportById (String id) {
+
+        return reportService.findReportById(id);
+
+    }
+
+    public void confirmReportRequest () {
+
+
+
+    }
+
+    public void denyReportRequest () {
+
+
+
+    }
 
     @Override
     public PagedResponseDTO <ReportDTO> setupPaginationStructure (Page <Report> pages, List <ReportDTO> elements) {
