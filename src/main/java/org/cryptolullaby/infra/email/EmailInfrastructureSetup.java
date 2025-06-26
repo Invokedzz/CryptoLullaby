@@ -5,6 +5,7 @@ import org.cryptolullaby.exception.BadGatewayException;
 import org.cryptolullaby.exception.GatewayTimeoutException;
 import org.cryptolullaby.exception.UnprocessableEntityException;
 import org.cryptolullaby.model.dto.general.EmailDTO;
+import org.cryptolullaby.model.enums.EmailType;
 import org.cryptolullaby.service.EmailService;
 import org.cryptolullaby.util.IEmailQueues;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -24,7 +25,15 @@ public class EmailInfrastructureSetup implements IEmailQueues {
 
     private final EmailService emailService;
 
-    public EmailInfrastructureSetup(SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
+    private static final EmailType REGISTRATION_EMAIL_TYPE = EmailType.REGISTRATION;
+
+    private static final EmailType REACTIVATION_EMAIL_TYPE = EmailType.REACTIVATION;
+
+    private static final EmailType DEACTIVATION_EMAIL_TYPE = EmailType.DEACTIVATION;
+
+    private static final EmailType REPORT_EMAIL_TYPE = EmailType.REPORT;
+
+    public EmailInfrastructureSetup (SimpleMailMessage simpleMailMessage, MailSender mailSender, EmailService emailService) {
 
         this.simpleMailMessage = simpleMailMessage;
 
@@ -46,7 +55,7 @@ public class EmailInfrastructureSetup implements IEmailQueues {
 
             var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(buildEmail));
+            saveChangesInTheDatabase(new Email(buildEmail, REGISTRATION_EMAIL_TYPE));
 
             mailSender.send(email);
 
@@ -78,7 +87,7 @@ public class EmailInfrastructureSetup implements IEmailQueues {
 
             var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(buildEmail));
+            saveChangesInTheDatabase(new Email(buildEmail, REACTIVATION_EMAIL_TYPE));
 
             mailSender.send(email);
 
@@ -110,7 +119,7 @@ public class EmailInfrastructureSetup implements IEmailQueues {
 
             var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(buildEmail));
+            saveChangesInTheDatabase(new Email(buildEmail, DEACTIVATION_EMAIL_TYPE));
 
             mailSender.send(email);
 
@@ -140,7 +149,7 @@ public class EmailInfrastructureSetup implements IEmailQueues {
 
             var buildEmail = buildEmailDTO(email);
 
-            saveChangesInTheDatabase(new Email(buildEmail));
+            saveChangesInTheDatabase(new Email(buildEmail, REPORT_EMAIL_TYPE));
 
             mailSender.send(email);
 

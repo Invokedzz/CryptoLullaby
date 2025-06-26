@@ -2,6 +2,7 @@ package org.cryptolullaby.controller;
 
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
+import org.cryptolullaby.model.enums.EmailType;
 import org.cryptolullaby.orchestration.EmailManagerOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,13 +35,15 @@ public class EmailManagerController {
     @GetMapping
     public ResponseEntity <PagedResponseDTO<EmailDTO>> findAllEmails (
 
+            @RequestParam(required = false) EmailType type,
+
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
     )
 
     {
 
-        var aBunchOfEmails = orchestrationFacade.findAll(pageable);
+        var aBunchOfEmails = orchestrationFacade.findAll(type, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(aBunchOfEmails);
 

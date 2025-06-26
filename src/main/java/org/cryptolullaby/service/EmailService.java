@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class EmailService {
 
@@ -35,9 +33,11 @@ public class EmailService {
 
     }
 
-    public Page <Email> findAll (Pageable pageable) {
+    public Page <Email> findAll (EmailType type, Pageable pageable) {
 
-        return emailRepository.findAll(pageable);
+        return emailRepository.findAllByType(
+                type, pageable
+        );
 
     }
 

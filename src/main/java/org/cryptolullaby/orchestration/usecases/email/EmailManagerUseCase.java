@@ -3,6 +3,7 @@ package org.cryptolullaby.orchestration.usecases.email;
 import org.cryptolullaby.entity.Email;
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
+import org.cryptolullaby.model.enums.EmailType;
 import org.cryptolullaby.service.EmailService;
 import org.cryptolullaby.util.IPaginationStructure;
 import org.springframework.data.domain.Page;
@@ -28,9 +29,11 @@ public class EmailManagerUseCase implements IPaginationStructure <EmailDTO, Emai
 
     }
 
-    public PagedResponseDTO <EmailDTO> findAll (Pageable pageable) {
+    public PagedResponseDTO <EmailDTO> findAll (EmailType type, Pageable pageable) {
 
-        var pages = emailService.findAll(pageable);
+        var pages = emailService.findAll(
+                type, pageable
+        );
 
         var emails = getPagesContentAndRenderItToDTO(pages);
 
