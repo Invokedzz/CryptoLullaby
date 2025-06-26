@@ -45,7 +45,9 @@ public class ReportController {
 
         var report = orchestrationFacade.getReportById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
+    //    return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
+
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 

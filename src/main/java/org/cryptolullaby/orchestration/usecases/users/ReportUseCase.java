@@ -1,9 +1,13 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Report;
+import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.dto.report.ReportDTO;
+import org.cryptolullaby.model.dto.users.ProfileDTO;
+import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.service.CommentsService;
 import org.cryptolullaby.service.PostsService;
@@ -14,7 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
@@ -71,11 +75,11 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     public Report getReportById (String id) {
 
-        return reportService.findReportById(id);
+        return findReportById(id);
 
     }
 
-    public void confirmReportRequest () {
+    public void confirmReportRequest (EmailDTO emailDTO) {
 
 
 
@@ -107,11 +111,36 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
     @Override
     public List <ReportDTO> getPagesContentAndRenderItToDTO (Page <Report> pages) {
 
+        /*
+        *
+        * To do: Adjust this garbage method as soon as possible :(
+        * 26/06/2025
+        *
+        * */
+
+        List <UsernameEmailDTO> listOfUsers = new ArrayList<>();
+
         return pages
                 .getContent()
                 .stream()
-                .map(ReportDTO::new)
+                .map(report -> {
+
+                    var reporter = usersService.findUserById(report.getReporterId());
+
+                    var reported = usersService.findUserById(report.getReportedId());
+
+                    Collections.addAll(listOfUsers, new UsernameEmailDTO(reporter), new UsernameEmailDTO(reported));
+
+                    return new ReportDTO(report, listOfUsers);
+
+                })
                 .toList();
+
+    }
+
+    private Report findReportById (String id) {
+
+        return reportService.findReportById(id);
 
     }
 

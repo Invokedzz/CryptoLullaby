@@ -3,6 +3,7 @@ package org.cryptolullaby.entity;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
+import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.postgresql.shaded.com.ongres.stringprep.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -89,6 +90,14 @@ public class Users {
         this.interests = profileDTO.interests();
 
         this.createdAt = profileDTO.createdAt();
+
+    }
+
+    public Users (UsernameEmailDTO usernameEmailDTO) {
+
+        this.username = usernameEmailDTO.username();
+
+        this.email = usernameEmailDTO.email();
 
     }
 

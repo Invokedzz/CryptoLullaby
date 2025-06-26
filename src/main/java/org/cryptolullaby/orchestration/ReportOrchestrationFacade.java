@@ -49,11 +49,15 @@ public class ReportOrchestrationFacade {
 
     public void confirmReportRequest (EmailDTO emailDTO) {
 
+        reportUseCase.confirmReportRequest(emailDTO);
+
         sendEmailToQueueUseCase.sendConfirmReportEmail(emailDTO);
 
     }
 
     public void denyReportRequest (EmailDTO emailDTO) {
+
+        reportUseCase.denyReportRequest();
 
         sendEmailToQueueUseCase.sendDenyReportEmail(emailDTO);
 
