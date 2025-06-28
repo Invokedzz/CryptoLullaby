@@ -57,7 +57,7 @@ public class ReportOrchestrationFacade {
 
     public void denyReportRequest (EmailDTO emailDTO) {
 
-        reportUseCase.denyReportRequest();
+        reportUseCase.denyReportRequest(emailDTO);
 
         sendEmailToQueueUseCase.sendDenyReportEmail(emailDTO);
 

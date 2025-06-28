@@ -83,9 +83,27 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public void denyReportRequest () {
+    public void denyReportRequest (EmailDTO emailDTO) {
+
+        var emails = emailDTO.to();
+
+        for (String email : emails) {
+
+            var user = usersService.findUserByEmail(email);
+
+            if (user.isPresent()) {
+
+                var idList = List.of(user.get().getId());
+
+                for (var id : idList) {
 
 
+
+                }
+
+            }
+
+        }
 
     }
 
@@ -113,10 +131,8 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
         *
         * To do: Adjust this garbage method as soon as possible :(
         * 26/06/2025
-        *
+        * FIXED: 28/05/2025
         * */
-
-        List <UsernameEmailDTO> listOfUsers = new ArrayList<>();
 
         return pages
                 .getContent()
@@ -127,7 +143,10 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
                     var reported = usersService.findUserById(report.getReportedId());
 
-                    Collections.addAll(listOfUsers, new UsernameEmailDTO(reporter), new UsernameEmailDTO(reported));
+                    List <UsernameEmailDTO> listOfUsers = List.of(
+                            new UsernameEmailDTO(reporter),
+                            new UsernameEmailDTO(reported)
+                    );
 
                     return new ReportDTO(report, listOfUsers);
 

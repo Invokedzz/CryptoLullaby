@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +59,12 @@ public class UsersService {
         return usersRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("We couldn't find a user with id: " + id));
+
+    }
+
+    public Optional <Users> findUserByEmail (String email) {
+
+        return usersRepository.findByEmail(email);
 
     }
 
