@@ -1,15 +1,11 @@
 package org.cryptolullaby.util;
 
-import org.cryptolullaby.model.dto.general.EmailDTO;
-
-public interface IEmailQueues {
+public interface IDefaultEmailQueues {
 
     void sendEmailToUserAfterRegistration (String to);
 
     void sendEmailToUserAfterAccountReactivation (String to);
 
     void sendEmailToUserAfterAccountDeactivation (String to);
-
-    void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO);
 
 }

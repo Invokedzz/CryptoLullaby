@@ -1,12 +1,10 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Report;
-import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.dto.report.ReportDTO;
-import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.service.CommentsService;

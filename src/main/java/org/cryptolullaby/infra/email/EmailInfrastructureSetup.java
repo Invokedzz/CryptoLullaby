@@ -7,14 +7,15 @@ import org.cryptolullaby.exception.UnprocessableEntityException;
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.enums.EmailType;
 import org.cryptolullaby.service.EmailService;
-import org.cryptolullaby.util.IEmailQueues;
+import org.cryptolullaby.util.IDTOEmailQueues;
+import org.cryptolullaby.util.IDefaultEmailQueues;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailInfrastructureSetup implements IEmailQueues {
+public class EmailInfrastructureSetup implements IDefaultEmailQueues, IDTOEmailQueues {
 
     @Value("${spring.mail.username}")
     private String from;
