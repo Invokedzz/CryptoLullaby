@@ -21,6 +21,10 @@ public class MailSenderConfig {
 
     private static final int PORT = 587;
 
+    private static final String MAIL_TRANSPORT_PROTOCOL = "smtp";
+
+    private static final String IS_PROPERTY_ENABLED = "true";
+
     @Bean
     public JavaMailSender getMailSender() {
 
@@ -49,10 +53,10 @@ public class MailSenderConfig {
 
         var properties = mailSender.getJavaMailProperties();
 
-        properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.debug", "true");
+        properties.put("mail.transport.protocol", MAIL_TRANSPORT_PROTOCOL);
+        properties.put("mail.smtp.auth", IS_PROPERTY_ENABLED);
+        properties.put("mail.smtp.starttls.enable", IS_PROPERTY_ENABLED);
+        properties.put("mail.debug", IS_PROPERTY_ENABLED);
 
     }
 
