@@ -85,6 +85,36 @@ public class ReportController {
 
     }
 
+    @GetMapping("/pending")
+    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToPendingStatus (
+
+            @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var reports = orchestrationFacade.getAllEqualsToPendingStatus(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(reports);
+
+    }
+
+    @GetMapping("/reported")
+    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToReportedStatus (
+
+            @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var reports = orchestrationFacade.getAllEqualsToReportedStatus(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(reports);
+
+    }
+
     @PostMapping("/confirm")
     public ResponseEntity <Void> confirmReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
 

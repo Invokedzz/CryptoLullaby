@@ -19,4 +19,5 @@ public interface ReportRepository extends MongoRepository <Report, String> {
 
     Page <Report> findAllByReporterIdAndStatus(String reporterId, ReportStatus status, Pageable pageable);
 
+    Page<Report> findAllByStatus(ReportStatus status, Pageable pageable);
 }

@@ -47,6 +47,18 @@ public class ReportOrchestrationFacade {
 
     }
 
+    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatus (Pageable pageable) {
+
+        return reportUseCase.getAllEqualsToPendingStatus(pageable);
+
+    }
+
+    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatus (Pageable pageable) {
+
+        return reportUseCase.getAllEqualsToReportedStatus(pageable);
+
+    }
+
     public void confirmReportRequest (EmailDTO emailDTO) {
 
         reportUseCase.confirmReportRequest(emailDTO);
