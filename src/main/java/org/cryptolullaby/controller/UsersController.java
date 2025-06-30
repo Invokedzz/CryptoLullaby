@@ -1,14 +1,9 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.model.dto.general.ImageDTO;
-import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.orchestration.UserOrchestrationFacade;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,75 +61,7 @@ public class UsersController {
 
     */
 
-    @GetMapping("/profile/{id}")
-    public ResponseEntity <PagedResponseDTO<ProfileDTO>> findProfileById (
-
-            @PathVariable String id,
-
-            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
-
-    )
-
-    {
-
-        var user = orchestrationFacade.getProfile(id, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(user);
-
-    }
-
-    @GetMapping("/profile/{username}/find")
-    public ResponseEntity <PagedResponseDTO<ProfileDTO>> findProfileByUsername (
-
-            @PathVariable String username,
-
-            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
-
-    )
-
-    {
-
-        var user = orchestrationFacade.getProfileByUsername(username, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(user);
-
-    }
-
-    @PutMapping("/profile/edit/{id}")
-    public ResponseEntity <SystemResponseDTO> editProfileById (
-
-            @PathVariable String id,
-
-            @Valid @ModelAttribute EditProfileDTO profileDTO
-
-    )
-
-    {
-
-        orchestrationFacade.editUserById(id, profileDTO);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new SystemResponseDTO("Profile edited successfully!"));
-
-    }
-
-    @PutMapping("/profile/edit/pfp/{id}")
-    public ResponseEntity <Void> editProfileImageById (
-
-            @PathVariable String id,
-
-            @Valid @ModelAttribute ImageDTO imageDTO
-
-    )
-
-    {
-
-        orchestrationFacade.editUserImage(id, imageDTO.file());
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-
-    }
-
-    @PutMapping("/profile/reactivate")
+    @PutMapping("/reactivate")
     public ResponseEntity <Void> reactivateProfileByEmail (@Valid @RequestBody EmailResponseDTO emailResponseDTO) {
 
         orchestrationFacade.reactivateUserByEmail(emailResponseDTO);
@@ -143,7 +70,7 @@ public class UsersController {
 
     }
 
-    @DeleteMapping("/profile/deactivate")
+    @DeleteMapping("/deactivate")
     public ResponseEntity <Void> deactivateProfileById (@Valid @RequestBody EmailResponseDTO emailResponseDTO) {
 
         orchestrationFacade.deactivateUserById(emailResponseDTO);
