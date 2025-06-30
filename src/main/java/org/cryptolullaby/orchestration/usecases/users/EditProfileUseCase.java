@@ -5,6 +5,7 @@ import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.EmailResponseDTO;
+import org.cryptolullaby.model.enums.ProfileStatus;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;
 import org.cryptolullaby.util.IUserInterestSanitizer;
@@ -87,6 +88,30 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
         saveChangesInTheDatabase(user);
 
     }
+
+    public void changeProfileVisibilityById (String id) {
+
+        var user = findUserById(id);
+
+        if (user.getStatus().equals(ProfileStatus.PUBLIC)) {
+
+            user.setStatus(ProfileStatus.PRIVATE);
+
+        } else if (user.getStatus().equals(ProfileStatus.PRIVATE)) {
+
+            user.setStatus(ProfileStatus.PUBLIC);
+
+        }
+
+        saveChangesInTheDatabase(user);
+
+    }
+
+    /*
+
+        PRIVATE METHODS AHEAD!
+
+    */
 
     private Images setupProfileImage (MultipartFile file) {
 

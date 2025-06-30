@@ -94,4 +94,13 @@ public class ProfileController {
 
     }
 
+    @PutMapping("/visibility/{id}")
+    public ResponseEntity <Void> changeProfileVisibilityById (@PathVariable String id) {
+
+        orchestrationFacade.changeProfileVisibilityById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
 }

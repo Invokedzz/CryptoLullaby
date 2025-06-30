@@ -93,6 +93,12 @@ public class UserOrchestrationFacade {
 
     }
 
+    public void changeProfileVisibilityById (String id) {
+
+        editProfileUseCase.changeProfileVisibilityById(id);
+
+    }
+
     /*
 
         PRIVATE METHODS AHEAD!

@@ -106,6 +106,8 @@ public class Users {
 
         this.createdAt = profileDTO.createdAt();
 
+        this.status = profileDTO.status();
+
     }
 
     public Users (UsernameEmailDTO usernameEmailDTO) {
