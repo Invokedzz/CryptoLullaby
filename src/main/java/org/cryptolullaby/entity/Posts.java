@@ -2,6 +2,8 @@ package org.cryptolullaby.entity;
 
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
+import org.cryptolullaby.model.enums.EntityType;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,14 +29,16 @@ public class Posts {
 
     private String userId;
 
+    private EntityType entityType;
+
     private Boolean isActive;
 
     public Posts () {}
 
     public Posts (
 
-            String id, String title, String description, Images img,
-            LocalDateTime createdAt, String userId, Boolean isActive
+            String id, String title, String description, Images img, LocalDateTime createdAt,
+            String userId, EntityType entityType, Boolean isActive
 
     )
 
@@ -52,6 +56,8 @@ public class Posts {
 
         this.userId = userId;
 
+        this.entityType = entityType;
+
         this.isActive = isActive;
 
     }
@@ -67,6 +73,8 @@ public class Posts {
         this.createdAt = LocalDateTime.now();
 
         this.userId = createPostDTO.userId();
+
+        this.entityType = EntityType.POST;
 
         this.isActive = true;
 
@@ -157,6 +165,18 @@ public class Posts {
     public void setUserId (String userId) {
 
         this.userId = userId;
+
+    }
+
+    public EntityType getEntityType () {
+
+        return entityType;
+
+    }
+
+    public void setEntityType (EntityType entityType) {
+
+        this.entityType = entityType;
 
     }
 

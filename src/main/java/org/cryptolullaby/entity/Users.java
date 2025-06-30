@@ -4,6 +4,7 @@ import org.cryptolullaby.model.dto.users.ProfileDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
+import org.cryptolullaby.model.enums.EntityType;
 import org.postgresql.shaded.com.ongres.stringprep.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,6 +32,8 @@ public class Users {
 
     private LocalDateTime createdAt;
 
+    private EntityType entityType;
+
     private Boolean isActive;
 
     public Users () {}
@@ -38,7 +41,7 @@ public class Users {
     public Users (
 
             String id, String username, String email, String password, Images img, List <String> rolesId,
-            List <Interest> interests, LocalDateTime createdAt, Boolean isActive
+            List <Interest> interests, LocalDateTime createdAt, EntityType entityType, Boolean isActive
     )
 
     {
@@ -59,6 +62,8 @@ public class Users {
 
         this.createdAt = createdAt;
 
+        this.entityType = entityType;
+
         this.isActive = isActive;
 
     }
@@ -74,6 +79,8 @@ public class Users {
         this.img = new Images();
 
         this.createdAt = LocalDateTime.now();
+
+        this.entityType = EntityType.USER;
 
         this.isActive = false;
 
@@ -186,6 +193,18 @@ public class Users {
     public LocalDateTime getCreatedAt () {
 
         return createdAt;
+
+    }
+
+    public EntityType getEntityType () {
+
+        return entityType;
+
+    }
+
+    public void setEntityType (EntityType entityType) {
+
+        this.entityType = entityType;
 
     }
 
