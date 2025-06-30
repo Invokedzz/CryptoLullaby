@@ -2,7 +2,7 @@ package org.cryptolullaby.util;
 
 import org.springframework.amqp.core.Queue;
 
-public interface IRabbitQueuesConfig {
+public interface IRabbitQueuesConfigMethods {
 
     Queue registerEmailQueue ();
 

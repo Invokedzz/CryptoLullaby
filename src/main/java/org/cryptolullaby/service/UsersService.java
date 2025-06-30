@@ -1,19 +1,13 @@
 package org.cryptolullaby.service;
 
-import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.EmailNotFoundException;
 import org.cryptolullaby.exception.UserNotFoundException;
-import org.cryptolullaby.model.enums.InterestName;
 import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UsersService {

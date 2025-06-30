@@ -7,7 +7,7 @@ import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.service.*;
-import org.cryptolullaby.util.IUserInterest;
+import org.cryptolullaby.util.IUserInterestSanitizer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service
-public class RegisterUserUseCase implements IUserInterest {
+public class RegisterUserUseCase implements IUserInterestSanitizer {
 
     private final UsersService usersService;
 

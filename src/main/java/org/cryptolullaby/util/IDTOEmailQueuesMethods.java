@@ -2,7 +2,7 @@ package org.cryptolullaby.util;
 
 import org.cryptolullaby.model.dto.general.EmailDTO;
 
-public interface IDTOEmailQueues {
+public interface IDTOEmailQueuesMethods {
 
     void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO);
 

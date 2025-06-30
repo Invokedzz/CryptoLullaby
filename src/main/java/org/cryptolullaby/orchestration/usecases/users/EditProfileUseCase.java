@@ -7,14 +7,14 @@ import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.EmailResponseDTO;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;
-import org.cryptolullaby.util.IUserInterest;
+import org.cryptolullaby.util.IUserInterestSanitizer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Service
-public class EditProfileUseCase implements IUserInterest {
+public class EditProfileUseCase implements IUserInterestSanitizer {
 
     private final UsersService usersService;
 

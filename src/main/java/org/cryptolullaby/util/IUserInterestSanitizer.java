@@ -6,7 +6,7 @@ import org.cryptolullaby.model.enums.InterestName;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public interface IUserInterest {
+public interface IUserInterestSanitizer {
 
     default List <Interest> getSanitizedInterestList (List <Interest> interests) {
 

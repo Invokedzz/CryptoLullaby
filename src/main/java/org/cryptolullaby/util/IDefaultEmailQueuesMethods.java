@@ -1,6 +1,6 @@
 package org.cryptolullaby.util;
 
-public interface IDefaultEmailQueues {
+public interface IDefaultEmailQueuesMethods {
 
     void sendEmailToUserAfterRegistration (String to);
 

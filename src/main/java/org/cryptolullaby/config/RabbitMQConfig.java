@@ -1,8 +1,7 @@
 package org.cryptolullaby.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.cryptolullaby.util.IRabbitQueuesConfig;
+import org.cryptolullaby.util.IRabbitQueuesConfigMethods;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfig implements IRabbitQueuesConfig {
+public class RabbitMQConfig implements IRabbitQueuesConfigMethods {
 
     @Value("${rabbitmq.register.email.queue}")
     private String registerQueue;
