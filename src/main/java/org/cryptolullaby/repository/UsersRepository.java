@@ -17,10 +17,6 @@ public interface UsersRepository extends MongoRepository <Users, String> {
 
     Page <Users> findByIdAndIsActive (String id, Boolean isActive, Pageable pageable);
 
-    Optional <Users> findByEmail (String email);
-
-    Optional <Users> findByIdAndIsActive (String id, Boolean isActive);
-
     Optional <Users> findByEmailAndIsActive(String email, Boolean isActive);
 
 }

@@ -105,25 +105,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     public void denyReportRequest (EmailDTO emailDTO) {
 
-        var emails = emailDTO.to();
 
-        for (String email : emails) {
-
-            var user = usersService.findUserByEmail(email);
-
-            if (user.isPresent()) {
-
-                var idList = List.of(user.get().getId());
-
-                for (var id : idList) {
-
-
-
-                }
-
-            }
-
-        }
 
     }
 

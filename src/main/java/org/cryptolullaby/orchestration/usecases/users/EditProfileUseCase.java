@@ -7,13 +7,14 @@ import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.EmailResponseDTO;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;
+import org.cryptolullaby.util.IUserInterest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Service
-public class EditProfileUseCase {
+public class EditProfileUseCase implements IUserInterest {
 
     private final UsersService usersService;
 
@@ -113,7 +114,7 @@ public class EditProfileUseCase {
 
     private List<Interest> sanitizeInterests (List <Interest> interests) {
 
-        return usersService.getSanitizedInterestList(interests);
+        return getSanitizedInterestList(interests);
 
     }
 

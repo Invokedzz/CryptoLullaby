@@ -62,12 +62,6 @@ public class UsersService {
 
     }
 
-    public Optional <Users> findUserByEmail (String email) {
-
-        return usersRepository.findByEmail(email);
-
-    }
-
     public void checkIfBothIdsAreValid (String firstUserId, String secondUserId) {
 
         userValidator.validate(firstUserId, secondUserId);
@@ -79,38 +73,6 @@ public class UsersService {
         return usersRepository
                 .findByEmailAndIsActive(email, isActive)
                 .orElseThrow(() -> new EmailNotFoundException("We couldn't find a user with email: " + email));
-
-    }
-
-    public List <Interest> getSanitizedInterestList (List <Interest> interests) {
-
-        /*
-         *
-         *  To do: fix the NullPointerIssue that is happening with interests.stream()
-         *   09/05/2025
-         *
-         *   FIXED 12/05/2025
-         *
-         * */
-
-        if (interests != null) {
-
-            var sanitizedList =
-                    interests.stream()
-                            .filter(i -> i.getType() != null && !i.getType().getLabel().isBlank())
-                            .collect(Collectors.toList());
-
-            if (sanitizedList.isEmpty()) {
-
-                sanitizedList.add(new Interest(InterestName.NONE));
-
-            }
-
-            return sanitizedList;
-
-        }
-
-        return List.of(new Interest(InterestName.NONE));
 
     }
 
