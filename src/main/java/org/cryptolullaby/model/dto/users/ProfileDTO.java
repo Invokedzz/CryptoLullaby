@@ -5,6 +5,7 @@ import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.follow.UserFollowersDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
+import org.cryptolullaby.model.enums.ProfileStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,8 @@ public record ProfileDTO(
         String email,
 
         List <Interest> interests,
+
+        ProfileStatus status,
 
         LocalDateTime createdAt,
 
@@ -39,6 +42,7 @@ public record ProfileDTO(
                 user.getUsername(),
                 user.getEmail(),
                 user.getInterests(),
+                user.getStatus(),
                 user.getCreatedAt(),
                 followers,
                 posts

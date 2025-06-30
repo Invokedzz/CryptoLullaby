@@ -6,6 +6,6 @@ public enum CurrencyType {
 
     USD,
 
-    EUR;
+    EUR
 
 }

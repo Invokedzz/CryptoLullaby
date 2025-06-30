@@ -19,4 +19,5 @@ public interface UsersRepository extends MongoRepository <Users, String> {
 
     Optional <Users> findByEmailAndIsActive(String email, Boolean isActive);
 
+    boolean existsByIdAndIsActive(String id, Boolean isActive);
 }

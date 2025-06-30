@@ -6,6 +6,6 @@ public enum FollowStatus {
 
     BLOCKED,
 
-    PENDING;
+    PENDING
 
 }

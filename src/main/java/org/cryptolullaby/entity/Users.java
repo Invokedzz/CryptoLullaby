@@ -5,6 +5,7 @@ import org.cryptolullaby.model.dto.users.RegisterDTO;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
+import org.cryptolullaby.model.enums.ProfileStatus;
 import org.postgresql.shaded.com.ongres.stringprep.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,6 +33,8 @@ public class Users {
 
     private LocalDateTime createdAt;
 
+    private ProfileStatus status;
+
     private EntityType entityType;
 
     private Boolean isActive;
@@ -40,8 +43,9 @@ public class Users {
 
     public Users (
 
-            String id, String username, String email, String password, Images img, List <String> rolesId,
-            List <Interest> interests, LocalDateTime createdAt, EntityType entityType, Boolean isActive
+            String id, String username, String email, String password, Images img,
+            List <String> rolesId, List <Interest> interests,
+            LocalDateTime createdAt, ProfileStatus status, EntityType entityType, Boolean isActive
     )
 
     {
@@ -62,6 +66,8 @@ public class Users {
 
         this.createdAt = createdAt;
 
+        this.status = status;
+
         this.entityType = entityType;
 
         this.isActive = isActive;
@@ -79,6 +85,8 @@ public class Users {
         this.img = new Images();
 
         this.createdAt = LocalDateTime.now();
+
+        this.status = ProfileStatus.PUBLIC;
 
         this.entityType = EntityType.USER;
 
@@ -193,6 +201,18 @@ public class Users {
     public LocalDateTime getCreatedAt () {
 
         return createdAt;
+
+    }
+
+    public ProfileStatus getStatus () {
+
+        return status;
+
+    }
+
+    public void setStatus (ProfileStatus status) {
+
+        this.status = status;
 
     }
 

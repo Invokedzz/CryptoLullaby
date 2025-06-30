@@ -8,6 +8,6 @@ public enum ProfileStatus {
 
     LIMITED_ACCESS,
 
-    BANNED;
+    BANNED
 
 }

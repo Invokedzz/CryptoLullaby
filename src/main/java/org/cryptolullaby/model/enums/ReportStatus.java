@@ -4,6 +4,6 @@ public enum ReportStatus {
 
     PENDING,
 
-    REPORTED;
+    REPORTED
 
 }

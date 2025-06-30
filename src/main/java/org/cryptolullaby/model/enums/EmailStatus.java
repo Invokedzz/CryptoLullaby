@@ -4,6 +4,6 @@ public enum EmailStatus {
 
     SENT,
 
-    ERROR;
+    ERROR
 
 }

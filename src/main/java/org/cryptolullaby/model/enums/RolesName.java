@@ -6,6 +6,6 @@ public enum RolesName {
 
     MODERATOR,
 
-    USER;
+    USER
 
 }

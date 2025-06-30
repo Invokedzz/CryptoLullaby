@@ -2,7 +2,6 @@ package org.cryptolullaby.service;
 
 import org.cryptolullaby.entity.Posts;
 import org.cryptolullaby.exception.PostNotFoundException;
-import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.repository.PostsRepository;
 import org.cryptolullaby.validation.PostsValidator;
 import org.springframework.data.domain.Page;
@@ -45,7 +44,15 @@ public class PostsService {
 
     }
 
-    public List<Posts> findPostByUserIdAndIsActive (String userId) {
+    public boolean doesPostExist (String id) {
+
+        return postsRepository.existsByIdAndIsActive(
+                id, IS_ACTIVE
+        );
+
+    }
+
+    public List <Posts> findPostByUserIdAndIsActive (String userId) {
 
         return postsRepository.findByUserIdAndIsActive(userId, IS_ACTIVE);
 

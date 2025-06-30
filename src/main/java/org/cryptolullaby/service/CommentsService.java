@@ -34,6 +34,14 @@ public class CommentsService {
 
     }
 
+    public boolean doesCommentExist (String id) {
+
+        return commentsRepository.existsByIdAndIsActive(
+                id, IS_ACTIVE
+        );
+
+    }
+
     public Page <Comments> findAllByUserIdAndIsActive (String userId, Pageable pageable) {
 
         return commentsRepository.findAllByUserIdAndIsActive(

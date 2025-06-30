@@ -56,6 +56,14 @@ public class UsersService {
 
     }
 
+    public boolean doesUserExist (String id) {
+
+        return usersRepository.existsByIdAndIsActive(
+                id, IS_ACTIVE
+        );
+
+    }
+
     public void checkIfBothIdsAreValid (String firstUserId, String secondUserId) {
 
         userValidator.validate(firstUserId, secondUserId);
