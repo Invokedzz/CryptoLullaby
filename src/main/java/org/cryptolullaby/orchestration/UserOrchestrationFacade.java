@@ -33,6 +33,12 @@ public class UserOrchestrationFacade {
 
     }
 
+    /*
+
+        PUBLIC METHODS FOR CONTROLLERS AHEAD!
+
+    */
+
     public void register (RegisterDTO registerDTO) {
 
         registerANewUser(registerDTO);
@@ -47,9 +53,15 @@ public class UserOrchestrationFacade {
 
     }
 
-    public PagedResponseDTO<ProfileDTO> getProfile (String id, Pageable pageable) {
+    public PagedResponseDTO <ProfileDTO> getProfile (String id, Pageable pageable) {
 
         return profileUseCase.getUserProfileById(id, pageable);
+
+    }
+
+    public PagedResponseDTO <ProfileDTO> getProfileByUsername (String username, Pageable pageable) {
+
+        return profileUseCase.getProfileByUsername(username, pageable);
 
     }
 
@@ -80,6 +92,12 @@ public class UserOrchestrationFacade {
         sendDeactivationEmail(emailResponseDTO.email());
 
     }
+
+    /*
+
+        PRIVATE METHODS AHEAD!
+
+    */
 
     private void registerANewUser (RegisterDTO registerDTO) {
 

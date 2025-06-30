@@ -56,6 +56,14 @@ public class UsersService {
 
     }
 
+    public Page <Users> findProfileByUsername (String username, Pageable pageable) {
+
+        return usersRepository.findByUsernameAndIsActive(
+                username, IS_ACTIVE, pageable
+        );
+
+    }
+
     public boolean doesUserExist (String id) {
 
         return usersRepository.existsByIdAndIsActive(

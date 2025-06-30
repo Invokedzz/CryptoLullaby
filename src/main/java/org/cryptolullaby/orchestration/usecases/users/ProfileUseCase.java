@@ -46,6 +46,16 @@ public class ProfileUseCase implements IPaginationStructure <ProfileDTO, Users> 
 
     }
 
+    public PagedResponseDTO <ProfileDTO> getProfileByUsername (String username, Pageable pageable) {
+
+        var pages = usersService.findProfileByUsername(username, pageable);
+
+        var users = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, users);
+
+    }
+
     @Override
     public PagedResponseDTO <ProfileDTO> setupPaginationStructure (Page <Users> pages, List <ProfileDTO> elements) {
 

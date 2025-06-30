@@ -20,4 +20,5 @@ public interface PostsRepository extends MongoRepository <Posts, String> {
     List <Posts> findByUserIdAndIsActive (String userId, Boolean isActive);
 
     boolean existsByIdAndIsActive(String id, Boolean isActive);
+
 }

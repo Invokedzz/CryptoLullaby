@@ -50,12 +50,21 @@ public class UsersController {
 
     }
 
+    /*
+
+    TO DO:
+
+        - create login endpoint
+          30/06/2025
+
     @PostMapping("/login")
     public ResponseEntity <Void> login (@Valid @RequestBody LoginDTO loginDTO) {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 
     }
+
+    */
 
     @GetMapping("/profile/{id}")
     public ResponseEntity <PagedResponseDTO<ProfileDTO>> findProfileById (
@@ -69,6 +78,23 @@ public class UsersController {
     {
 
         var user = orchestrationFacade.getProfile(id, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+
+    }
+
+    @GetMapping("/profile/{username}/find")
+    public ResponseEntity <PagedResponseDTO<ProfileDTO>> findProfileByUsername (
+
+            @PathVariable String username,
+
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var user = orchestrationFacade.getProfileByUsername(username, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
 
