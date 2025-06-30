@@ -8,7 +8,6 @@ import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.dto.posts.PostsDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.orchestration.PostsOrchestrationFacade;
-import org.cryptolullaby.service.PostsService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -37,7 +36,7 @@ public class PostsController {
 
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity <PagedResponseDTO<PostsDTO>> allPosts (
 
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
@@ -52,10 +51,10 @@ public class PostsController {
 
     }
 
-    @GetMapping
+    @GetMapping("/{title}")
     public ResponseEntity <PagedResponseDTO<PostsDTO>> postsByTitle (
 
-            @RequestParam String title,
+            @PathVariable String title,
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
     )
