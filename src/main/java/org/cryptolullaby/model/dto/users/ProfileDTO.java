@@ -22,7 +22,7 @@ public record ProfileDTO(
 
         List <Interest> interests,
 
-        ProfileStatus status,
+        List <ProfileStatus> status,
 
         LocalDateTime createdAt,
 

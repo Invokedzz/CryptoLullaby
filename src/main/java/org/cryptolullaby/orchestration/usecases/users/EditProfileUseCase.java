@@ -93,13 +93,17 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
         var user = findUserById(id);
 
-        if (user.getStatus().equals(ProfileStatus.PUBLIC)) {
+        if (user.getStatus().getFirst().equals(ProfileStatus.PUBLIC)) {
 
-            user.setStatus(ProfileStatus.PRIVATE);
+            user.getStatus().removeFirst();
 
-        } else if (user.getStatus().equals(ProfileStatus.PRIVATE)) {
+            user.getStatus().addFirst(ProfileStatus.PRIVATE);
 
-            user.setStatus(ProfileStatus.PUBLIC);
+        } else if (user.getStatus().getFirst().equals(ProfileStatus.PRIVATE)) {
+
+            user.getStatus().removeFirst();
+
+            user.getStatus().addFirst(ProfileStatus.PUBLIC);
 
         }
 

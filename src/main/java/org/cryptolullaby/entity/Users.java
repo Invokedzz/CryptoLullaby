@@ -33,7 +33,7 @@ public class Users {
 
     private LocalDateTime createdAt;
 
-    private ProfileStatus status;
+    private List <ProfileStatus> status;
 
     private EntityType entityType;
 
@@ -45,7 +45,7 @@ public class Users {
 
             String id, String username, String email, String password, Images img,
             List <String> rolesId, List <Interest> interests,
-            LocalDateTime createdAt, ProfileStatus status, EntityType entityType, Boolean isActive
+            LocalDateTime createdAt, List <ProfileStatus> status, EntityType entityType, Boolean isActive
     )
 
     {
@@ -86,7 +86,7 @@ public class Users {
 
         this.createdAt = LocalDateTime.now();
 
-        this.status = ProfileStatus.PUBLIC;
+        this.status = List.of(ProfileStatus.PUBLIC);
 
         this.entityType = EntityType.USER;
 
@@ -206,13 +206,13 @@ public class Users {
 
     }
 
-    public ProfileStatus getStatus () {
+    public List <ProfileStatus> getStatus () {
 
         return status;
 
     }
 
-    public void setStatus (ProfileStatus status) {
+    public void setStatus (List <ProfileStatus> status) {
 
         this.status = status;
 
