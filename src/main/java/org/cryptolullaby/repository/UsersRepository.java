@@ -22,11 +22,12 @@ public interface UsersRepository extends MongoRepository <Users, String> {
 
     Optional <Users> findByEmailAndIsActive (String email, Boolean isActive);
 
+    List <UserInfoForScheduledDeletion> findAllByIsActive (Boolean isActive);
+
     boolean existsByUsername (String username);
 
     boolean existsByEmail (String email);
 
     boolean existsByIdAndIsActive (String id, Boolean isActive);
 
-    List <UserInfoForScheduledDeletion> findAllByIsActive (Boolean isActive);
 }

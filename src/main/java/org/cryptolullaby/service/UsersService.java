@@ -91,7 +91,7 @@ public class UsersService {
 
     }
 
-    @Scheduled(cron = "0 30 9 * Jan Mon", zone = "America/Sao_Paulo")
+    @Scheduled(cron = "0 0 0 25 12 ?", zone = "America/Sao_Paulo")
     public void scheduleDateToDeleteDeactivatedUsers () {
 
         var inactiveUsersIdList = usersRepository.findAllByIsActive(IS_INACTIVE);

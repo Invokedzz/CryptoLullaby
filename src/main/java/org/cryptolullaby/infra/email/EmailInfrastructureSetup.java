@@ -196,19 +196,6 @@ public class EmailInfrastructureSetup implements IDefaultEmailQueuesMethods, IDT
 
     }
 
-    private EmailDTO buildEmailDTO (SimpleMailMessage mailMessage) {
-
-        return new EmailDTO(
-
-            mailMessage.getFrom(),
-            mailMessage.getTo(),
-            mailMessage.getSubject(),
-            mailMessage.getText()
-
-        );
-
-    }
-
     private void saveChangesInTheDatabase (Email email) {
 
         emailService.save(email);
