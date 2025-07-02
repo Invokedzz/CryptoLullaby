@@ -58,18 +58,26 @@ public class ReportService {
 
     }
 
-    public Page <Report> findAllByStatusEqualsToPendingAndReporterId (String reporterId, Pageable pageable) {
+    public Page <Report> findAllByStatusEqualsToPendingAndId (String id, Pageable pageable) {
 
-        return reportRepository.findAllByReporterIdAndStatus(
-                reporterId, ReportStatus.PENDING, pageable
+        return reportRepository.findAllByIdAndStatus(
+                id, ReportStatus.PENDING, pageable
         );
 
     }
 
-    public Page <Report> findAllByStatusEqualsToReportedAndReporterId (String reporterId, Pageable pageable) {
+    public Page <Report> findAllByStatusEqualsToInAnalysisAndId (String id, Pageable pageable) {
 
-        return reportRepository.findAllByReporterIdAndStatus(
-                reporterId, ReportStatus.REPORTED, pageable
+        return reportRepository.findAllByIdAndStatus(
+                id, ReportStatus.IN_ANALYSIS, pageable
+        );
+
+    }
+
+    public Page <Report> findAllByStatusEqualsToReportedAndId (String id, Pageable pageable) {
+
+        return reportRepository.findAllByIdAndStatus(
+                id, ReportStatus.REPORTED, pageable
         );
 
     }

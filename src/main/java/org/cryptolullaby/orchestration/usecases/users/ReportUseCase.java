@@ -47,30 +47,6 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatusAndReporterId (String reporterId, Pageable pageable) {
-
-        var pages = reportService.findAllByStatusEqualsToPendingAndReporterId(
-                reporterId, pageable
-        );
-
-        var reports = getPagesContentAndRenderItToDTO(pages);
-
-        return setupPaginationStructure(pages, reports);
-
-    }
-
-    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatusAndReporterId (String reporterId, Pageable pageable) {
-
-        var pages = reportService.findAllByStatusEqualsToReportedAndReporterId(
-               reporterId, pageable
-        );
-
-        var reports = getPagesContentAndRenderItToDTO(pages);
-
-        return setupPaginationStructure(pages, reports);
-
-    }
-
     public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatus (Pageable pageable) {
 
         var pages = reportService.findAllByStatusEqualsToPending(pageable);

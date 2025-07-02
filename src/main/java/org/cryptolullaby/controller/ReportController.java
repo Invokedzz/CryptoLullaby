@@ -1,7 +1,6 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.entity.Report;
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
@@ -29,13 +28,6 @@ public class ReportController {
 
     }
 
-    /*
-    *
-    * TO DO: INSTEAD OF USING "TYPE" IN THE REQUEST BODY USE IT IN THE PATH VARIABLE
-    * 02/07/2025
-    *
-    * */
-
     @PutMapping
     public ResponseEntity <SystemResponseDTO> report (@Valid @RequestBody CreateReportDTO createReportDTO) {
 
@@ -52,48 +44,16 @@ public class ReportController {
 
         var report = orchestrationFacade.getReportById(id);
 
-    //    return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
+       // return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
-    @GetMapping("/{reporterId}/pending")
-    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToPendingStatusAndReporterId (
-
-            @PathVariable String reporterId,
-
-            @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
-
-    )
-
-    {
-
-        var pendingReports = orchestrationFacade.getAllEqualsToPendingStatusAndReporterId(reporterId, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(pendingReports);
-
-    }
-
-    @GetMapping("/{reporterId}/reported")
-    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToReportedStatusAndReporterId (
-
-            @PathVariable String reporterId,
-
-            @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
-
-    )
-
-    {
-
-        var reports = orchestrationFacade.getAllEqualsToReportedStatusAndReporterId(reporterId, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(reports);
-
-    }
-
     @GetMapping("/pending")
     public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToPendingStatus (
+
+            @RequestParam(required = false) String id,
 
             @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
 

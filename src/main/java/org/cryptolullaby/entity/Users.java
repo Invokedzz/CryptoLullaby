@@ -39,13 +39,16 @@ public class Users {
 
     private Boolean isActive;
 
+    public Boolean isDeleted;
+
     public Users () {}
 
     public Users (
 
             String id, String username, String email, String password, Images img,
             List <String> rolesId, List <Interest> interests,
-            LocalDateTime createdAt, List <ProfileStatus> status, EntityType entityType, Boolean isActive
+            LocalDateTime createdAt, List <ProfileStatus> status,
+            EntityType entityType, Boolean isActive, Boolean isDeleted
     )
 
     {
@@ -72,6 +75,8 @@ public class Users {
 
         this.isActive = isActive;
 
+        this.isDeleted = isDeleted;
+
     }
 
     public Users (RegisterDTO register) {
@@ -91,6 +96,8 @@ public class Users {
         this.entityType = EntityType.USER;
 
         this.isActive = false;
+
+        this.isDeleted = false;
 
     }
 
@@ -245,6 +252,24 @@ public class Users {
     public void deactivate () {
 
         this.isActive = false;
+
+    }
+
+    public Boolean getIsDeleted () {
+
+        return isDeleted;
+
+    }
+
+    public void delete () {
+
+        this.isDeleted = true;
+
+    }
+
+    public void undelete () {
+
+        this.isDeleted = false;
 
     }
 

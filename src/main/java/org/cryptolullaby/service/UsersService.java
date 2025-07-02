@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsersService {
 
@@ -49,6 +51,12 @@ public class UsersService {
     }
 
     public Users findUserById (String id) {
+
+        return usersRepository.findById(id).orElse(null);
+
+    }
+
+    public Users findUserByIdOrElseThrow (String id) {
 
         return usersRepository
                 .findById(id)

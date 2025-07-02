@@ -1,7 +1,6 @@
 package org.cryptolullaby.model.dto.report;
 
 import org.cryptolullaby.entity.Report;
-import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.model.enums.ReportStatus;

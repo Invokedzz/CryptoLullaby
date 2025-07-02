@@ -73,7 +73,7 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
 
     public void confirmRegistration (String id, InterestDTO interestDTO) {
 
-        var user = findUserById(id);
+        var user = findUserByIdOrElseThrow(id);
 
         if (interestDTO.interests() != null) {
 
@@ -140,9 +140,9 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
 
     }
 
-    private Users findUserById (String id) {
+    private Users findUserByIdOrElseThrow (String id) {
 
-        return usersService.findUserById(id);
+        return usersService.findUserByIdOrElseThrow(id);
 
     }
 

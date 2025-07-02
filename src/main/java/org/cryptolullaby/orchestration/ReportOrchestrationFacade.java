@@ -31,22 +31,6 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatusAndReporterId (String reporterId, Pageable pageable) {
-
-        return reportUseCase.getAllEqualsToPendingStatusAndReporterId(
-                reporterId, pageable
-        );
-
-    }
-
-    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatusAndReporterId (String reporterId, Pageable pageable) {
-
-        return reportUseCase.getAllEqualsToReportedStatusAndReporterId(
-                reporterId, pageable
-        );
-
-    }
-
     public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatus (Pageable pageable) {
 
         return reportUseCase.getAllEqualsToPendingStatus(pageable);

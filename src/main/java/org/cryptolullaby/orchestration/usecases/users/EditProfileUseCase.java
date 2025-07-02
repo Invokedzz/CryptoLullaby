@@ -34,7 +34,7 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
     public void editUserProfile (String id, EditProfileDTO profileDTO) {
 
-        var user = findUserById(id);
+        var user = findUserByIdOrElseThrow(id);
 
         var interests = sanitizeInterests(profileDTO.interests());
 
@@ -53,7 +53,7 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
     public void editUserImage (String id, MultipartFile file) {
 
-        var user = findUserById(id);
+        var user = findUserByIdOrElseThrow(id);
 
         var img = setupProfileImage(file);
 
@@ -91,7 +91,7 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
     public void changeProfileVisibilityById (String id) {
 
-        var user = findUserById(id);
+        var user = findUserByIdOrElseThrow(id);
 
         if (user.getStatus().getFirst().equals(ProfileStatus.PUBLIC)) {
 
@@ -123,9 +123,9 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
     }
 
-    private Users findUserById (String id) {
+    private Users findUserByIdOrElseThrow (String id) {
 
-        return usersService.findUserById(id);
+        return usersService.findUserByIdOrElseThrow(id);
 
     }
 
