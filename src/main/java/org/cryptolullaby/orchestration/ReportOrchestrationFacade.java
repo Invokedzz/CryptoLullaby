@@ -53,6 +53,12 @@ public class ReportOrchestrationFacade {
 
     }
 
+    public PagedResponseDTO <ReportDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
+
+        return reportUseCase.getAllEqualsToInAnalysisStatus(pageable);
+
+    }
+
     public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatus (Pageable pageable) {
 
         return reportUseCase.getAllEqualsToReportedStatus(pageable);

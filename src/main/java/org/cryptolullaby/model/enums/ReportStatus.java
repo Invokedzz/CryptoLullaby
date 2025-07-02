@@ -4,6 +4,8 @@ public enum ReportStatus {
 
     PENDING,
 
+    IN_ANALYSIS,
+
     REPORTED
 
 }

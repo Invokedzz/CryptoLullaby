@@ -10,6 +10,16 @@ public class SendEmailToQueue {
 
     private final RabbitMQService rabbitMQService;
 
+    private static final EmailType REGISTRATION_EMAIL_TYPE = EmailType.REGISTRATION;
+
+    private static final EmailType REACTIVATION_EMAIL_TYPE = EmailType.REACTIVATION;
+
+    private static final EmailType DEACTIVATION_EMAIL_TYPE = EmailType.DEACTIVATION;
+
+    private static final EmailType REPORT_EMAIL_TYPE = EmailType.REPORT;
+
+    private static final EmailType DENY_REPORT_EMAIL_TYPE = EmailType.DENY_REPORT;
+
     public SendEmailToQueue(RabbitMQService rabbitMQService) {
 
         this.rabbitMQService = rabbitMQService;
@@ -48,31 +58,31 @@ public class SendEmailToQueue {
 
     private void sendRegisterEmailToQueue (String to) {
 
-        rabbitMQService.sendToQueue(to, EmailType.REGISTRATION);
+        rabbitMQService.sendToQueue(to, REGISTRATION_EMAIL_TYPE);
 
     }
 
     private void sendReactivationEmailToQueue (String to) {
 
-        rabbitMQService.sendToQueue(to, EmailType.REACTIVATION);
+        rabbitMQService.sendToQueue(to, REACTIVATION_EMAIL_TYPE);
 
     }
 
     private void sendDeactivationEmailToQueue (String to) {
 
-        rabbitMQService.sendToQueue(to, EmailType.DEACTIVATION);
+        rabbitMQService.sendToQueue(to, DEACTIVATION_EMAIL_TYPE);
 
     }
 
     private void sendReportConfirmEmailToQueue (EmailDTO emailDTO) {
 
-        rabbitMQService.sendToQueue(emailDTO, EmailType.CONFIRM_REPORT);
+        rabbitMQService.sendToQueue(emailDTO, REPORT_EMAIL_TYPE);
 
     }
 
     private void sendDenyReportEmailToQueue (EmailDTO emailDTO) {
 
-        rabbitMQService.sendToQueue(emailDTO, EmailType.DENY_REPORT);
+        rabbitMQService.sendToQueue(emailDTO, DENY_REPORT_EMAIL_TYPE);
 
     }
 

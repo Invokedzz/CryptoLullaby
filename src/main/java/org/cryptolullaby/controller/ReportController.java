@@ -29,6 +29,13 @@ public class ReportController {
 
     }
 
+    /*
+    *
+    * TO DO: INSTEAD OF USING "TYPE" IN THE REQUEST BODY USE IT IN THE PATH VARIABLE
+    * 02/07/2025
+    *
+    * */
+
     @PutMapping
     public ResponseEntity <SystemResponseDTO> report (@Valid @RequestBody CreateReportDTO createReportDTO) {
 
@@ -95,6 +102,21 @@ public class ReportController {
     {
 
         var reports = orchestrationFacade.getAllEqualsToPendingStatus(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(reports);
+
+    }
+
+    @GetMapping("/in-analysis")
+    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToInAnalysisStatus (
+
+            @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
+
+    )
+
+    {
+
+        var reports = orchestrationFacade.getAllEqualsToInAnalysisStatus(pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(reports);
 

@@ -42,6 +42,14 @@ public class ReportService {
 
     }
 
+    public Page <Report> findAllByStatusEqualsToInAnalysis (Pageable pageable) {
+
+        return reportRepository.findAllByStatus(
+                ReportStatus.IN_ANALYSIS, pageable
+        );
+
+    }
+
     public Page <Report> findAllByStatusEqualsToReported (Pageable pageable) {
 
         return reportRepository.findAllByStatus(

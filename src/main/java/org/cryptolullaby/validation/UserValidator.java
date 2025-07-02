@@ -12,6 +12,8 @@ public class UserValidator {
 
     private final UsersRepository usersRepository;
 
+    private static final boolean IS_ACTIVE = true;
+
     public UserValidator (UsersRepository usersRepository) {
 
         this.usersRepository = usersRepository;
@@ -70,7 +72,7 @@ public class UserValidator {
 
         return userList
                 .stream()
-                .filter(x -> x.getId().equals(followerId) && x.getIsActive().equals(true))
+                .filter(x -> x.getId().equals(followerId) && x.getIsActive().equals(IS_ACTIVE))
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException("We weren't able to find a user with this id: " + followerId));
 
@@ -80,7 +82,7 @@ public class UserValidator {
 
         return userList
                 .stream()
-                .filter(y -> y.getId().equals(followingId) && y.getIsActive().equals(true))
+                .filter(y -> y.getId().equals(followingId) && y.getIsActive().equals(IS_ACTIVE))
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException("We weren't able to find a user with this id: " + followingId));
 

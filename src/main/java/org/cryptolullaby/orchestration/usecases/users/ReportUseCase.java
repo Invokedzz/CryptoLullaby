@@ -91,6 +91,16 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
+    public PagedResponseDTO <ReportDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
+
+        var pages = reportService.findAllByStatusEqualsToInAnalysis(pageable);
+
+        var reports = getPagesContentAndRenderItToDTO(pages);
+
+        return setupPaginationStructure(pages, reports);
+
+    }
+
     public Report getReportById (String id) {
 
         return findReportById(id);
@@ -169,29 +179,31 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    private void reportSaveValidation (String reportedId, EntityType entity) {
+    private boolean reportSaveValidation (String reportedId, EntityType entity) {
 
         switch (entity) {
 
             case USER -> {
 
-                return;
+                return usersService.doesUserExist(reportedId);
 
             }
 
             case POST -> {
 
+                return postsService.doesPostExist(reportedId);
+
             }
 
             case COMMENT -> {
 
-
+                return commentsService.doesCommentExist(reportedId);
 
             }
 
             default -> throw new IllegalStateException("Unexpected value: " + entity);
 
-        };
+        }
 
     }
 
