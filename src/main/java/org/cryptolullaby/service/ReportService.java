@@ -78,6 +78,14 @@ public class ReportService {
 
     }
 
+    public long countNumberOfTimesAUserHasBeenReported (String reportedId, ReportStatus reportStatus) {
+
+        return reportRepository.countReportByReportedIdAndStatus(
+                reportedId, reportStatus
+        );
+
+    }
+
     public boolean hasUserReported (String reporterId, String reportedId, EntityType entityType) {
 
         return reportRepository.existsByReporterIdAndReportedIdAndEntityType(

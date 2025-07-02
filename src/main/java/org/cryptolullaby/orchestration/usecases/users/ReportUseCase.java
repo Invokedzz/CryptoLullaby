@@ -109,6 +109,12 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
+    public void randomMethodName () {
+
+
+
+    }
+
     @Override
     public PagedResponseDTO <ReportDTO> setupPaginationStructure (Page <Report> pages, List <ReportDTO> elements) {
 

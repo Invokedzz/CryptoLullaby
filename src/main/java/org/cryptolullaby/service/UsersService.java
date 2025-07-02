@@ -7,7 +7,10 @@ import org.cryptolullaby.repository.UsersRepository;
 import org.cryptolullaby.validation.UserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class UsersService {
@@ -17,6 +20,8 @@ public class UsersService {
     private final UserValidator userValidator;
 
     private static final boolean IS_ACTIVE = true;
+
+    private static final boolean IS_INACTIVE = false;
 
     public UsersService (UsersRepository usersRepository, UserValidator userValidator) {
 
@@ -83,6 +88,27 @@ public class UsersService {
         return usersRepository
                 .findByEmailAndIsActive(email, isActive)
                 .orElseThrow(() -> new EmailNotFoundException("We couldn't find a user with email: " + email));
+
+    }
+
+    @Scheduled(cron = "0 30 9 * Jan Mon", zone = "America/Sao_Paulo")
+    public void scheduleDateToDeleteDeactivatedUsers () {
+
+        var inactiveUsersIdList = usersRepository.findAllByIsActive(IS_INACTIVE);
+
+        for (var inactiveUserId : inactiveUsersIdList) {
+
+            System.out.println(inactiveUserId);
+
+            if (inactiveUserId.createdAt().getYear() < LocalDateTime.now().getYear()) {
+
+                System.out.println(inactiveUserId.id());
+
+                usersRepository.deleteById(inactiveUserId.id());
+
+            }
+
+        }
 
     }
 

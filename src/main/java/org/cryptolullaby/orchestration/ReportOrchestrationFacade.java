@@ -75,6 +75,12 @@ public class ReportOrchestrationFacade {
 
     }
 
+    public void randomMethodName () {
+
+        reportUseCase.randomMethodName();
+
+    }
+
     public Report getReportById (String id) {
 
         return reportUseCase.getReportById(id);
