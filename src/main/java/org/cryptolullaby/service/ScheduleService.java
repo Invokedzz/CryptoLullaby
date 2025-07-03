@@ -1,6 +1,11 @@
 package org.cryptolullaby.service;
 
+import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.repository.UsersRepository;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,11 +15,17 @@ public class ScheduleService {
 
     private final UsersRepository usersRepository;
 
+    private final MongoTemplate mongoTemplate;
+
+    private static final boolean IS_ACTIVE = true;
+
     private static final boolean IS_INACTIVE = false;
 
-    public ScheduleService (UsersRepository usersRepository) {
+    public ScheduleService (UsersRepository usersRepository, MongoTemplate mongoTemplate) {
 
         this.usersRepository = usersRepository;
+
+        this.mongoTemplate = mongoTemplate;
 
     }
 
@@ -30,11 +41,27 @@ public class ScheduleService {
 
                 System.out.println(inactiveUserId.id());
 
-                usersRepository.deleteById(inactiveUserId.id());
+                var query = getQuery(Criteria.where("id").is(inactiveUserId.id()));
+
+                var update = getUpdate().set("isDeleted", IS_ACTIVE);
+
+                mongoTemplate.updateFirst(query, update, Users.class);
 
             }
 
         }
+
+    }
+
+    private Query getQuery (Criteria criteria) {
+
+        return new Query(criteria);
+
+    }
+
+    private Update getUpdate () {
+
+        return new Update();
 
     }
 

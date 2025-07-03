@@ -1,12 +1,8 @@
 package org.cryptolullaby.entity;
 
-import org.cryptolullaby.model.dto.users.ProfileDTO;
-import org.cryptolullaby.model.dto.users.RegisterDTO;
-import org.cryptolullaby.model.dto.users.EditProfileDTO;
-import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
+import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.model.enums.ProfileStatus;
-import org.postgresql.shaded.com.ongres.stringprep.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
