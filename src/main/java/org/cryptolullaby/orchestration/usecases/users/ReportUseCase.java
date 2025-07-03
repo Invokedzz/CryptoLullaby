@@ -95,10 +95,6 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
         var setOfIds = reportCases.id();
 
-        System.out.println(setOfIds);
-
-        System.out.println(reportCases.email());
-
         for (var id : setOfIds) {
 
             var report = reportService.findReportOptionalById(id);
@@ -117,7 +113,21 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
 
+        var setOfIds = reportCases.id();
 
+        for (var id : setOfIds) {
+
+            var report = reportService.findReportOptionalById(id);
+
+            if (report.isPresent()) {
+
+                report.get().setStatus(ReportStatus.DENIED);
+
+                reportService.save(report.get());
+
+            }
+
+        }
 
     }
 
@@ -149,7 +159,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
         /*
         *
-        * To do: Adjust this garbage method as soon as possible :(
+        * Todo: Adjust this garbage method as soon as possible :(
         * 26/06/2025
         * FIXED: 28/05/2025
         * */

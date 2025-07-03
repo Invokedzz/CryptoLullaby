@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.enums.EntityType;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Posts {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     @TextIndexed
     private String title;
@@ -37,7 +38,7 @@ public class Posts {
 
     public Posts (
 
-            String id, String title, String description, Images img, LocalDateTime createdAt,
+            ObjectId id, String title, String description, Images img, LocalDateTime createdAt,
             String userId, EntityType entityType, Boolean isActive
 
     )
@@ -102,7 +103,7 @@ public class Posts {
 
     }
 
-    public String getId () {
+    public ObjectId getId () {
 
         return id;
 

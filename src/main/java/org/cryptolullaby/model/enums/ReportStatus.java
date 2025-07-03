@@ -6,6 +6,8 @@ public enum ReportStatus {
 
     IN_ANALYSIS,
 
-    REPORTED
+    REPORTED,
+
+    DENIED
 
 }

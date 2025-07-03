@@ -1,7 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Images {
 
     private String url;

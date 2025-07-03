@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.follow.FollowDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 public class Follow {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     private String followerId;
 
@@ -23,7 +24,7 @@ public class Follow {
 
     public Follow () {}
 
-    public Follow (String id, String followerId, String followingId, FollowStatus followStatus, LocalDateTime requestAt) {
+    public Follow (ObjectId id, String followerId, String followingId, FollowStatus followStatus, LocalDateTime requestAt) {
 
         this.id = id;
 
@@ -49,7 +50,7 @@ public class Follow {
 
     }
 
-    public String getId () {
+    public ObjectId getId () {
 
         return id;
 

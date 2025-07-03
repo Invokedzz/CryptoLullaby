@@ -1,7 +1,6 @@
 package org.cryptolullaby.orchestration;
 
 import org.cryptolullaby.entity.Report;
-import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
@@ -52,17 +51,17 @@ public class ReportOrchestrationFacade {
 
     public void confirmReportRequest (StoreReportCasesIdDTO reportCases) {
 
-        sendEmailToQueueUseCase.sendConfirmReportEmail(reportCases.email());
-
         reportUseCase.confirmReportRequest(reportCases);
+
+        sendEmailToQueueUseCase.sendConfirmReportEmail(reportCases.email());
 
     }
 
     public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
 
-        sendEmailToQueueUseCase.sendDenyReportEmail(reportCases.email());
-
         reportUseCase.denyReportRequest(reportCases);
+
+        sendEmailToQueueUseCase.sendDenyReportEmail(reportCases.email());
 
     }
 

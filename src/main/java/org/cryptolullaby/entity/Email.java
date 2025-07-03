@@ -1,5 +1,6 @@
 package org.cryptolullaby.entity;
 
+import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.enums.EmailStatus;
 import org.cryptolullaby.model.enums.EmailType;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class Email {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     private String from;
 
@@ -69,7 +70,7 @@ public class Email {
 
     }
 
-    public String getId () {
+    public ObjectId getId () {
 
         return id;
 
