@@ -1,23 +1,19 @@
 package org.cryptolullaby.entity;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.posts.CreatePostDTO;
 import org.cryptolullaby.model.dto.posts.EditPostsDTO;
 import org.cryptolullaby.model.enums.EntityType;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Document("posts")
 public class Posts {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     @TextIndexed
     private String title;
@@ -38,7 +34,7 @@ public class Posts {
 
     public Posts (
 
-            ObjectId id, String title, String description, Images img, LocalDateTime createdAt,
+            String id, String title, String description, Images img, LocalDateTime createdAt,
             String userId, EntityType entityType, Boolean isActive
 
     )
@@ -103,7 +99,7 @@ public class Posts {
 
     }
 
-    public ObjectId getId () {
+    public String getId () {
 
         return id;
 

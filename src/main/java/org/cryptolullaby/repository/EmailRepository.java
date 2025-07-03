@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmailRepository extends MongoRepository <Email, String> {
-    Page<Email> findAllByType(EmailType type, Pageable pageable);
+
+    Page <Email> findAllByType (EmailType type, Pageable pageable);
+
 }

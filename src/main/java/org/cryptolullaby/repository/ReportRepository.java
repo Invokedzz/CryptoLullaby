@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReportRepository extends MongoRepository <Report, String> {
 
-    Page <Report> findAllByReporterIdAndStatus(String reporterId, ReportStatus status, Pageable pageable);
+    Page <Report> findAllByReporterIdAndStatus (String reporterId, ReportStatus status, Pageable pageable);
 
     Page <Report> findAllByStatus(ReportStatus status, Pageable pageable);
+
+    Page <Report> findAllByIdAndStatus(String id, ReportStatus status, Pageable pageable);
 
     void deleteByIdAndEntityType (String id, EntityType entityType);
 
@@ -23,5 +25,4 @@ public interface ReportRepository extends MongoRepository <Report, String> {
 
     long countReportByReportedIdAndStatus(String reportedId, ReportStatus status);
 
-    Page<Report> findAllByIdAndStatus(String id, ReportStatus status, Pageable pageable);
 }

@@ -1,6 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.enums.RolesName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Roles {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private RolesName name;
 
@@ -21,7 +20,7 @@ public class Roles {
 
     }
 
-    public Roles (ObjectId id, RolesName name) {
+    public Roles (String id, RolesName name) {
 
         this.id = id;
 
@@ -29,7 +28,7 @@ public class Roles {
 
     }
 
-    public ObjectId getId () {
+    public String getId () {
 
         return id;
 

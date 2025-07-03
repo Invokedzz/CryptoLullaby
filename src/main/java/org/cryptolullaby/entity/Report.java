@@ -1,6 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.model.enums.ReportStatus;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 public class Report {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private String reporterId;
 
@@ -31,7 +30,7 @@ public class Report {
 
     public Report (
 
-            ObjectId id, String reporterId, String reportedId, String reason,
+            String id, String reporterId, String reportedId, String reason,
             ReportStatus status, EntityType entityType, LocalDateTime timestamp
 
     )
@@ -70,7 +69,7 @@ public class Report {
 
     }
 
-    public ObjectId getId () {
+    public String getId () {
 
         return id;
 

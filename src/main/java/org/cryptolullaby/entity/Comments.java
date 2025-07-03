@@ -1,6 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;
 import org.cryptolullaby.model.enums.EntityType;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 public class Comments {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private String comment;
 
@@ -35,7 +34,7 @@ public class Comments {
 
     public Comments (
 
-            ObjectId id, String comment, Integer likes, LocalDateTime createdAt, String userId,
+            String id, String comment, Integer likes, LocalDateTime createdAt, String userId,
             String postId, String parentId, EntityType entityType, Boolean isActive
 
     )
@@ -92,7 +91,7 @@ public class Comments {
 
     }
 
-    public ObjectId getId () {
+    public String getId () {
 
         return id;
 

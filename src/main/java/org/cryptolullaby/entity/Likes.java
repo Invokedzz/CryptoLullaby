@@ -1,6 +1,5 @@
 package org.cryptolullaby.entity;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.likes.LikeDTO;
 import org.cryptolullaby.model.enums.EntityType;
 import org.springframework.data.annotation.Id;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 public class Likes {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private LocalDateTime timestamp;
 
@@ -24,7 +23,7 @@ public class Likes {
 
     public Likes () {}
 
-    public Likes (ObjectId id, LocalDateTime timestamp, String userId, String entityId, EntityType entityType) {
+    public Likes (String id, LocalDateTime timestamp, String userId, String entityId, EntityType entityType) {
 
         this.id = id;
 
@@ -50,7 +49,7 @@ public class Likes {
 
     }
 
-    public ObjectId getId () {
+    public String getId () {
 
         return id;
 

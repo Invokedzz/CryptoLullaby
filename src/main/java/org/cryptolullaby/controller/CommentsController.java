@@ -39,6 +39,7 @@ public class CommentsController {
     public ResponseEntity <PagedResponseDTO<CommentsDTO>> allCommentsFromACertainPost (
 
             @RequestParam String postId,
+
             @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
 
     )
@@ -77,7 +78,15 @@ public class CommentsController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity <Void> editCommentById (@PathVariable String id, @Valid @RequestBody EditCommentDTO editCommentDTO) {
+    public ResponseEntity <Void> editCommentById (
+
+            @PathVariable String id,
+
+            @Valid @RequestBody EditCommentDTO editCommentDTO
+
+    )
+
+    {
 
         orchestrationFacade.editACommentById(id, editCommentDTO);
 
