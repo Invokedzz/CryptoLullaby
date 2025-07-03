@@ -7,17 +7,4 @@ public interface IDTOEmailQueuesMethods {
 
     void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO);
 
-    default EmailDTO buildEmailDTO (SimpleMailMessage mailMessage) {
-
-        return new EmailDTO(
-
-                mailMessage.getFrom(),
-                mailMessage.getTo(),
-                mailMessage.getSubject(),
-                mailMessage.getText()
-
-        );
-
-    }
-
 }

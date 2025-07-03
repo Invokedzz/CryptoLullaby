@@ -53,7 +53,7 @@ public class RabbitMQService {
 
         switch (emailType) {
 
-            case CONFIRM_REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, emailDTO);
+            case REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, emailDTO);
 
             case DENY_REPORT -> rabbitTemplate.convertAndSend(denyReportQueue, emailDTO);
 

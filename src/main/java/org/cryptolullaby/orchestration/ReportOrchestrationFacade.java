@@ -5,7 +5,8 @@ import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
-import org.cryptolullaby.model.dto.report.ReportDTO;
+import org.cryptolullaby.model.dto.report.ReportPageDTO;
+import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,37 +32,37 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToPendingStatus (Pageable pageable) {
 
         return reportUseCase.getAllEqualsToPendingStatus(pageable);
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
 
         return reportUseCase.getAllEqualsToInAnalysisStatus(pageable);
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToReportedStatus (Pageable pageable) {
 
         return reportUseCase.getAllEqualsToReportedStatus(pageable);
 
     }
 
-    public void confirmReportRequest (EmailDTO emailDTO) {
+    public void confirmReportRequest (StoreReportCasesIdDTO reportCases) {
 
-        reportUseCase.confirmReportRequest(emailDTO);
+        sendEmailToQueueUseCase.sendConfirmReportEmail(reportCases.email());
 
-        sendEmailToQueueUseCase.sendConfirmReportEmail(emailDTO);
+        reportUseCase.confirmReportRequest(reportCases);
 
     }
 
-    public void denyReportRequest (EmailDTO emailDTO) {
+    public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
 
-        reportUseCase.denyReportRequest(emailDTO);
+        sendEmailToQueueUseCase.sendDenyReportEmail(reportCases.email());
 
-        sendEmailToQueueUseCase.sendDenyReportEmail(emailDTO);
+        reportUseCase.denyReportRequest(reportCases);
 
     }
 

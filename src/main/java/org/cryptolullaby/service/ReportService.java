@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ReportService {
 
@@ -34,6 +36,12 @@ public class ReportService {
 
     }
 
+    public Optional <Report> findReportOptionalById (String id) {
+
+        return reportRepository.findById(id);
+
+    }
+
     public Page <Report> findAllByStatusEqualsToPending (Pageable pageable) {
 
         return reportRepository.findAllByStatus(
@@ -54,30 +62,6 @@ public class ReportService {
 
         return reportRepository.findAllByStatus(
                 ReportStatus.REPORTED, pageable
-        );
-
-    }
-
-    public Page <Report> findAllByStatusEqualsToPendingAndId (String id, Pageable pageable) {
-
-        return reportRepository.findAllByIdAndStatus(
-                id, ReportStatus.PENDING, pageable
-        );
-
-    }
-
-    public Page <Report> findAllByStatusEqualsToInAnalysisAndId (String id, Pageable pageable) {
-
-        return reportRepository.findAllByIdAndStatus(
-                id, ReportStatus.IN_ANALYSIS, pageable
-        );
-
-    }
-
-    public Page <Report> findAllByStatusEqualsToReportedAndId (String id, Pageable pageable) {
-
-        return reportRepository.findAllByIdAndStatus(
-                id, ReportStatus.REPORTED, pageable
         );
 
     }

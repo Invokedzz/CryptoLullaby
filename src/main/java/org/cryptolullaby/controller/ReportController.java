@@ -1,11 +1,12 @@
 package org.cryptolullaby.controller;
 
 import jakarta.validation.Valid;
-import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.dto.report.ReportDTO;
+import org.cryptolullaby.model.dto.report.ReportPageDTO;
+import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
 import org.cryptolullaby.orchestration.ReportOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -44,16 +45,12 @@ public class ReportController {
 
         var report = orchestrationFacade.getReportById(id);
 
-       // return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new ReportDTO(report));
 
     }
 
     @GetMapping("/pending")
-    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToPendingStatus (
-
-            @RequestParam(required = false) String id,
+    public ResponseEntity <PagedResponseDTO<ReportPageDTO>> allEqualsToPendingStatus (
 
             @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
 
@@ -68,7 +65,7 @@ public class ReportController {
     }
 
     @GetMapping("/in-analysis")
-    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToInAnalysisStatus (
+    public ResponseEntity <PagedResponseDTO<ReportPageDTO>> allEqualsToInAnalysisStatus (
 
             @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
 
@@ -83,7 +80,7 @@ public class ReportController {
     }
 
     @GetMapping("/reported")
-    public ResponseEntity <PagedResponseDTO<ReportDTO>> allEqualsToReportedStatus (
+    public ResponseEntity <PagedResponseDTO<ReportPageDTO>> allEqualsToReportedStatus (
 
             @PageableDefault(size = 5, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable
 
@@ -98,18 +95,18 @@ public class ReportController {
     }
 
     @PostMapping("/confirm")
-    public ResponseEntity <Void> confirmReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
+    public ResponseEntity <Void> confirmReportRequest (@RequestBody StoreReportCasesIdDTO reportCases) {
 
-        orchestrationFacade.confirmReportRequest(emailDTO);
+        orchestrationFacade.confirmReportRequest(reportCases);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
     @PostMapping("/deny")
-    public ResponseEntity <Void> denyReportRequest (@Valid @RequestBody EmailDTO emailDTO) {
+    public ResponseEntity <Void> denyReportRequest (@RequestBody StoreReportCasesIdDTO reportCases) {
 
-        orchestrationFacade.denyReportRequest(emailDTO);
+        orchestrationFacade.denyReportRequest(reportCases);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

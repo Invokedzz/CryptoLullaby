@@ -48,12 +48,6 @@ public class UsersService {
 
     }
 
-    public Users findUserById (String id) {
-
-        return usersRepository.findById(id).orElse(null);
-
-    }
-
     public Users findUserByIdOrElseThrow (String id) {
 
         return usersRepository

@@ -1,12 +1,13 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Report;
-import org.cryptolullaby.model.dto.general.EmailDTO;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
-import org.cryptolullaby.model.dto.report.ReportDTO;
+import org.cryptolullaby.model.dto.report.ReportPageDTO;
+import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
+import org.cryptolullaby.model.enums.ReportStatus;
 import org.cryptolullaby.service.CommentsService;
 import org.cryptolullaby.service.PostsService;
 import org.cryptolullaby.service.ReportService;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
+public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Report> {
 
     private final ReportService reportService;
 
@@ -47,7 +48,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToPendingStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToPendingStatus (Pageable pageable) {
 
         var pages = reportService.findAllByStatusEqualsToPending(pageable);
 
@@ -57,7 +58,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToReportedStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToReportedStatus (Pageable pageable) {
 
         var pages = reportService.findAllByStatusEqualsToReported(pageable);
 
@@ -67,7 +68,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public PagedResponseDTO <ReportDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
+    public PagedResponseDTO <ReportPageDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
 
         var pages = reportService.findAllByStatusEqualsToInAnalysis(pageable);
 
@@ -83,13 +84,38 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
 
     }
 
-    public void confirmReportRequest (EmailDTO emailDTO) {
+    public void confirmReportRequest (StoreReportCasesIdDTO reportCases) {
 
+        /*
+        * TODO: METHOD RULES
+        * 1. the emails can't repeat themselves
+        * 2. They must be related to the reporterId
+        * 3. And if the Set solution fails, don't let the id repeat themselves
+        */
 
+        var setOfIds = reportCases.id();
+
+        System.out.println(setOfIds);
+
+        System.out.println(reportCases.email());
+
+        for (var id : setOfIds) {
+
+            var report = reportService.findReportOptionalById(id);
+
+            if (report.isPresent()) {
+
+                report.get().setStatus(ReportStatus.REPORTED);
+
+                reportService.save(report.get());
+
+            }
+
+        }
 
     }
 
-    public void denyReportRequest (EmailDTO emailDTO) {
+    public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
 
 
 
@@ -102,7 +128,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
     }
 
     @Override
-    public PagedResponseDTO <ReportDTO> setupPaginationStructure (Page <Report> pages, List <ReportDTO> elements) {
+    public PagedResponseDTO <ReportPageDTO> setupPaginationStructure (Page <Report> pages, List <ReportPageDTO> elements) {
 
         return new PagedResponseDTO<>(
 
@@ -119,7 +145,7 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
     }
 
     @Override
-    public List <ReportDTO> getPagesContentAndRenderItToDTO (Page <Report> pages) {
+    public List <ReportPageDTO> getPagesContentAndRenderItToDTO (Page <Report> pages) {
 
         /*
         *
@@ -133,16 +159,16 @@ public class ReportUseCase implements IPaginationStructure <ReportDTO, Report> {
                 .stream()
                 .map(report -> {
 
-                    var reporter = usersService.findUserById(report.getReporterId());
+                    var reporter = usersService.findUserByIdOrElseThrow(report.getReporterId());
 
-                    var reported = usersService.findUserById(report.getReportedId());
+                    var reported = usersService.findUserByIdOrElseThrow(report.getReportedId());
 
                     List <UsernameEmailDTO> listOfUsers = List.of(
                             new UsernameEmailDTO(reporter),
                             new UsernameEmailDTO(reported)
                     );
 
-                    return new ReportDTO(report, listOfUsers);
+                    return new ReportPageDTO(report, listOfUsers);
 
                 })
                 .toList();
