@@ -141,7 +141,7 @@ public class EmailInfrastructureSetup implements IDefaultEmailQueuesMethods, IDT
     }
 
     @Override
-    @RabbitListener(queues = {"${rabbitmq.confirm.report.email.queue}", "${rabbitmq.deny.report.email.queue}"})
+    @RabbitListener(queues = "${rabbitmq.confirm.report.email.queue}")
     public void sendEmailAfterReportCaseHasBeenDecided (EmailDTO emailDTO) {
 
         try {

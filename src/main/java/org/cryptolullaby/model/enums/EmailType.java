@@ -8,10 +8,6 @@ public enum EmailType {
 
     DEACTIVATION,
 
-    REPORT,
-
-    CONFIRM_REPORT,
-
-    DENY_REPORT
+    REPORT
 
 }

@@ -18,8 +18,6 @@ public class SendEmailToQueue {
 
     private static final EmailType REPORT_EMAIL_TYPE = EmailType.REPORT;
 
-    private static final EmailType DENY_REPORT_EMAIL_TYPE = EmailType.DENY_REPORT;
-
     public SendEmailToQueue(RabbitMQService rabbitMQService) {
 
         this.rabbitMQService = rabbitMQService;
@@ -50,12 +48,6 @@ public class SendEmailToQueue {
 
     }
 
-    public void sendDenyReportEmail (EmailDTO emailDTO) {
-
-        sendDenyReportEmailToQueue(emailDTO);
-
-    }
-
     private void sendRegisterEmailToQueue (String to) {
 
         rabbitMQService.sendToQueue(to, REGISTRATION_EMAIL_TYPE);
@@ -77,12 +69,6 @@ public class SendEmailToQueue {
     private void sendReportConfirmEmailToQueue (EmailDTO emailDTO) {
 
         rabbitMQService.sendToQueue(emailDTO, REPORT_EMAIL_TYPE);
-
-    }
-
-    private void sendDenyReportEmailToQueue (EmailDTO emailDTO) {
-
-        rabbitMQService.sendToQueue(emailDTO, DENY_REPORT_EMAIL_TYPE);
 
     }
 

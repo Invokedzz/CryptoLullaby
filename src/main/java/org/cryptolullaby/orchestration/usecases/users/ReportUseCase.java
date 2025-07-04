@@ -1,6 +1,7 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Report;
+import org.cryptolullaby.exception.EmailAlreadyExistsException;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.dto.report.ReportPageDTO;
@@ -84,50 +85,41 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     }
 
-    public void confirmReportRequest (StoreReportCasesIdDTO reportCases) {
+    public void processReportStatusChangeRequest (ReportStatus status, StoreReportCasesIdDTO reportCases) {
 
         /*
-        * TODO: METHOD RULES
-        * 1. the emails can't repeat themselves
-        * 2. They must be related to the reporterId
-        * 3. And if the Set solution fails, don't let the id repeat themselves
-        */
+         * TODO: METHOD RULES
+         * 1. the emails can't repeat themselves
+         * 2. They must be related to the reporterId
+         * 3. And if the Set solution fails, don't let the id repeat themselves
+         * 4. Use the ReportStatus as a @RequestParam in order to avoid repetition
+         */
 
-        var setOfIds = reportCases.id();
+        var hasAnyDuplicatedEmail = checkIfToFieldArrayHasAnyDuplicate(reportCases.email().to());
 
-        for (var id : setOfIds) {
+        if (!hasAnyDuplicatedEmail) {
 
-            var report = reportService.findReportOptionalById(id);
+            var setOfIds = reportCases.id();
 
-            if (report.isPresent()) {
+            for (var id : setOfIds) {
 
-                report.get().setStatus(ReportStatus.REPORTED);
+                var optionalReport = reportService.findReportOptionalById(id);
 
-                reportService.save(report.get());
+                switch (status) {
 
-            }
+                    case REPORTED, DENIED -> receiveOptionalReportSetTheProperStatusThenSave(status, optionalReport);
 
-        }
+                    default -> throw new IllegalStateException("Unexpected value: " + status);
 
-    }
-
-    public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
-
-        var setOfIds = reportCases.id();
-
-        for (var id : setOfIds) {
-
-            var report = reportService.findReportOptionalById(id);
-
-            if (report.isPresent()) {
-
-                report.get().setStatus(ReportStatus.DENIED);
-
-                reportService.save(report.get());
+                }
 
             }
 
+            return;
+
         }
+
+        throw new EmailAlreadyExistsException("In order to send the email package, please, remove the duplicated emails!");
 
     }
 
@@ -214,6 +206,44 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
             }
 
             default -> throw new IllegalStateException("Unexpected value: " + entity);
+
+        }
+
+    }
+
+    private boolean checkIfToFieldArrayHasAnyDuplicate (String [] to) {
+
+        Set <String> hashSet = new HashSet<>();
+
+        for (String email : to) {
+
+            /*
+            * If the hashset.add() is false, it means an element got duplicated, and it's not going to be
+            * added in the hashset.
+            *
+            */
+
+            if (!hashSet.add(email)) {
+
+                return true;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    private void receiveOptionalReportSetTheProperStatusThenSave (ReportStatus status, Optional <Report> optionalReport) {
+
+        if (optionalReport.isPresent()) {
+
+            var report = optionalReport.get();
+
+            report.setStatus(status);
+
+            reportService.save(report);
 
         }
 

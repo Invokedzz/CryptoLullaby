@@ -12,6 +12,4 @@ public interface IRabbitQueuesConfigMethods {
 
     Queue confirmReportEmailQueue ();
 
-    Queue denyReportEmailQueue ();
-
 }

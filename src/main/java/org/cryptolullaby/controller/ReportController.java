@@ -7,6 +7,7 @@ import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.model.dto.report.ReportDTO;
 import org.cryptolullaby.model.dto.report.ReportPageDTO;
 import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
+import org.cryptolullaby.model.enums.ReportStatus;
 import org.cryptolullaby.orchestration.ReportOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -94,19 +95,18 @@ public class ReportController {
 
     }
 
-    @PostMapping("/confirm")
-    public ResponseEntity <Void> confirmReportRequest (@RequestBody StoreReportCasesIdDTO reportCases) {
+    @PostMapping("/process")
+    public ResponseEntity <Void> processReportStatus (
 
-        orchestrationFacade.confirmReportRequest(reportCases);
+            @RequestParam ReportStatus status,
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+            @RequestBody StoreReportCasesIdDTO reportCases
 
-    }
+    )
 
-    @PostMapping("/deny")
-    public ResponseEntity <Void> denyReportRequest (@RequestBody StoreReportCasesIdDTO reportCases) {
+    {
 
-        orchestrationFacade.denyReportRequest(reportCases);
+        orchestrationFacade.processReportRequest(status, reportCases);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

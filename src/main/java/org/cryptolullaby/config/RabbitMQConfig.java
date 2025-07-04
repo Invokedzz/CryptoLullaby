@@ -23,9 +23,6 @@ public class RabbitMQConfig implements IRabbitQueuesConfigMethods {
     @Value("${rabbitmq.confirm.report.email.queue}")
     private String confirmReportQueue;
 
-    @Value("${rabbitmq.deny.report.email.queue}")
-    private String denyReportQueue;
-
     private static final boolean IS_DURABLE = true;
 
     @Bean
@@ -57,14 +54,6 @@ public class RabbitMQConfig implements IRabbitQueuesConfigMethods {
     public Queue confirmReportEmailQueue () {
 
         return buildQueue(confirmReportQueue);
-
-    }
-
-    @Bean
-    @Override
-    public Queue denyReportEmailQueue () {
-
-        return buildQueue(denyReportQueue);
 
     }
 

@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class RabbitMQService {
 
@@ -21,9 +23,6 @@ public class RabbitMQService {
 
     @Value("${rabbitmq.confirm.report.email.queue}")
     private String confirmReportQueue;
-
-    @Value("${rabbitmq.deny.report.email.queue}")
-    private String denyReportQueue;
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -51,15 +50,15 @@ public class RabbitMQService {
 
     public void sendToQueue (EmailDTO emailDTO, EmailType emailType) {
 
-        switch (emailType) {
+        if (Objects.requireNonNull(emailType) == EmailType.REPORT) {
 
-            case REPORT -> rabbitTemplate.convertAndSend(confirmReportQueue, emailDTO);
+            rabbitTemplate.convertAndSend(confirmReportQueue, emailDTO);
 
-            case DENY_REPORT -> rabbitTemplate.convertAndSend(denyReportQueue, emailDTO);
-
-            default -> throw new BadRequestException("Invalid email type!");
+            return;
 
         }
+
+        throw new BadRequestException("Invalid email type!");
 
     }
 

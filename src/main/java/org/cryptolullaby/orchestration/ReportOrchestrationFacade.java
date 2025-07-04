@@ -6,6 +6,7 @@ import org.cryptolullaby.model.dto.report.CreateReportDTO;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
 import org.cryptolullaby.model.dto.report.ReportPageDTO;
 import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
+import org.cryptolullaby.model.enums.ReportStatus;
 import org.cryptolullaby.orchestration.usecases.users.ReportUseCase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -49,19 +50,11 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public void confirmReportRequest (StoreReportCasesIdDTO reportCases) {
+    public void processReportRequest (ReportStatus status, StoreReportCasesIdDTO reportCases) {
 
-        reportUseCase.confirmReportRequest(reportCases);
+        reportUseCase.processReportStatusChangeRequest(status, reportCases);
 
         sendEmailToQueueUseCase.sendConfirmReportEmail(reportCases.email());
-
-    }
-
-    public void denyReportRequest (StoreReportCasesIdDTO reportCases) {
-
-        reportUseCase.denyReportRequest(reportCases);
-
-        sendEmailToQueueUseCase.sendDenyReportEmail(reportCases.email());
 
     }
 
