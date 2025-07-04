@@ -20,7 +20,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     private final FollowService followService;
 
-    private final UsersService usersService;
+    private final UsersService usersService;//
 
     public FollowUseCase (FollowService followService, UsersService usersService) {
 
@@ -32,7 +32,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public PagedResponseDTO <FollowDTO> getAllOfUsersFollowers (String followingId, Pageable pageable) {
 
-        var pages = followService.findAllByStatusEqualsToFollowingAndFollowingId(followingId, pageable);
+        var pages = findAllByStatusEqualsToFollowingAndFollowingId(followingId, pageable);
 
         var follows = getPagesContentAndRenderItToDTO(pages);
 
@@ -192,6 +192,12 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
     private Optional <Follow> findByFollowerIdAndFollowingId (String followerId, String followingId) {
 
         return followService.findByFollowerIdAndFollowingId(followerId, followingId);
+
+    }
+
+    private Page <Follow> findAllByStatusEqualsToFollowingAndFollowingId (String followingId, Pageable pageable) {
+
+        return followService.findAllByStatusEqualsToFollowingAndFollowingId(followingId, pageable);
 
     }
 

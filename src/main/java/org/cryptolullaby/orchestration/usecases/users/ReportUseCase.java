@@ -1,6 +1,7 @@
 package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Report;
+import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.EmailAlreadyExistsException;
 import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.report.CreateReportDTO;
@@ -52,7 +53,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public PagedResponseDTO <ReportPageDTO> getAllEqualsToPendingStatus (Pageable pageable) {
 
-        var pages = reportService.findAllByStatusEqualsToPending(pageable);
+        var pages = findAllByStatusEqualsToPending(pageable);
 
         var reports = getPagesContentAndRenderItToDTO(pages);
 
@@ -62,7 +63,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public PagedResponseDTO <ReportPageDTO> getAllEqualsToReportedStatus (Pageable pageable) {
 
-        var pages = reportService.findAllByStatusEqualsToReported(pageable);
+        var pages = findAllByStatusEqualsToReported(pageable);
 
         var reports = getPagesContentAndRenderItToDTO(pages);
 
@@ -72,7 +73,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public PagedResponseDTO <ReportPageDTO> getAllEqualsToInAnalysisStatus (Pageable pageable) {
 
-        var pages = reportService.findAllByStatusEqualsToInAnalysis(pageable);
+        var pages = findAllByStatusEqualsToInAnalysis(pageable);
 
         var reports = getPagesContentAndRenderItToDTO(pages);
 
@@ -104,7 +105,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
             for (var id : setOfIds) {
 
-                var optionalReport = reportService.findReportOptionalById(id);
+                var optionalReport = findReportOptionalById(id);
 
                 switch (status) {
 
@@ -126,17 +127,17 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public void limitAccessOrBanUserAfterACertainAmountOfReports (String reportedId) {
 
-        var counter = reportService.countNumberOfTimesAUserHasBeenReported(reportedId);
+        var counter = countNumberOfTimesAUserHasBeenReported(reportedId);
 
         if (counter >= 10) {
 
-            var user = usersService.findUserByIdOrElseThrow(reportedId);
+            var user = findUserByIdOrElseThrow(reportedId);
 
             if (counter >= 30) {
 
                 user.getStatus().add(1, ProfileStatus.BANNED);
 
-                usersService.save(user);
+                saveChangesRelatedToUserInTheDatabase(user);
 
                 return;
 
@@ -144,7 +145,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
             user.getStatus().add(1, ProfileStatus.LIMITED_ACCESS);
 
-            usersService.save(user);
+            saveChangesRelatedToUserInTheDatabase(user);
 
         }
 
@@ -182,9 +183,9 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
                 .stream()
                 .map(report -> {
 
-                    var reporter = usersService.findUserByIdOrElseThrow(report.getReporterId());
+                    var reporter = findUserByIdOrElseThrow(report.getReporterId());
 
-                    var reported = usersService.findUserByIdOrElseThrow(report.getReportedId());
+                    var reported = findUserByIdOrElseThrow(report.getReportedId());
 
                     List <UsernameEmailDTO> listOfUsers = List.of(
                             new UsernameEmailDTO(reporter),
@@ -198,9 +199,39 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     }
 
+    private Page <Report> findAllByStatusEqualsToPending (Pageable pageable) {
+
+        return reportService.findAllByStatusEqualsToPending(pageable);
+
+    }
+
+    private Page <Report> findAllByStatusEqualsToReported (Pageable pageable) {
+
+        return reportService.findAllByStatusEqualsToReported(pageable);
+
+    }
+
+    private Page <Report> findAllByStatusEqualsToInAnalysis (Pageable pageable) {
+
+        return reportService.findAllByStatusEqualsToInAnalysis(pageable);
+
+    }
+
     private Report findReportById (String id) {
 
         return reportService.findReportById(id);
+
+    }
+
+    private long countNumberOfTimesAUserHasBeenReported (String reportedId) {
+
+        return reportService.countNumberOfTimesAUserHasBeenReported(reportedId);
+
+    }
+
+    private Optional <Report> findReportOptionalById (String id) {
+
+        return reportService.findReportOptionalById(id);
 
     }
 
@@ -267,6 +298,18 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
             reportService.save(report);
 
         }
+
+    }
+
+    private Users findUserByIdOrElseThrow (String id) {
+
+        return usersService.findUserByIdOrElseThrow(id);
+
+    }
+
+    private void saveChangesRelatedToUserInTheDatabase (Users user) {
+
+        usersService.save(user);
 
     }
 
