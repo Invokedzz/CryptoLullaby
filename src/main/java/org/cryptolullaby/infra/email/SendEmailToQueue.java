@@ -18,7 +18,7 @@ public class SendEmailToQueue {
 
     private static final EmailType REPORT_EMAIL_TYPE = EmailType.REPORT;
 
-    public SendEmailToQueue(RabbitMQService rabbitMQService) {
+    public SendEmailToQueue (RabbitMQService rabbitMQService) {
 
         this.rabbitMQService = rabbitMQService;
 

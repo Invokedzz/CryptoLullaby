@@ -8,6 +8,8 @@ public enum EmailType {
 
     DEACTIVATION,
 
-    REPORT
+    REPORT,
+
+    BAN
 
 }

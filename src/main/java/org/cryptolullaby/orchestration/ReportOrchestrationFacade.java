@@ -58,9 +58,9 @@ public class ReportOrchestrationFacade {
 
     }
 
-    public void randomMethodName () {
+    public void limitAccessOrBanUserAfterACertainAmountOfReports (String reportedId) {
 
-        reportUseCase.randomMethodName();
+        reportUseCase.limitAccessOrBanUserAfterACertainAmountOfReports(reportedId);
 
     }
 

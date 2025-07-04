@@ -78,10 +78,10 @@ public class ReportService {
 
     }
 
-    public long countNumberOfTimesAUserHasBeenReported (String reportedId, ReportStatus reportStatus) {
+    public long countNumberOfTimesAUserHasBeenReported (String reportedId) {
 
         return reportRepository.countReportByReportedIdAndStatus(
-                reportedId, reportStatus
+                reportedId, ReportStatus.REPORTED
         );
 
     }

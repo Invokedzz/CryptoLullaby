@@ -112,11 +112,13 @@ public class ReportController {
 
     }
 
-    /*@PutMapping
-    public ResponseEntity <Void> randomMethodName () {
+    @PutMapping("/{reportedId}")
+    public ResponseEntity <Void> limitAccessOrBanUserAfterACertainAmountOfReports (@PathVariable String reportedId) {
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        orchestrationFacade.limitAccessOrBanUserAfterACertainAmountOfReports(reportedId);
 
-    }*/
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
 
 }

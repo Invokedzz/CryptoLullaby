@@ -8,6 +8,7 @@ import org.cryptolullaby.model.dto.report.ReportPageDTO;
 import org.cryptolullaby.model.dto.report.StoreReportCasesIdDTO;
 import org.cryptolullaby.model.dto.users.UsernameEmailDTO;
 import org.cryptolullaby.model.enums.EntityType;
+import org.cryptolullaby.model.enums.ProfileStatus;
 import org.cryptolullaby.model.enums.ReportStatus;
 import org.cryptolullaby.service.CommentsService;
 import org.cryptolullaby.service.PostsService;
@@ -123,9 +124,29 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     }
 
-    public void randomMethodName () {
+    public void limitAccessOrBanUserAfterACertainAmountOfReports (String reportedId) {
 
+        var counter = reportService.countNumberOfTimesAUserHasBeenReported(reportedId);
 
+        if (counter >= 10) {
+
+            var user = usersService.findUserByIdOrElseThrow(reportedId);
+
+            if (counter >= 30) {
+
+                user.getStatus().add(1, ProfileStatus.BANNED);
+
+                usersService.save(user);
+
+                return;
+
+            }
+
+            user.getStatus().add(1, ProfileStatus.LIMITED_ACCESS);
+
+            usersService.save(user);
+
+        }
 
     }
 
