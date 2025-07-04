@@ -99,9 +99,9 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
-    public void acceptFollowRequest (String followerId) {
+    public void acceptFollowRequest (String id) {
 
-        var follower = findByFollowerId(followerId);
+        var follower = findByFollowId(id);
 
         follower.setFollowStatus(FollowStatus.FOLLOWING);
 
@@ -111,7 +111,7 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     public void rejectFollowRequest (String followerId) {
 
-        var follower = findByFollowerId(followerId);
+        var follower = findByFollowId(followerId);
 
         if (follower.getFollowStatus().equals(FollowStatus.PENDING) || follower.getFollowStatus().equals(FollowStatus.FOLLOWING)) {
 
@@ -121,9 +121,9 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
-    public void block (String followerId) {
+    public void block (String id) {
 
-        var follower = findByFollowerId(followerId);
+        var follower = findByFollowId(id);
 
         follower.setFollowStatus(FollowStatus.BLOCKED);
 
@@ -159,9 +159,9 @@ public class FollowUseCase implements IPaginationStructure <FollowDTO, Follow> {
 
     }
 
-    private Follow findByFollowerId (String followerId) {
+    private Follow findByFollowId (String id) {
 
-        return followService.findByFollowerId(followerId);
+        return followService.findByFollowId(id);
 
     }
 

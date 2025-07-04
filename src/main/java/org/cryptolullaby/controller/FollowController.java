@@ -97,28 +97,34 @@ public class FollowController {
 
     }
 
-    @PutMapping("/{followerId}/accept")
-    public ResponseEntity <Void> acceptFollowRequest (@PathVariable String followerId) {
+    // todo: need to fix this method, it's returning
+    // "message": "Query { \"$java\" : Query: { \"followerId\" : \"683f30fc7d61cd6086ca0363\"},
+    // Fields: {}, Sort: {} } returned non unique result".
+    // Rewrite this shit method :)
+    // FIXED 03/07/25
 
-        orchestrationFacade.acceptFollowRequest(followerId);
+    @PutMapping("/{id}/accept")
+    public ResponseEntity <Void> acceptFollowRequest (@PathVariable String id) {
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-    }
-
-    @PutMapping("/{followerId}/reject")
-    public ResponseEntity <Void> rejectFollowRequest (@PathVariable String followerId) {
-
-        orchestrationFacade.rejectFollowRequest(followerId);
+        orchestrationFacade.acceptFollowRequest(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @PutMapping("/{followerId}/block")
-    public ResponseEntity <Void> block (@PathVariable String followerId) {
+    @PutMapping("/{id}/reject")
+    public ResponseEntity <Void> rejectFollowRequest (@PathVariable String id) {
 
-        orchestrationFacade.block(followerId);
+        orchestrationFacade.rejectFollowRequest(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    @PutMapping("/{id}/block")
+    public ResponseEntity <Void> block (@PathVariable String id) {
+
+        orchestrationFacade.block(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

@@ -47,21 +47,21 @@ public class FollowOrchestrationFacade {
 
     }
 
-    public void acceptFollowRequest (String followerId) {
+    public void acceptFollowRequest (String id) {
 
-        followUseCase.acceptFollowRequest(followerId);
-
-    }
-
-    public void rejectFollowRequest (String followerId) {
-
-        followUseCase.rejectFollowRequest(followerId);
+        followUseCase.acceptFollowRequest(id);
 
     }
 
-    public void block (String followerId) {
+    public void rejectFollowRequest (String id) {
 
-        followUseCase.block(followerId);
+        followUseCase.rejectFollowRequest(id);
+
+    }
+
+    public void block (String id) {
+
+        followUseCase.block(id);
 
     }
 

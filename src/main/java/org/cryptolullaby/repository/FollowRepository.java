@@ -18,13 +18,11 @@ public interface FollowRepository extends MongoRepository <Follow, String> {
 
     Page <Follow> findByFollowerIdAndFollowStatus (String followerId, FollowStatus followStatus, Pageable pageable);
 
-    Optional <Follow> findByFollowerId (String followerId);
-
     Optional <Follow> findByFollowerIdAndFollowingId (String followerId, String followingId);
 
-    void deleteByFollowerIdAndFollowingId(String followerId, String followingId);
+    List <Follow> findByFollowingIdAndFollowStatus (String followingId, FollowStatus followStatus);
 
-    List <Follow> findByFollowingIdAndFollowStatus(String followingId, FollowStatus followStatus);
+    void deleteByFollowerIdAndFollowingId(String followerId, String followingId);
 
     long countByFollowingIdAndFollowStatus(String followingId, FollowStatus followStatus);
 
