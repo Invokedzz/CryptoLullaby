@@ -33,7 +33,7 @@ public class KeycloakClientConfig {
                 .serverUrl(serverUrl)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
-                .authorization(OAuth2Constants.CLIENT_CREDENTIALS)
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .build();
 
     }

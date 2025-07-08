@@ -8,6 +8,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,10 +33,6 @@ public class KeycloakService {
 
         this.keycloak = keycloak;
 
-      //  this.userRepresentation = userRepresentation;
-
-        //this.credentialRepresentation = credentialRepresentation;
-
     }
 
     public void save (Users user) {
@@ -44,12 +41,19 @@ public class KeycloakService {
                     .users()
                     .create(setupUserProperties(user));
 
-        //var token = keycloak.tokenManager().getAccessToken();
-       // System.out.println("Access token: " + token.getToken());
+        System.out.println(response);
 
-        System.out.println("STATUS: " + response.getStatus());
-        System.out.println("ERRO: " + response.readEntity(String.class));
+        System.out.println(response.getStatus());
 
+        if (response.getStatus() == 201) {
+
+            System.out.println("Success!");
+
+            return;
+
+        }
+
+        System.out.println("Erro DE NOVO HAHAHAHAHAHAH");
 
     }
 
@@ -60,11 +64,13 @@ public class KeycloakService {
         rep.setUsername(user.getUsername());
         rep.setEmail(user.getEmail());
         rep.setEnabled(IS_ENABLED);
+        rep.setEmailVerified(true);
 
         var credentials = setupUserCredentials(user.getPassword());
 
-        rep.setCredentials(List.of(credentials));
-        rep.setRealmRoles(List.of("view-profile"));
+        List <CredentialRepresentation> representationList = new ArrayList<>();
+        representationList.add(credentials);
+        rep.setCredentials(representationList);
 
         return rep;
 
@@ -77,6 +83,7 @@ public class KeycloakService {
         cred.setTemporary(IS_TEMPORARY);
         cred.setType(CREDENTIAL_TYPE);
         cred.setValue(password);
+        cred.setType(CredentialRepresentation.PASSWORD);
 
         return cred;
 
