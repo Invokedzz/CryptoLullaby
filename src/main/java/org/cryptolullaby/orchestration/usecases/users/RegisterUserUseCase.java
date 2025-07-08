@@ -63,9 +63,11 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
 
             user.setImgUrl(img);
 
-            saveChangesInTheDatabaseWithExternalValidation(user);
+            var userKeycloakId = saveUserInKeycloakThenReturnItsId(user);
 
-            keycloakService.save(user);
+            user.setKeycloakId(userKeycloakId);
+
+            saveChangesInTheDatabaseWithExternalValidation(user);
 
         }
 
@@ -143,6 +145,12 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
     private Users findUserByIdOrElseThrow (String id) {
 
         return usersService.findUserByIdOrElseThrow(id);
+
+    }
+
+    private String saveUserInKeycloakThenReturnItsId (Users user) {
+
+        return keycloakService.save(user);
 
     }
 

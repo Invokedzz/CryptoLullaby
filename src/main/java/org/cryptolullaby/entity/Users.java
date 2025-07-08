@@ -33,6 +33,8 @@ public class Users {
 
     private EntityType entityType;
 
+    private String keycloakId;
+
     private Boolean isActive;
 
     public Boolean isDeleted;
@@ -42,9 +44,8 @@ public class Users {
     public Users (
 
             String id, String username, String email, String password, Images img,
-            List <String> rolesId, List <Interest> interests,
-            LocalDateTime createdAt, List <ProfileStatus> status,
-            EntityType entityType, Boolean isActive, Boolean isDeleted
+            List <String> rolesId, List <Interest> interests, LocalDateTime createdAt, List <ProfileStatus> status,
+            EntityType entityType, String keycloakId, Boolean isActive, Boolean isDeleted
     )
 
     {
@@ -68,6 +69,8 @@ public class Users {
         this.status = status;
 
         this.entityType = entityType;
+
+        this.keycloakId = keycloakId;
 
         this.isActive = isActive;
 
@@ -230,6 +233,18 @@ public class Users {
     public void setEntityType (EntityType entityType) {
 
         this.entityType = entityType;
+
+    }
+
+    public String getKeycloakId () {
+
+        return keycloakId;
+
+    }
+
+    public void setKeycloakId (String keycloakId) {
+
+        this.keycloakId = keycloakId;
 
     }
 

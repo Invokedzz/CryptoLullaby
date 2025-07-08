@@ -24,6 +24,8 @@ public class KeycloakClientConfig {
     @Value("${keycloak.client.secret}")
     private String clientSecret;
 
+    private static final String GRANT_TYPE = OAuth2Constants.CLIENT_CREDENTIALS;
+
     @Bean
     public Keycloak getKeycloak() {
 
@@ -33,23 +35,9 @@ public class KeycloakClientConfig {
                 .serverUrl(serverUrl)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
-                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+                .grantType(GRANT_TYPE)
                 .build();
 
     }
-
-    /*@Bean
-    public UserRepresentation userRepresentation () {
-
-        return new UserRepresentation();
-
-    }
-
-    @Bean
-    public CredentialRepresentation credentialRepresentation () {
-
-        return new CredentialRepresentation();
-
-    } */
 
 }
