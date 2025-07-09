@@ -111,7 +111,7 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(ClassCastException.class)
+    @ExceptionHandler({ClassCastException.class, InternalServerException.class})
     public ResponseEntity <ExceptionDTO> handleInternalServerErrorException (Exception ex) {
 
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());

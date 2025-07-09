@@ -1,6 +1,8 @@
 package org.cryptolullaby.service;
 
+import jakarta.ws.rs.core.Response;
 import org.cryptolullaby.entity.Users;
+import org.cryptolullaby.exception.*;
 import org.cryptolullaby.infra.security.KeycloakUserCredentials;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -27,27 +29,49 @@ public class KeycloakService {
 
     public String save (Users user) {
 
-        var response = keycloak
-                        .realm(realm).users()
-                        .create(userRepresentationAlongsideCredentials(user));
+        var response = createUserInKeycloakWithItsDefaultCredentials(user);
 
-        if (response.getStatus() == 201) {
+        switch (response.getStatus()) {
 
-            var users = keycloak.
-                        realm(realm).users()
-                        .searchByEmail(user.getEmail(), true);
+            case 201 -> {
 
-            for (UserRepresentation userRep : users) {
-
-                System.out.println(userRep);
+                return searchUserByEmailThenReturnTheUserId(user);
 
             }
 
-            return users.getFirst().getId();
+            case 401 -> throw new UnauthorizedRequestException("Unauthorized: invalid credentials!");
+
+            case 404 -> throw new ResourceNotFoundException("Current URL not found!");
+
+            case 502 -> throw new BadGatewayException("Bad Gateway!");
+
+            case 504 -> throw new GatewayTimeoutException("Gateway timeout!");
+
+            default -> {
+
+                throw new InternalServerException("Server internal error!");
+
+            }
 
         }
 
-        return "";
+    }
+
+    private Response createUserInKeycloakWithItsDefaultCredentials (Users user) {
+
+        return keycloak
+                .realm(realm).users()
+                .create(userRepresentationAlongsideCredentials(user));
+
+    }
+
+    private String searchUserByEmailThenReturnTheUserId (Users user) {
+
+        var users = keycloak.
+                realm(realm).users()
+                .searchByEmail(user.getEmail(), true);
+
+        return users.getFirst().getId();
 
     }
 
