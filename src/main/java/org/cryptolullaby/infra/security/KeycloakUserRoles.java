@@ -2,14 +2,12 @@ package org.cryptolullaby.infra.security;
 
 import org.cryptolullaby.model.enums.RolesName;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.resource.RoleResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 @Component
 public class KeycloakUserRoles {
@@ -33,25 +31,61 @@ public class KeycloakUserRoles {
 
     public void assignUserRole (UserResource userResource) {
 
-        RoleRepresentation roleRepresentation = keycloak.realm(realm).roles().get(USER_ROLE).toRepresentation();
+        Set <String> roleNames = Set.of(USER_ROLE);
 
-        userResource.roles().realmLevel().add(Collections.singletonList(roleRepresentation));
+        assignRoles(userResource, roleNames);
 
     }
 
     public void assignModeratorRole (UserResource userResource) {
 
-        RoleRepresentation roleRepresentation = keycloak.realm(realm).roles().get(MODERATOR_ROLE).toRepresentation();
+        Set <String> roleNames = Set.of(USER_ROLE, MODERATOR_ROLE);
 
-        userResource.roles().realmLevel().add(Collections.singletonList(roleRepresentation));
+        assignRoles(userResource, roleNames);
 
     }
 
     public void assignAdminRole (UserResource userResource) {
 
-        RoleRepresentation roleRepresentation = keycloak.realm(realm).roles().get(ADMIN_ROLE).toRepresentation();
+        Set <String> roleNames = Set.of(USER_ROLE, ADMIN_ROLE);
 
-        userResource.roles().realmLevel().add(Collections.singletonList(roleRepresentation));
+        assignRoles(userResource, roleNames);
+
+    }
+
+    private void assignRoles (UserResource userResource, Set <String> roleNames) {
+
+        List <RoleRepresentation> roleRepresentationList = getRoleRepresentationList();
+
+        if (!roleRepresentationList.isEmpty()) {
+
+            List <RoleRepresentation> userRolesList = new ArrayList<>();
+
+            for (RoleRepresentation role : roleRepresentationList) {
+
+                if (roleNames.contains(role.getName())) {
+
+                    userRolesList.add(role);
+
+                }
+
+            }
+
+            addRoleToCollection(userRolesList, userResource);
+
+        }
+
+    }
+
+    private List <RoleRepresentation> getRoleRepresentationList () {
+
+        return keycloak.realm(realm).roles().list();
+
+    }
+
+    private void addRoleToCollection (List <RoleRepresentation> userRolesList, UserResource userResource) {
+
+        userResource.roles().realmLevel().add(userRolesList);
 
     }
 

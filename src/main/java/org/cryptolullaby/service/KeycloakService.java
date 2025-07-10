@@ -4,6 +4,7 @@ import jakarta.ws.rs.core.Response;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.exception.*;
 import org.cryptolullaby.infra.security.KeycloakUserCredentials;
+import org.cryptolullaby.infra.security.KeycloakUserRoles;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +20,15 @@ public class KeycloakService {
 
     private final KeycloakUserCredentials keycloakUserCredentials;
 
-    public KeycloakService (Keycloak keycloak, KeycloakUserCredentials keycloakUserCredentials) {
+    private final KeycloakUserRoles keycloakUserRoles;
+
+    public KeycloakService (Keycloak keycloak, KeycloakUserCredentials keycloakUserCredentials, KeycloakUserRoles keycloakUserRoles) {
 
         this.keycloak = keycloak;
 
         this.keycloakUserCredentials = keycloakUserCredentials;
+
+        this.keycloakUserRoles = keycloakUserRoles;
 
     }
 
@@ -35,7 +40,11 @@ public class KeycloakService {
 
             case 201 -> {
 
-                return searchUserByEmailThenReturnTheUserId(user);
+                var userKeycloakId = searchUserByEmailThenReturnTheUserId(user);
+
+                assignProperRoleInKeycloakToUser(user, userKeycloakId);
+
+                return userKeycloakId;
 
             }
 
@@ -47,13 +56,17 @@ public class KeycloakService {
 
             case 504 -> throw new GatewayTimeoutException("Gateway timeout!");
 
-            default -> {
-
-                throw new InternalServerException("Server internal error!");
-
-            }
+            default -> throw new InternalServerException("Server internal error!");
 
         }
+
+    }
+
+    private void assignProperRoleInKeycloakToUser (Users user, String userId) {
+
+        var lookForUser = keycloak.realm(realm).users().get(userId);
+
+        System.out.println(lookForUser);
 
     }
 
