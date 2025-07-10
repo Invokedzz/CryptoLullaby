@@ -23,7 +23,7 @@ public class Users {
 
     private Images img;
 
-    private List <String> rolesId;
+    private List <Roles> roles;
 
     private List <Interest> interests;
 
@@ -44,7 +44,7 @@ public class Users {
     public Users (
 
             String id, String username, String email, String password, Images img,
-            List <String> rolesId, List <Interest> interests, LocalDateTime createdAt, List <ProfileStatus> status,
+            List <Roles> roles, List <Interest> interests, LocalDateTime createdAt, List <ProfileStatus> status,
             EntityType entityType, String keycloakId, Boolean isActive, Boolean isDeleted
     )
 
@@ -60,7 +60,7 @@ public class Users {
 
         this.img = img;
 
-        this.rolesId = rolesId;
+        this.roles = roles;
 
         this.interests = interests;
 
@@ -182,15 +182,15 @@ public class Users {
 
     }
 
-    public List <String> getRolesId () {
+    public List <Roles> getRoles () {
 
-        return rolesId;
+        return roles;
 
     }
 
-    public void setRolesId (List <String> rolesId) {
+    public void setRoles (List <Roles> roles) {
 
-        this.rolesId = rolesId;
+        this.roles = roles;
 
     }
 

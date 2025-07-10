@@ -64,9 +64,23 @@ public class KeycloakService {
 
     private void assignProperRoleInKeycloakToUser (Users user, String userId) {
 
-        var lookForUser = keycloak.realm(realm).users().get(userId);
+        System.out.println("Keycloak user id: " + userId);
 
-        System.out.println(lookForUser);
+        var searchUserInKeycloakRealm = keycloak.realm(realm).users().get(userId);
+
+        var getUserRoleName = user.getRoles().getFirst().getName();
+
+        System.out.println("Role name: " + getUserRoleName);
+
+        switch (getUserRoleName) {
+
+            case USER -> keycloakUserRoles.assignUserRole(searchUserInKeycloakRealm);
+
+            case MODERATOR -> keycloakUserRoles.assignModeratorRole(searchUserInKeycloakRealm);
+
+            case ADMIN -> keycloakUserRoles.assignAdminRole(searchUserInKeycloakRealm);
+
+        }
 
     }
 

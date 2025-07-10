@@ -2,7 +2,6 @@ package org.cryptolullaby.orchestration.usecases.users;
 
 import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
-import org.cryptolullaby.entity.Roles;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.InterestDTO;
 import org.cryptolullaby.model.dto.users.RegisterDTO;
@@ -57,7 +56,7 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
 
             user.setPassword(encodedPassword);
 
-            setRoleIdInUserAccount(user);
+            setRoleInUserAccount(user);
 
             var img = setupProfileImage(registerDTO.img());
 
@@ -127,18 +126,11 @@ public class RegisterUserUseCase implements IUserInterestSanitizer {
 
     }
 
-    private void setRoleIdInUserAccount (Users user) {
+    private void setRoleInUserAccount (Users user) {
 
         var roles = List.of(rolesService.getDefaultRole());
 
-        user.setRolesId (
-
-                roles
-                        .stream()
-                        .map(Roles::getId)
-                        .toList()
-
-        );
+        user.setRoles(roles);
 
     }
 
