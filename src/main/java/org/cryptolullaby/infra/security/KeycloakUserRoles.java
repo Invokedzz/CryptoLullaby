@@ -57,6 +57,8 @@ public class KeycloakUserRoles {
 
         List <RoleRepresentation> roleRepresentationList = getRoleRepresentationList();
 
+        roleRepresentationList.forEach(System.out::println);
+
         if (!roleRepresentationList.isEmpty()) {
 
             List <RoleRepresentation> userRolesList = new ArrayList<>();
@@ -84,6 +86,8 @@ public class KeycloakUserRoles {
     }
 
     private void addRoleToCollection (List <RoleRepresentation> userRolesList, UserResource userResource) {
+
+        System.out.println("Roles: " + userRolesList.stream().map(RoleRepresentation::getName).toList());
 
         userResource.roles().realmLevel().add(userRolesList);
 
