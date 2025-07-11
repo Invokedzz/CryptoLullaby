@@ -63,32 +63,6 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
 
     }
 
-    public void reactivateUserAccount (EmailResponseDTO emailResponseDTO) {
-
-        var user = findUserByEmail(
-                emailResponseDTO.email(),
-                false
-        );
-
-        user.activate();
-
-        saveChangesInTheDatabase(user);
-
-    }
-
-    public void deactivateUserAccount (EmailResponseDTO emailResponseDTO) {
-
-        var user = findUserByEmail(
-                emailResponseDTO.email(),
-                true
-        );
-
-        user.deactivate();
-
-        saveChangesInTheDatabase(user);
-
-    }
-
     public void changeProfileVisibilityById (String id) {
 
         var user = findUserByIdOrElseThrow(id);
@@ -144,12 +118,6 @@ public class EditProfileUseCase implements IUserInterestSanitizer {
     private List<Interest> sanitizeInterests (List <Interest> interests) {
 
         return getSanitizedInterestList(interests);
-
-    }
-
-    private Users findUserByEmail (String email, boolean isActive) {
-
-        return usersService.findUserByEmailAndIsActive(email, isActive);
 
     }
 

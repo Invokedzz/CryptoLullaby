@@ -6,7 +6,7 @@ import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.general.SystemResponseDTO;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
 import org.cryptolullaby.model.dto.users.ProfileDTO;
-import org.cryptolullaby.orchestration.UserOrchestrationFacade;
+import org.cryptolullaby.orchestration.ProfileOrchestrationFacade;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/domain/profile")
 public class ProfileController {
 
-    private final UserOrchestrationFacade orchestrationFacade;
+    private final ProfileOrchestrationFacade orchestrationFacade;
 
-    public ProfileController (UserOrchestrationFacade orchestrationFacade) {
+    public ProfileController (ProfileOrchestrationFacade orchestrationFacade) {
 
         this.orchestrationFacade = orchestrationFacade;
 

@@ -1,35 +1,27 @@
 package org.cryptolullaby.orchestration;
 
-import org.cryptolullaby.model.dto.general.PagedResponseDTO;
 import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
-import org.cryptolullaby.orchestration.usecases.users.EditProfileUseCase;
-import org.cryptolullaby.orchestration.usecases.users.ProfileUseCase;
+import org.cryptolullaby.orchestration.usecases.users.DeactivateReactivateAccountUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserOrchestrationFacade {
 
     private final RegisterUserUseCase registerUserUseCase;
 
-    private final ProfileUseCase profileUseCase;
-
     private final SendEmailToQueue sendToQueueUseCase;
 
-    private final EditProfileUseCase editProfileUseCase;
+    private final DeactivateReactivateAccountUseCase deactivateReactivateAccountUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, ProfileUseCase profileUseCase, SendEmailToQueue sendToQueueUseCase, EditProfileUseCase editProfileUseCase) {
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, SendEmailToQueue sendToQueueUseCase, DeactivateReactivateAccountUseCase deactivateReactivateAccountUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
 
-        this.profileUseCase = profileUseCase;
-
         this.sendToQueueUseCase = sendToQueueUseCase;
 
-        this.editProfileUseCase = editProfileUseCase;
+        this.deactivateReactivateAccountUseCase = deactivateReactivateAccountUseCase;
 
     }
 
@@ -53,33 +45,9 @@ public class UserOrchestrationFacade {
 
     }
 
-    public PagedResponseDTO <ProfileDTO> getProfile (String id, Pageable pageable) {
-
-        return profileUseCase.getUserProfileById(id, pageable);
-
-    }
-
-    public PagedResponseDTO <ProfileDTO> getProfileByUsername (String username, Pageable pageable) {
-
-        return profileUseCase.getProfileByUsername(username, pageable);
-
-    }
-
-    public void editUserById (String id, EditProfileDTO profileDTO) {
-
-        editProfileUseCase.editUserProfile(id, profileDTO);
-
-    }
-
-    public void editUserImage (String id, MultipartFile file) {
-
-        editProfileUseCase.editUserImage(id, file);
-
-    }
-
     public void reactivateUserByEmail (EmailResponseDTO reactivateDTO) {
 
-        editProfileUseCase.reactivateUserAccount(reactivateDTO);
+        deactivateReactivateAccountUseCase.reactivateUserAccount(reactivateDTO);
 
         sendReactivationEmail(reactivateDTO.email());
 
@@ -87,15 +55,9 @@ public class UserOrchestrationFacade {
 
     public void deactivateUserById (EmailResponseDTO emailResponseDTO) {
 
-        editProfileUseCase.deactivateUserAccount(emailResponseDTO);
+        deactivateReactivateAccountUseCase.deactivateUserAccount(emailResponseDTO);
 
         sendDeactivationEmail(emailResponseDTO.email());
-
-    }
-
-    public void changeProfileVisibilityById (String id) {
-
-        editProfileUseCase.changeProfileVisibilityById(id);
 
     }
 
