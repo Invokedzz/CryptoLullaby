@@ -1,5 +1,7 @@
 package org.cryptolullaby.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.cryptolullaby.infra.security.JwtAccessTokenCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,23 +38,16 @@ public class SecurityConfig {
     }
 
     @Bean
+    public JwtAccessTokenCustomizer jwtAccessTokenCustomizer (ObjectMapper mapper) {
+
+        return new JwtAccessTokenCustomizer(mapper);
+
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder () {
 
         return new BCryptPasswordEncoder();
-
-    }
-
-    @Bean
-    public JwtEncoder jwtEncoder () {
-
-        return null;
-
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder () {
-
-        return null;
 
     }
 

@@ -45,12 +45,10 @@ public class UsersController {
 
     }
 
-    /*
+ //   TODO:
 
-    TO DO:
-
-        - create login endpoint
-          30/06/2025
+    //    - create login endpoint
+    //      30/06/2025
 
     @PostMapping("/login")
     public ResponseEntity <Void> login (@Valid @RequestBody LoginDTO loginDTO) {
@@ -58,8 +56,6 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 
     }
-
-    */
 
     @PutMapping("/reactivate")
     public ResponseEntity <Void> reactivateProfileByEmail (@Valid @RequestBody EmailResponseDTO emailResponseDTO) {
