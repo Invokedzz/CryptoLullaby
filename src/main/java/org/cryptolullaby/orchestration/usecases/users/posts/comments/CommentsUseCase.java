@@ -1,6 +1,5 @@
 package org.cryptolullaby.orchestration.usecases.users.posts.comments;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.entity.Comments;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;

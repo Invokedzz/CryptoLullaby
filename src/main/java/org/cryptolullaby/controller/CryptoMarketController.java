@@ -5,7 +5,6 @@ import org.cryptolullaby.model.dto.polygon.MarketExchangeDTO;
 import org.cryptolullaby.model.dto.polygon.MarketHolidaysDTO;
 import org.cryptolullaby.model.dto.polygon.TradingStatusDTO;
 import org.cryptolullaby.orchestration.MarketOperationsOrchestrationFacade;
-import org.cryptolullaby.orchestration.usecases.polygon.MarketOperationsUseCase;
 import org.cryptolullaby.validation.annotations.SIPValues;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

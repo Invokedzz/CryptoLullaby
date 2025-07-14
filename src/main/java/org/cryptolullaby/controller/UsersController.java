@@ -6,6 +6,7 @@ import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.orchestration.UserOrchestrationFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +31,7 @@ public class UsersController {
     }
 
     @PostMapping("/confirm/activation/{id}")
+    @PreAuthorize("hasAnyAuthority()")
     public ResponseEntity <SystemResponseDTO> confirmInterestsThenActivateAccount (
 
             @PathVariable String id,

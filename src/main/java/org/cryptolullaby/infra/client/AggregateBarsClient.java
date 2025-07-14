@@ -8,8 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
-
 @FeignClient(url = "${polygon.api.url}", name = "AggregateBars", configuration = PolygonConfig.class)
 public interface AggregateBarsClient {
 

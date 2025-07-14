@@ -1,6 +1,5 @@
 package org.cryptolullaby.service;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.entity.Comments;
 import org.cryptolullaby.exception.CommentNotFoundException;
 import org.cryptolullaby.repository.CommentsRepository;

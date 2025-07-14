@@ -1,6 +1,5 @@
 package org.cryptolullaby.repository;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.entity.Comments;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +14,5 @@ public interface CommentsRepository extends MongoRepository <Comments, String> {
     Page <Comments> findAllByPostIdAndIsActive (String postId, Boolean isActive, Pageable pageable);
 
     boolean existsByIdAndIsActive (String id, Boolean isActive);
+
 }

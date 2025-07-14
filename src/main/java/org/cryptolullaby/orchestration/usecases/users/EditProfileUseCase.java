@@ -4,7 +4,6 @@ import org.cryptolullaby.entity.Images;
 import org.cryptolullaby.entity.Interest;
 import org.cryptolullaby.entity.Users;
 import org.cryptolullaby.model.dto.users.EditProfileDTO;
-import org.cryptolullaby.model.dto.users.EmailResponseDTO;
 import org.cryptolullaby.model.enums.ProfileStatus;
 import org.cryptolullaby.service.CloudinaryService;
 import org.cryptolullaby.service.UsersService;

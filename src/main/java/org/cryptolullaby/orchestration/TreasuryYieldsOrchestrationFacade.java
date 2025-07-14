@@ -1,6 +1,5 @@
 package org.cryptolullaby.orchestration;
 
-import org.cryptolullaby.infra.client.TreasuryYieldsClient;
 import org.cryptolullaby.model.dto.polygon.treasury.TreasuryYieldsDTO;
 import org.cryptolullaby.orchestration.usecases.polygon.TreasuryYieldsUseCase;
 import org.springframework.stereotype.Service;

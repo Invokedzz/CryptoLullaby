@@ -1,7 +1,6 @@
 package org.cryptolullaby.repository;
 
 import org.cryptolullaby.entity.Follow;
-import org.cryptolullaby.model.dto.follow.UserFollowersDTO;
 import org.cryptolullaby.model.enums.FollowStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

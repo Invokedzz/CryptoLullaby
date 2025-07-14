@@ -1,6 +1,5 @@
 package org.cryptolullaby.orchestration;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.model.dto.comments.CommentsDTO;
 import org.cryptolullaby.model.dto.comments.CreateCommentDTO;
 import org.cryptolullaby.model.dto.comments.EditCommentDTO;

@@ -1,15 +1,14 @@
 package org.cryptolullaby.config;
 
 import org.cryptolullaby.infra.security.GrantedAuthoritiesExtractor;
+import org.cryptolullaby.model.enums.RolesName;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +21,10 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String [] ALL_ROLES_CAN_ACCESS = {RolesName.ADMIN.name(), RolesName.MODERATOR.name(), RolesName.USER.name()};
+
+    private static final String [] MODERATOR_AND_ADMIN_CAN_ACCESS = {RolesName.ADMIN.name(), RolesName.MODERATOR.name()};
+
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
 
@@ -31,7 +34,14 @@ public class SecurityConfig {
                     xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK
                     )).contentSecurityPolicy(cps -> cps.policyDirectives("script-src 'self'")))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.anyRequest().permitAll())
+                .authorizeHttpRequests(
+                        request -> {
+                            request.requestMatchers("/domain/users/register").permitAll();
+                            request.requestMatchers("/domain/users/reactivate", "/domain/users/deactivate", "/domain/users/confirm/**", "/domain/posts/**",
+                                    "/domain/follow/**", "/domain/comments/**", "/domain/profile/**").hasAnyRole(ALL_ROLES_CAN_ACCESS);
+                            request.requestMatchers("/domain/email/**").hasAnyRole(MODERATOR_AND_ADMIN_CAN_ACCESS).anyRequest().authenticated();
+                        }
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(
                         OAuth2ResourceServerConfigurer ->

@@ -1,6 +1,5 @@
 package org.cryptolullaby.service;
 
-import org.bson.types.ObjectId;
 import org.cryptolullaby.entity.Likes;
 import org.cryptolullaby.model.enums.EntityType;
 import org.cryptolullaby.repository.LikesRepository;

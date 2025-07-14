@@ -6,8 +6,6 @@ import org.cryptolullaby.model.dto.polygon.bars.ticker.DailyTickerDTO;
 import org.cryptolullaby.orchestration.usecases.polygon.AggregateBarsUseCase;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class AggregateBarsOrchestrationFacade {
 

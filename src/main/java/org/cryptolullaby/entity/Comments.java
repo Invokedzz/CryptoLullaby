@@ -103,12 +103,6 @@ public class Comments {
 
     }
 
-    public void setComment (String comment) {
-
-        this.comment = comment;
-
-    }
-
     public Integer getLikes () {
 
         return likes;
@@ -151,21 +145,9 @@ public class Comments {
 
     }
 
-    public void setPostId (String postId) {
-
-        this.postId = postId;
-
-    }
-
     public String getParentId () {
 
         return parentId;
-
-    }
-
-    public void setParentId (String parentId) {
-
-        this.parentId = parentId;
 
     }
 
@@ -178,12 +160,6 @@ public class Comments {
     public void setEntityType (EntityType entityType) {
 
         this.entityType = entityType;
-
-    }
-
-    public Boolean getIsActive () {
-
-        return isActive;
 
     }
 
