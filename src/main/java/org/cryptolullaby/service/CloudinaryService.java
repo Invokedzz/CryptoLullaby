@@ -36,6 +36,8 @@ public class CloudinaryService {
 
         try {
 
+            // we need to fix this garbage
+
             var convFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename());
 
             var fos = new FileOutputStream(convFile);
@@ -83,6 +85,12 @@ public class CloudinaryService {
         String type = tika.detect(file.getContentType());
 
         return ALLOWED_IMAGE_TYPES.contains(type);
+
+    }
+
+    private boolean isPathSecure (String path) {
+
+        return path.contains("..") || path.contains(":");
 
     }
 

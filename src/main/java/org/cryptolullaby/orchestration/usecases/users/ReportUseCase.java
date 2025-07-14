@@ -47,7 +47,29 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     public void report (CreateReportDTO createReportDTO) {
 
-        reportService.save(new Report(createReportDTO));
+        // Ik this code sucks. I got tired of working in this project :(
+
+        var isEntityReal = doesReportedEntityExist(createReportDTO.reportedId(), createReportDTO.type());
+
+        if (isEntityReal) {
+
+            var hasReported = reportService.hasUserReported(
+                    createReportDTO.reporterId(),
+                    createReportDTO.reportedId(),
+                    createReportDTO.type()
+            );
+
+            if (hasReported) {
+
+                reportService.deleteReportByIdAndEntity(createReportDTO.reporterId(), createReportDTO.type());
+
+                return;
+
+            }
+
+            reportService.save(new Report(createReportDTO));
+
+        }
 
     }
 
@@ -235,7 +257,7 @@ public class ReportUseCase implements IPaginationStructure <ReportPageDTO, Repor
 
     }
 
-    private boolean reportSaveValidation (String reportedId, EntityType entity) {
+    private boolean doesReportedEntityExist (String reportedId, EntityType entity) {
 
         switch (entity) {
 

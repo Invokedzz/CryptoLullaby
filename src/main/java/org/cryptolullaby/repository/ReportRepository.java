@@ -13,12 +13,11 @@ public interface ReportRepository extends MongoRepository <Report, String> {
 
     Page <Report> findAllByStatus(ReportStatus status, Pageable pageable);
 
-    void deleteByIdAndEntityType (String id, EntityType entityType);
-
     boolean existsByReporterIdAndReportedIdAndEntityType (String reporterId, String reportedId, EntityType entityType);
 
     long countReportByIdAndEntityType (String id, EntityType entityType);
 
     long countReportByReportedIdAndStatus(String reportedId, ReportStatus status);
 
+    void deleteByReporterIdAndEntityType(String reporterId, EntityType entityType);
 }

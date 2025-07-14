@@ -14,6 +14,8 @@ import java.util.Optional;
 @Service
 public class ReportService {
 
+    // todo
+
     private final ReportRepository reportRepository;
 
     public ReportService (ReportRepository reportRepository) {
@@ -66,9 +68,9 @@ public class ReportService {
 
     }
 
-    public void deleteReportByIdAndEntity (String id, EntityType entityType) {
+    public void deleteReportByIdAndEntity (String reporterId, EntityType entityType) {
 
-        reportRepository.deleteByIdAndEntityType(id, entityType);
+        reportRepository.deleteByReporterIdAndEntityType(reporterId, entityType);
 
     }
 

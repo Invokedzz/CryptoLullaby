@@ -36,10 +36,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> {
-                            request.requestMatchers("/domain/users/register").permitAll();
-                            request.requestMatchers("/domain/users/reactivate", "/domain/users/deactivate", "/domain/users/confirm/**", "/domain/posts/**",
-                                    "/domain/follow/**", "/domain/comments/**", "/domain/profile/**").hasAnyRole(ALL_ROLES_CAN_ACCESS);
-                            request.requestMatchers("/domain/email/**").hasAnyRole(MODERATOR_AND_ADMIN_CAN_ACCESS).anyRequest().authenticated();
+                           // request.requestMatchers("/domain/users/register").permitAll();
+                           // request.requestMatchers("/domain/users/reactivate", "/domain/users/deactivate", "/domain/users/confirm/**", "/domain/posts/**",
+                           //         "/domain/follow/**", "/domain/comments/**", "/domain/profile/**").hasAnyRole(ALL_ROLES_CAN_ACCESS);
+                           // request.requestMatchers("/domain/email/**").hasAnyRole(MODERATOR_AND_ADMIN_CAN_ACCESS).anyRequest().authenticated();
+                            request.anyRequest().permitAll();
                         }
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
