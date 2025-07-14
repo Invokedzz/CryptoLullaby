@@ -21,9 +21,9 @@ public class PermissionsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <Void> addRoleById (@PathVariable String id) {
+    public ResponseEntity <Void> addModeratorRoleById (@PathVariable String id) {
 
-        orchestrationFacade.addACertainRoleToAnUserById(id);
+        orchestrationFacade.addModeratorRoleToAnUserById(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

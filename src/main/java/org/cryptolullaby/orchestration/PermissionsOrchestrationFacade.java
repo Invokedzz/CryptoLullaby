@@ -14,9 +14,9 @@ public class PermissionsOrchestrationFacade {
 
     }
 
-    public void addACertainRoleToAnUserById (String id) {
+    public void addModeratorRoleToAnUserById (String id) {
 
-        permissionsUseCase.addACertainRoleToAnUserById(id);
+        permissionsUseCase.addModeratorRoleToAnUserById(id);
 
     }
 

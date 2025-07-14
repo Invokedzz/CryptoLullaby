@@ -25,6 +25,8 @@ public class SecurityConfig {
 
     private static final String [] MODERATOR_AND_ADMIN_CAN_ACCESS = {RolesName.ADMIN.name(), RolesName.MODERATOR.name()};
 
+    private static final String ADMIN = RolesName.ADMIN.name();
+
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
 
@@ -36,11 +38,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> {
-                           // request.requestMatchers("/domain/users/register").permitAll();
-                           // request.requestMatchers("/domain/users/reactivate", "/domain/users/deactivate", "/domain/users/confirm/**", "/domain/posts/**",
-                           //         "/domain/follow/**", "/domain/comments/**", "/domain/profile/**").hasAnyRole(ALL_ROLES_CAN_ACCESS);
-                           // request.requestMatchers("/domain/email/**").hasAnyRole(MODERATOR_AND_ADMIN_CAN_ACCESS).anyRequest().authenticated();
-                            request.anyRequest().permitAll();
+                            request.requestMatchers("/domain/users/register", "/domain/users/reactivate").permitAll();
+                            request.requestMatchers("/domain/users/deactivate", "/domain/users/confirm/**", "/domain/posts/**",
+                                    "/domain/follow/**", "/domain/comments/**", "/domain/profile/**").hasAnyRole(ALL_ROLES_CAN_ACCESS)
+                                    .requestMatchers("/domain/email/**").hasAnyRole(MODERATOR_AND_ADMIN_CAN_ACCESS)
+                                    .requestMatchers("/domain/permissions/**").hasRole(ADMIN).anyRequest().authenticated();
                         }
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

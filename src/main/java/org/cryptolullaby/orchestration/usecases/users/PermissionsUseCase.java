@@ -19,6 +19,20 @@ public class PermissionsUseCase {
 
     }
 
-    public void addACertainRoleToAnUserById (String id) {}
+    public void addModeratorRoleToAnUserById (String id) {
+
+        var user = usersService.findUserByIdOrElseThrow(id);
+
+        var moderatorRole = rolesService.getModRole();
+
+        if (!user.getRoles().contains(moderatorRole)) {
+
+            user.getRoles().add(moderatorRole);
+
+            usersService.save(user);
+
+        }
+
+    }
 
 }

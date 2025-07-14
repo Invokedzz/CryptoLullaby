@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.apache.tika.Tika;
 import org.cryptolullaby.entity.Images;
+import org.cryptolullaby.exception.DirectoryTraversalException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -36,9 +37,11 @@ public class CloudinaryService {
 
         try {
 
-            // we need to fix this garbage
+            // we need to fix this garbage -> garbage apparently fixed :p
 
             var convFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename());
+
+            failIfDirectoryTraversal(convFile);
 
             var fos = new FileOutputStream(convFile);
             fos.write(file.getBytes());
@@ -88,9 +91,35 @@ public class CloudinaryService {
 
     }
 
-    private boolean isPathSecure (String path) {
+    private void failIfDirectoryTraversal (File file) {
 
-        return path.contains("..") || path.contains(":");
+        if (file.isAbsolute()) {
+
+            throw new RuntimeException("Directory traversal attempt - absolute path not allowed!");
+
+        }
+
+        String pathUsingCanonical, pathUsingAbsolute;
+
+        try {
+
+            pathUsingCanonical = file.getCanonicalPath();
+            pathUsingAbsolute = file.getAbsolutePath();
+
+        } catch (IOException e) {
+
+            throw new DirectoryTraversalException(e.getMessage());
+
+        }
+
+        // Require the absolute path and canonicalized path match.
+        // This is done to avoid directory traversal
+        // attacks, e.g. "1/../2/"
+        if (!pathUsingCanonical.equals(pathUsingAbsolute)) {
+
+            throw new DirectoryTraversalException("Directory traversal attempt?");
+
+        }
 
     }
 
