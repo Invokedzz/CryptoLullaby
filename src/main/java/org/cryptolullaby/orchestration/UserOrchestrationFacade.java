@@ -3,7 +3,6 @@ package org.cryptolullaby.orchestration;
 import org.cryptolullaby.model.dto.users.*;
 import org.cryptolullaby.infra.email.SendEmailToQueue;
 import org.cryptolullaby.orchestration.usecases.users.DeactivateReactivateAccountUseCase;
-import org.cryptolullaby.orchestration.usecases.users.LoginUseCase;
 import org.cryptolullaby.orchestration.usecases.users.RegisterUserUseCase;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +11,13 @@ public class UserOrchestrationFacade {
 
     private final RegisterUserUseCase registerUserUseCase;
 
-    private final LoginUseCase loginUseCase;
-
     private final SendEmailToQueue sendEmailToQueueMechanism;
 
     private final DeactivateReactivateAccountUseCase deactivateReactivateAccountUseCase;
 
-    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, LoginUseCase loginUseCase, SendEmailToQueue sendEmailToQueueMechanism, DeactivateReactivateAccountUseCase deactivateReactivateAccountUseCase) {
+    public UserOrchestrationFacade (RegisterUserUseCase registerUserUseCase, SendEmailToQueue sendEmailToQueueMechanism, DeactivateReactivateAccountUseCase deactivateReactivateAccountUseCase) {
 
         this.registerUserUseCase = registerUserUseCase;
-
-        this.loginUseCase = loginUseCase;
 
         this.sendEmailToQueueMechanism = sendEmailToQueueMechanism;
 
@@ -47,12 +42,6 @@ public class UserOrchestrationFacade {
     public void confirmRegistration (String id, InterestDTO interestDTO) {
 
         registerUserUseCase.confirmRegistration(id, interestDTO);
-
-    }
-
-    public void login () {
-
-
 
     }
 
